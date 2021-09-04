@@ -6,11 +6,12 @@ const router = Router();
 
 router
   .route('/me')
+  .all(authenticate)
 
-  .get(authenticate, async (req, res) => {
+  .get((req, res) => {
     const { userId } = req.accessToken;
     prisma.user
-      .findUnique({ where: { userId } })
+      .findUnique({ where: { userId }, include: { tasks: true } })
       .then(data => {
         if (!data) res.clearCookie('access_token');
         res.status(data ? 200 : 404).json({ data });
@@ -18,18 +19,20 @@ router
       .catch(err => res.send(err));
   })
 
-  .delete(authenticate, (req, res) => {
+  .delete((req, res) => {
     const { userId } = req.accessToken;
-    prisma.user
-      .delete({ where: { userId } })
-      .then(data => res.clearCookie('access_token').status(200).json({ data }))
+    prisma
+      .$transaction([
+        prisma.task.deleteMany({ where: { authorId: userId } }),
+        prisma.user.delete({ where: { userId } }),
+      ])
+      .then(() => res.clearCookie('access_token').json({ data: null }))
       .catch(err => {
         switch (err.code) {
           case 'P2025':
-            return res
-              .clearCookie('accessToken')
-              .status(404)
-              .json({ data: null });
+            res.clearCookie('access_token');
+            res.status(404).json({ data: null });
+            return;
           default:
             res.send(err);
         }
