@@ -1,22 +1,29 @@
 import { Router } from 'express';
+import { TaskDAO } from './tasks.dao';
+import { TaskValidationSchema, TaskInsert, TaskUpdate } from './tasks.schemas';
 import authenticate from '~/middlewares/authenticate';
-import { TaskDAL } from './tasks.dal';
+import validateBody from '~/middlewares/validateBody';
 
 const router = Router();
 
-router.post('/', authenticate, (req, res) => {
-  const { userId } = req.accessToken;
-  TaskDAL.create({
-    author_id: userId,
-    task: String(req.body.task),
-  })
-    .then(data => {
-      res.json({ data });
+router.post(
+  '/',
+  authenticate,
+  validateBody(TaskValidationSchema),
+  (req, res) => {
+    const { userId } = req.accessToken;
+    TaskDAO.create({
+      ...(req.parsedBody as TaskInsert),
+      author_id: userId,
     })
-    .catch(err => {
-      res.send(err);
-    });
-});
+      .then(data => {
+        res.json({ data });
+      })
+      .catch(err => {
+        res.send(err);
+      });
+  }
+);
 
 // TODO: check ownership middleware
 router
@@ -25,7 +32,7 @@ router
 
   .get((req, res) => {
     const { taskId } = req.params;
-    TaskDAL.findById(taskId)
+    TaskDAO.findById(taskId)
       .then(data => {
         res.json({ data });
       })
@@ -34,11 +41,11 @@ router
       });
   })
 
-  .patch((req, res) => {
+  .patch(validateBody(TaskValidationSchema.partial()), (req, res) => {
     const { taskId } = req.params;
-    TaskDAL.updateById(taskId, req.body)
+    TaskDAO.updateById(taskId, req.parsedBody as TaskUpdate)
       .then(data => {
-        res.json({ data: data[0] });
+        res.json({ data });
       })
       .catch(err => {
         res.send(err);
@@ -47,7 +54,7 @@ router
 
   .delete((req, res) => {
     const { taskId } = req.params;
-    TaskDAL.deleteById(taskId)
+    TaskDAO.deleteById(taskId)
       .then(data => {
         res.json({ data });
       })

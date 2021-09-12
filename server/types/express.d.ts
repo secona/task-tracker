@@ -5,6 +5,7 @@ declare global {
   namespace Express {
     interface Request {
       accessToken: JwtPayload & AccessToken;
+      parsedBody: Record<string, any>;
     }
   }
 }

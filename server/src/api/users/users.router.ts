@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { UserDAL } from './users.dal';
+import { UserDAO } from './users.dao';
 import authenticate from '~/middlewares/authenticate';
 
 const router = Router();
@@ -10,9 +10,8 @@ router
 
   .get((req, res) => {
     const { userId } = req.accessToken;
-    UserDAL.findByIdJoin(userId)
+    UserDAO.findByIdJoin(userId)
       .then(data => {
-        console.log(data);
         res.json({ data });
       })
       .catch(err => {
@@ -22,11 +21,13 @@ router
 
   .delete((req, res) => {
     const { userId } = req.accessToken;
-    UserDAL.deleteById(userId)
+    UserDAO.deleteById(userId)
       .then(data => {
         res.json({ data });
       })
-      .catch(err => res.send(err));
+      .catch(err => {
+        res.send(err)
+      });
   });
 
 export default router;

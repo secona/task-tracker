@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { auth, oauth2 } from '@googleapis/oauth2';
 import { accessTokenConfig } from '~/config/cookie';
 import { signAccessToken } from '~/lib/tokens';
-import { UserDAL } from '~/api/users/users.dal';
+import { UserDAO } from '~/api/users/users.dao';
 
 const router = Router();
 const oauth = oauth2('v2');
@@ -40,9 +40,8 @@ router.get('/callback', async (req, res) => {
       picture: data.picture!,
     };
 
-    const created = await UserDAL.create(user);
-    console.log(created)
-    const accessToken = signAccessToken({ userId: created[0]!.user_id });
+    const created = await UserDAO.upsert(user);
+    const accessToken = signAccessToken({ userId: created.user_id });
 
     res.cookie('access_token', accessToken, accessTokenConfig);
     res.redirect('/dashboard');
