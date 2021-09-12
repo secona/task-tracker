@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { auth, oauth2 } from '@googleapis/oauth2';
 import { accessTokenConfig } from '~/config/cookie';
 import { signAccessToken } from '~/lib/tokens';
-import prisma from '~/lib/prisma';
+import { UserDAL } from '~/api/users/users.dal';
 
 const router = Router();
 const oauth = oauth2('v2');
@@ -40,17 +40,14 @@ router.get('/callback', async (req, res) => {
       picture: data.picture!,
     };
 
-    const { userId } = await prisma.user.upsert({
-      where: { email: data.email! },
-      create: user,
-      update: user,
-      select: { userId: true }
-    });
+    const created = await UserDAL.create(user);
+    console.log(created)
+    const accessToken = signAccessToken({ userId: created[0]!.user_id });
 
-    const accessToken = signAccessToken({ userId })
     res.cookie('access_token', accessToken, accessTokenConfig);
     res.redirect('/dashboard');
   } catch (err) {
+    console.log(err);
     res.redirect('/login?failed=true');
   }
 });
