@@ -1,12 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-interface TokenFunctions<T> {
-  sign: (payload: T) => string;
-  verify: (token: string) => (jwt.JwtPayload & T) | null;
-}
-
 export interface AccessToken {
-  userId: string;
+  userId: number;
 }
 
 export function signAccessToken(payload: AccessToken) {

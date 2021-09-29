@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { TaskDAO } from './tasks.dao';
-import { TaskValidationSchema, TaskInsert, TaskUpdate } from './tasks.schemas';
+import { TaskValidationSchema, TaskInsert, TaskUpdate } from './tasks.common';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
 
@@ -11,13 +11,12 @@ router.post(
   authenticate,
   validateBody(TaskValidationSchema),
   (req, res) => {
-    const { userId } = req.accessToken;
-    TaskDAO.create({
-      ...(req.parsedBody as TaskInsert),
-      author_id: userId,
-    })
-      .then(data => {
-        res.json({ data });
+    const owner_id = req.accessToken.userId;
+    const data = req.parsedBody as TaskInsert;
+
+    TaskDAO.create({ ...data, owner_id })
+      .then(task => {
+        res.status(201).json({ success: true, data: { task } });
       })
       .catch(err => {
         res.send(err);
@@ -25,16 +24,16 @@ router.post(
   }
 );
 
-// TODO: check ownership middleware
 router
   .route('/:taskId')
   .all(authenticate)
 
   .get((req, res) => {
-    const { taskId } = req.params;
-    TaskDAO.findById(taskId)
-      .then(data => {
-        res.json({ data });
+    TaskDAO.findById(req.accessToken.userId, req.params.taskId)
+      .then(task => {
+        const found = !!task;
+        res.status(found ? 200 : 404);
+        res.json({ success: found, data: { task } });
       })
       .catch(err => {
         res.send(err);
@@ -42,10 +41,15 @@ router
   })
 
   .patch(validateBody(TaskValidationSchema.partial()), (req, res) => {
-    const { taskId } = req.params;
-    TaskDAO.updateById(taskId, req.parsedBody as TaskUpdate)
-      .then(data => {
-        res.json({ data });
+    TaskDAO.updateById(
+      req.accessToken.userId,
+      req.params.taskId,
+      req.parsedBody as TaskUpdate
+    )
+      .then(task => {
+        const updated = !!task;
+        res.status(updated ? 200 : 404);
+        res.json({ success: updated, data: { task } });
       })
       .catch(err => {
         res.send(err);
@@ -53,10 +57,11 @@ router
   })
 
   .delete((req, res) => {
-    const { taskId } = req.params;
-    TaskDAO.deleteById(taskId)
-      .then(data => {
-        res.json({ data });
+    TaskDAO.deleteById(req.accessToken.userId, req.params.taskId)
+      .then(n => {
+        const deleted = n > 0;
+        res.status(deleted ? 200 : 404);
+        res.json({ success: deleted });
       })
       .catch(err => {
         res.send(err);

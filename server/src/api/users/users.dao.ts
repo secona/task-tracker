@@ -1,35 +1,53 @@
 import db from '~/db';
-import { User, UserInsert, UserJoined } from './users.schemas';
+import { taskReturnFields } from '../tasks/tasks.dao';
+import { User, UserInsert, UserJoined } from './users.common';
+
+export const userReturnFields: Array<keyof User> = [
+  'email',
+  'name',
+  'picture',
+  'created_at',
+  'updated_at',
+];
 
 export const UserDAO = {
-  /** @returns every field of new or updated user */
-  async upsert(data: UserInsert): Promise<User> {
+  /** @returns `user_id` of new or updated user */
+  async upsert(data: UserInsert): Promise<Pick<User, 'user_id'>> {
     const user = await db('users')
       .insert(data)
-      .returning('*')
+      .returning('user_id')
       .onConflict('email')
       .merge();
     return user[0];
   },
 
   /** @returns users with tasks joined */
-  async findByIdJoin(user_id: string): Promise<UserJoined | undefined> {
-    return db
+  async findByIdJoin(user_id: number): Promise<UserJoined | null> {
+    const user = await db
       .select([
-        'users.*',
-        db.raw(
-          `CASE WHEN COUNT(tasks.*) = 0 THEN '[]' ELSE JSON_AGG(tasks.*) END AS tasks`
-        ),
+        ...userReturnFields.map(f => `users.${f}`),
+        db.raw(`
+          CASE WHEN COUNT("tasks"."task_id") = 0
+            THEN '[]'
+            ELSE JSON_AGG(
+              JSON_BUILD_OBJECT(
+                ${taskReturnFields.map(f => `'${f}', "tasks"."${f}"`)}
+              )
+            )
+          END AS "tasks"
+        `),
       ])
       .from('users')
       .where({ user_id })
-      .leftJoin('tasks', { 'users.user_id': 'tasks.author_id' })
+      .join('tasks', { 'users.user_id': 'tasks.owner_id' })
       .groupBy('users.user_id')
       .first();
+
+    return user ?? null;
   },
 
   /** @returns deleted count */
-  async deleteById(user_id: string): Promise<number> {
+  async deleteById(user_id: number): Promise<number> {
     return db.delete().from('users').where({ user_id });
   },
 };

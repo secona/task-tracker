@@ -2,15 +2,15 @@ import * as z from 'zod';
 
 export interface Task {
   task_id: string;
-  author_id: string;
+  owner_id: number;
   task: string;
   done: boolean;
   created_at: Date;
   updated_at: Date;
 }
 
-export type TaskInsert = Pick<Task, 'author_id' | 'task'> &
-  Partial<Pick<Task, 'done'>>;
+export type TaskInsert = Pick<Task, 'owner_id' | 'task'> &
+  Partial<Pick<Task, 'done' | 'task_id'>>;
 
 export type TaskUpdate = Pick<Task, 'task' | 'done'>;
 

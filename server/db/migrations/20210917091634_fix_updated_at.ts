@@ -20,8 +20,6 @@ export async function up(knex: Knex): Promise<void> {
 
 export async function down(knex: Knex): Promise<void> {
   return knex.raw(`
-    DROP FUNCTION IF EXISTS update_timestamp();
-    DROP TRIGGER IF EXISTS update_timestamp ON users;
-    DROP TRIGGER IF EXISTS update_timestamp ON tasks;
+    DROP FUNCTION IF EXISTS update_timestamp() CASCADE;
   `)
 }

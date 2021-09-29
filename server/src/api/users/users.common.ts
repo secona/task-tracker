@@ -1,7 +1,7 @@
-import { Task } from '../tasks/tasks.schemas';
+import { Task } from '../tasks/tasks.common';
 
 export interface User {
-  user_id: string;
+  user_id: number;
   email: string;
   name: string;
   picture: string;

@@ -2,11 +2,11 @@ import { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable('users', t => {
-    t.uuid('user_id').primary().defaultTo(knex.raw('gen_random_uuid()'));
+    t.increments('user_id').primary();
     t.text('email').notNullable().unique();
     t.text('name').notNullable();
     t.text('picture').notNullable();
-    t.timestamps(true, true)
+    t.timestamps(true, true);
   });
 }
 
