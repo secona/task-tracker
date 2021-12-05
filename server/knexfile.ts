@@ -1,5 +1,5 @@
 require('dotenv').config();
-import { Knex }  from 'knex';
+import { Knex } from 'knex';
 import { join } from 'path';
 
 export default {
@@ -13,7 +13,6 @@ export default {
     seeds: {
       directory: join(__dirname, 'db/seeds'),
       extension: 'ts',
-      timestampFilenamePrefix: true,
     }
   } as Knex.Config,
 };

@@ -1,6 +1,5 @@
 import { Knex } from 'knex';
 import { nanoid } from 'nanoid';
-import { taskIdLength } from '../../src/api/tasks/tasks.dao';
 
 export async function seed(knex: Knex): Promise<void> {
   await knex('tasks').del();
