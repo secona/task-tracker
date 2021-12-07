@@ -29,7 +29,13 @@ npm run dev
 npm run migration:new
 
 # run new migrations that haven't been run in `~/db/migrations`
-npm run migration:run
+npm run migration:latest
+
+# rollback the last batch of migrations performed
+npm run migration:rollback
+
+# list all migration files status
+npm run migration:list
 
 # create a new seed `~/db/seeds`
 npm run seed:new
