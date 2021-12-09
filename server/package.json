@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "cross-env DEBUG=knex:query NODE_ENV=development tsnd --respawn -r tsconfig-paths/register --files ./src/index.ts",
+    "dev": "cross-env DEBUG=knex:query NODE_ENV=development tsnd --rs -r tsconfig-paths/register --files ./src/index.ts",
     "build": "tsc",
     "migration:new": "knex migrate:make",
     "migration:latest": "knex migrate:latest",

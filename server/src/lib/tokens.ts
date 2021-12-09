@@ -1,17 +1,32 @@
 import jwt from 'jsonwebtoken';
 
+export class TokenHandler<T extends object> {
+  constructor(
+    private o: {
+      secretKey: string;
+      signOptions?: jwt.SignOptions;
+      verifyOptions?: jwt.VerifyOptions;
+    }
+  ) {}
+
+  sign(payload: T) {
+    return jwt.sign(payload, this.o.secretKey, this.o.signOptions);
+  }
+
+  verify(token: string) {
+    return jwt.verify(token, this.o.secretKey, this.o.verifyOptions) as
+      | (jwt.JwtPayload & T)
+      | null;
+  }
+}
+
 export interface AccessToken {
-  userId: number;
+  user_id: number;
 }
 
-export function signAccessToken(payload: AccessToken) {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: '30d',
-  });
-}
-
-export function verifyAccessToken(token: string) {
-  return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as
-    | (jwt.JwtPayload & AccessToken)
-    | null;
-}
+export const accessToken = new TokenHandler<AccessToken>({
+  secretKey: process.env.ACCESS_TOKEN_SECRET,
+  signOptions: {
+    expiresIn: '30d'
+  }
+})

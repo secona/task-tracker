@@ -13,10 +13,11 @@
   * `migrations` &mdash; database table migrations 
   * `seeds` &mdash; database seeds for development (don't use for production!)
 * `src` &mdash; server's source code
-  * `api` &mdash; server's core (file based routing-esque)
+  * `core` &mdash; server's core (where features such as `projects` and `tasks` live)
   * `config` &mdash; config objects
   * `lib` &mdash; functions
   * `middlewares` &mdash; express middlewares
+  * `interfaces` &mdash; interfaces and abstract classes
 * `types` &mdash; typescript types definitions
 * `scripts` &mdash; folder for js scripts
 
