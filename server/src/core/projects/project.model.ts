@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export class Project {
   project_id!: string;
   user_id!: number;
@@ -28,3 +30,8 @@ export class ProjectUpdate {
     this.display_color = data.display_color;
   }
 }
+
+export const projectValidation = z.object({
+  description: z.string(),
+  display_color: z.string().regex(/^#?(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$/),
+});

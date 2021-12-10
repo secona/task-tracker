@@ -15,27 +15,27 @@ class ProjectDAO extends BasicDAO<Project, ProjectInsert, ProjectUpdate> {
   async create(data: ProjectInsert): Promise<Project> {
     const rows = await db('projects')
       .insert({ ...data, project_id: nanoid(11) })
-      .returning(this.returnFields)
+      .returning(this.returnFields);
     return rows[0] as Project;
   }
 
-  async get(project_id: string): Promise<Project | undefined> {
-    return db('projects')
-      .select(this.returnFields)
-      .where({ project_id })
-      .first();
+  get(where: Partial<Project>): Promise<Project | undefined> {
+    return db('projects').select(this.returnFields).where(where).first();
   }
 
-  async update(project_id: string, data: ProjectUpdate): Promise<Project | undefined> {
+  async update(
+    where: Partial<Project>,
+    data: ProjectUpdate
+  ): Promise<Project | undefined> {
     const rows = await db('projects')
       .update(data, this.returnFields)
-      .where({ project_id });
+      .where(where);
     return rows[0];
   }
 
-  async del(project_id: string): Promise<number> {
-    return db('projects').delete().where({ project_id });
+  del(where: Partial<Project>): Promise<number> {
+    return db('projects').delete().where(where);
   }
 }
 
-export const projectDAO = new ProjectDAO;
+export const projectDAO = new ProjectDAO();

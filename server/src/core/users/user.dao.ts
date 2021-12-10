@@ -10,7 +10,7 @@ class UserDAO extends BasicDAO<User, UserInsert> {
     'created_at',
     'updated_at',
   ];
-  
+
   async create(data: UserInsert): Promise<User> {
     const rows = await db('users')
       .insert(data)
@@ -20,23 +20,24 @@ class UserDAO extends BasicDAO<User, UserInsert> {
     return rows[0];
   }
 
-  async get(user_id: number): Promise<User | undefined> {
+  async get(where: Partial<User>): Promise<User | undefined> {
     const user = await db('users')
       .select(this.returnFields)
-      .where({ user_id })
+      .where(where)
       .first();
     return user;
   }
 
-  async update(user_id: number, data: UserInsert): Promise<User | undefined> {
-    const rows = await db('users')
-      .update(data, this.returnFields)
-      .where({ user_id });
+  async update(
+    where: Partial<User>,
+    data: UserInsert
+  ): Promise<User | undefined> {
+    const rows = await db('users').update(data, this.returnFields).where(where);
     return rows[0];
   }
 
-  async del(user_id: number): Promise<number> {
-    return db('users').delete().where({ user_id });
+  async del(where: Partial<User>): Promise<number> {
+    return db('users').delete().where(where);
   }
 }
 

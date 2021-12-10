@@ -18,6 +18,7 @@
   * `lib` &mdash; functions
   * `middlewares` &mdash; express middlewares
   * `interfaces` &mdash; interfaces and abstract classes
+  * `routes` &mdash; route definitions
 * `types` &mdash; typescript types definitions
 * `scripts` &mdash; folder for js scripts
 

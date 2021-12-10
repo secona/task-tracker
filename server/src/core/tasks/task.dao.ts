@@ -13,23 +13,24 @@ class TaskDAO extends BasicDAO<Task, TaskInsert, TaskUpdate> {
     return rows[0] as Task;
   }
 
-  async get(task_id: string): Promise<Task | undefined> {
+  async get(where: Partial<Task>): Promise<Task | undefined> {
     const task = await db('tasks')
       .select(this.returnFields)
-      .where({ task_id })
+      .where(where)
       .first();
     return task;
   }
 
-  async update(task_id: string, data: TaskUpdate): Promise<Task | undefined> {
-    const rows = await db('tasks')
-      .update(data, this.returnFields)
-      .where({ task_id })
+  async update(
+    where: Partial<Task>,
+    data: TaskUpdate
+  ): Promise<Task | undefined> {
+    const rows = await db('tasks').update(data, this.returnFields).where(where);
     return rows[0];
   }
 
-  async del(task_id: string): Promise<number> {
-    return db('tasks').delete().where({ task_id });
+  async del(where: Partial<Task>): Promise<number> {
+    return db('tasks').delete().where(where);
   }
 }
 
