@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { signAccessToken } from '../../src/lib/tokens';
+import { accessToken } from '../../src/lib/tokens';
 import faker from 'faker';
 
 const USER_COUNT = 3;
@@ -17,9 +17,9 @@ export async function seed(knex: Knex): Promise<void> {
   );
 
   console.log(
-    userIds.map(userId => ({
-      user_id: userId,
-      token: signAccessToken({ userId }),
+    userIds.map(user_id => ({
+      user_id,
+      token: accessToken.sign({ user_id }),
     }))
   );
 }

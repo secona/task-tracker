@@ -25,8 +25,8 @@ export interface AccessToken {
 }
 
 export const accessToken = new TokenHandler<AccessToken>({
-  secretKey: process.env.ACCESS_TOKEN_SECRET,
+  secretKey: process.env.ACCESS_TOKEN_SECRET!,
   signOptions: {
-    expiresIn: '30d'
-  }
-})
+    expiresIn: '30d',
+  },
+});
