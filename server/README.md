@@ -23,28 +23,7 @@
 * `scripts` &mdash; folder for js scripts
 
 ### Scripts
-```sh
-# run app with hot reload
-npm run dev
-
-# create a new migration file in `~/db/migrations`
-npm run migration:new
-
-# run new migrations that haven't been run in `~/db/migrations`
-npm run migration:latest
-
-# rollback the last batch of migrations performed
-npm run migration:rollback
-
-# list all migration files status
-npm run migration:list
-
-# create a new seed `~/db/seeds`
-npm run seed:new
-
-# run all seeds in `~/db/seeds`
-npm run seed:run
-
-# run test (currently, no tests have been set)
-npm run test
-```
+* `yarn dev` &mdash; run app with hot reload
+* `yarn build` &mdash; build app
+* `yarn knex` &mdash; run knex cli with knexfile specified. [Read docs](https://knexjs.org)
+* `yarn test` &mdash; run test (currently, no tests have been set)

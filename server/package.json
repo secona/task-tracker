@@ -6,12 +6,7 @@
   "scripts": {
     "dev": "cross-env DEBUG=knex:query NODE_ENV=development tsnd --rs -r tsconfig-paths/register --files ./src/index.ts",
     "build": "tsc",
-    "migration:new": "knex migrate:make",
-    "migration:latest": "knex migrate:latest",
-    "migration:rollback": "knex migrate:rollback",
-    "migration:list": "knex migrate:list",
-    "seed:new": "knex seed:make",
-    "seed:run": "knex seed:run",
+    "knex": "knex --knexfile=./db/knexfile.ts",
     "postinstall": "node ./scripts/postinstall.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
