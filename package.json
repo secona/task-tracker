@@ -1,0 +1,22 @@
+{
+  "name": "task-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "turbo run dev --parallel"
+  },
+  "workspaces": [
+    "server"
+  ],
+  "devDependencies": {
+    "turbo": "^1.0.20"
+  },
+  "turbo": {
+    "pipeline": {
+      "dev": {
+        "cache": false
+      }
+    }
+  }
+}

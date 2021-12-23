@@ -1,4 +1,8 @@
 {
+  "name": "@task-tracker/server",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
   "scripts": {
     "dev": "cross-env DEBUG=knex:query NODE_ENV=development tsnd --rs -r tsconfig-paths/register --files ./src/index.ts",
     "build": "tsc",
