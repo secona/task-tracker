@@ -4,16 +4,26 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "server": "yarn workspace @task-tracker/server",
+    "clean": "rimraf **/node_modules **/dist **/.turbo",
+    "build": "turbo run build",
     "dev": "turbo run dev --parallel"
   },
   "workspaces": [
     "server"
   ],
   "devDependencies": {
+    "rimraf": "^3.0.2",
     "turbo": "^1.0.20"
   },
   "turbo": {
+    "baseBranch": "origin/main",
     "pipeline": {
+      "build": {
+        "dependsOn": [
+          "^build"
+        ]
+      },
       "dev": {
         "cache": false
       }
