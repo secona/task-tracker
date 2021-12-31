@@ -2,8 +2,8 @@ import db from '~/db';
 import { BasicDAO } from '~/interfaces/DAO';
 import { User, UserInsert } from './user.model';
 
-class UserDAO extends BasicDAO<User, UserInsert> {
-  returnFields: '*' | (keyof User)[] = [
+class UserDAO implements BasicDAO<User, UserInsert> {
+  returnFields: (keyof User)[] = [
     'email',
     'name',
     'picture',
@@ -20,11 +20,16 @@ class UserDAO extends BasicDAO<User, UserInsert> {
     return rows[0];
   }
 
-  async get(where: Partial<User>): Promise<User | undefined> {
+  async getOne(where: Partial<User>): Promise<User | undefined> {
     const user = await db('users')
       .select(this.returnFields)
       .where(where)
       .first();
+    return user;
+  }
+
+  async getMany(where: Partial<User>): Promise<User[] | undefined> {
+    const user = await db('users').select(this.returnFields).where(where);
     return user;
   }
 

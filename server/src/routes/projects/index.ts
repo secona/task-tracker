@@ -13,7 +13,7 @@ router
 
   .get((req, res) => {
     projectDAO
-      .get({
+      .getOne({
         project_id: req.params.projectId,
         user_id: req.accessToken.user_id,
       })

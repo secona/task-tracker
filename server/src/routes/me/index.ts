@@ -13,7 +13,7 @@ router
 
   .get((req, res) => {
     userDAO
-      .get({ user_id: req.accessToken.user_id })
+      .getOne({ user_id: req.accessToken.user_id })
       .then(user => {
         const success = !!user;
         res.status(success ? 200 : 404);
