@@ -9,8 +9,16 @@ import validateBody from '~/middlewares/validateBody';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.sendStatus(501);
+router.get('/', authenticate, (req, res) => {
+  projectDAO
+    .getMany({ user_id: req.accessToken.user_id })
+    .then(projects => {
+      res.status(200).json({ success: true, data: { projects } });
+    })
+    .catch(err => {
+      console.error(err);
+      res.json({ err });
+    })
 });
 
 router.post('/', authenticate, validateBody(projectValidation), (req, res) => {
