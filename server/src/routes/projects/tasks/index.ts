@@ -1,23 +1,34 @@
 import { Request, Router } from 'express';
-import db from '~/db';
+import { taskDAO } from '~/core/tasks/task.dao';
+import { TaskInsert, taskValidation } from '~/core/tasks/task.model';
 import authenticate from '~/middlewares/authenticate';
+import authorize from '~/middlewares/authorize';
+import validateBody from '~/middlewares/validateBody';
 
 const router = Router({ mergeParams: true });
 
 router
   .route('/')
-  .all(authenticate)
+  .all(authenticate, authorize.project)
 
-  .post((req, res) => {
-    res.sendStatus(501);
+  .post(validateBody(taskValidation), (req: Request<any>, res) => {
+    taskDAO
+      .create({
+        ...(req.parsedBody as TaskInsert),
+        project_id: req.params.projectId,
+      })
+      .then(task => {
+        res.status(201).json({ data: { task } });
+      })
+      .catch(err => {
+        console.error(err);
+        res.json({ err });
+      });
   })
 
   .get((req: Request<any>, res) => {
-    db('tasks')
-      .select('tasks.*')
-      .leftJoin('projects', { 'projects.project_id': 'tasks.project_id' })
-      .where({ 'tasks.project_id': req.params.projectId })
-      .andWhere({ 'projects.user_id': req.accessToken.user_id })
+    taskDAO
+      .getMany({ project_id: req.params.projectId })
       .then(tasks => {
         res.json({ data: { tasks } });
       })

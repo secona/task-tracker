@@ -10,6 +10,7 @@ const authenticate: RequestHandler = (req, res, next) => {
     if (decoded) req.accessToken = decoded;
     next();
   } catch (err) {
+    console.error(err);
     res.clearCookie('access_token');
     res.status(403).send(err);
   }
