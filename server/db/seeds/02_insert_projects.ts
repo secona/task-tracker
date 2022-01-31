@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 import { nanoid } from 'nanoid';
 import { Project } from '../../src/core/projects/project.model'
-import faker from 'faker';
+import faker from '@faker-js/faker';
 
 const PROJECTS_PER_USER = 3;
 
@@ -14,8 +14,8 @@ export async function seed(knex: Knex): Promise<void> {
       const p = new Project();
       p.project_id = nanoid(11);
       p.user_id = users[Math.floor(i / PROJECTS_PER_USER)].user_id;
-      p.description = faker.lorem.sentences();
-      p.display_color = faker.internet.color().substring(1);
+      p.description = faker.lorem.sentence(4);
+      p.display_color = 'ffffff';
       return p;
     })
   );

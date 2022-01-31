@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 import { nanoid } from 'nanoid';
 import { Task } from '../../src/core/tasks/task.model';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 
 const TASKS_PER_PROJECT = 3;
 
@@ -14,8 +14,8 @@ export async function seed(knex: Knex): Promise<void> {
       const t = new Task();
       t.task_id = nanoid(11);
       t.project_id = projects[Math.floor(i / TASKS_PER_PROJECT)].project_id;
-      t.task = faker.lorem.words();
-      t.description = faker.lorem.sentences();
+      t.task = faker.fake('{{word.verb}} {{word.adjective}} {{word.noun}}');
+      t.description = faker.lorem.sentence(4);
       return t;
     })
   );

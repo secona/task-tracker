@@ -23,14 +23,13 @@
     "zod": "^3.8.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.5",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.13",
-    "@types/faker": "^5.5.9",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.9.1",
     "cross-env": "^7.0.3",
-    "faker": "^5.5.3",
     "ts-node": "^10.2.1",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.11.0",
