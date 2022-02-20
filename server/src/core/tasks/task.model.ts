@@ -39,5 +39,5 @@ export class TaskUpdate {
 export const taskValidation = z.object({
   task: z.string().nonempty(),
   description: z.string().optional(),
-  done: z.boolean(),
+  done: z.boolean().optional(),
 });

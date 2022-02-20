@@ -10,7 +10,10 @@ router.get('/', authenticate, (req, res) => {
     .leftJoin('projects', { 'projects.project_id': 'tasks.project_id' })
     .where({ 'projects.user_id': req.accessToken.user_id })
     .then(tasks => {
-      res.status(200).json({ data: { tasks } });
+      res.status(200).json({
+        success: true, 
+        data: { tasks },
+      });
     })
     .catch(err => {
       console.error(err);

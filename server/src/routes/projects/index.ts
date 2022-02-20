@@ -1,11 +1,15 @@
 import { Router } from 'express';
 import { projectDAO } from '~/core/projects/project.dao';
-import { ProjectUpdate } from '~/core/projects/project.model';
+import {
+  ProjectUpdate,
+  projectValidation,
+} from '~/core/projects/project.model';
 import authenticate from '~/middlewares/authenticate';
+import validateBody from '~/middlewares/validateBody';
 
 const router = Router();
 
-router.use('/:projectId/tasks', require('./tasks').default)
+router.use('/:projectId/tasks', require('./tasks').default);
 
 router
   .route('/:projectId')
@@ -28,8 +32,8 @@ router
       });
   })
 
-  .patch((req, res) => {
-    const data = new ProjectUpdate({ ...req.body });
+  .patch(validateBody(projectValidation.partial()), (req, res) => {
+    const data = new ProjectUpdate({ ...(req.parsedBody as ProjectUpdate) });
     projectDAO
       .update(
         {

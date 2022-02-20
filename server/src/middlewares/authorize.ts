@@ -9,7 +9,11 @@ export default {
         project_id: req.params.projectId,
       })
       .then(project => {
-        if (!project) return res.status(404).send("u don't have access");
+        if (!project)
+          return res.status(404).json({
+            success: false,
+            message: 'This project does not exist',
+          });
         next();
       })
       .catch(err => {

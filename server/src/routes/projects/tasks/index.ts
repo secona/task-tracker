@@ -22,7 +22,10 @@ router
         project_id: req.params.projectId,
       })
       .then(task => {
-        res.status(201).json({ data: { task } });
+        res.status(201).json({
+          success: true,
+          data: { task },
+        });
       })
       .catch(err => {
         console.error(err);
@@ -34,7 +37,10 @@ router
     taskDAO
       .getMany({ project_id: req.params.projectId })
       .then(tasks => {
-        res.json({ data: { tasks } });
+        res.json({
+          success: true,
+          data: { tasks },
+        });
       })
       .catch(err => {
         console.error(err);
@@ -53,7 +59,11 @@ router
         project_id: req.params.projectId,
       })
       .then(task => {
-        res.json({ data: { task } });
+        res.status(task ? 200 : 404)
+        res.json({
+          success: !!task,
+          data: { task },
+        });
       })
       .catch(err => {
         console.error(err);
@@ -61,7 +71,7 @@ router
       });
   })
 
-  .patch(validateBody(taskValidation), (req: Request<any>, res) => {
+  .patch(validateBody(taskValidation.partial()), (req: Request<any>, res) => {
     taskDAO
       .update(
         {
@@ -71,7 +81,11 @@ router
         req.parsedBody as TaskUpdate
       )
       .then(task => {
-        res.json({ data: { task } });
+        res.status(task ? 200 : 404);
+        res.json({
+          success: !!task,
+          data: { task },
+        });
       })
       .catch(err => {
         console.error(err);
