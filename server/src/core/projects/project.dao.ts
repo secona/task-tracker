@@ -3,8 +3,8 @@ import db from '~/db';
 import { BasicDAO } from '~/interfaces/DAO';
 import { Project, ProjectInsert, ProjectUpdate } from './project.model';
 
-class ProjectDAO extends BasicDAO<Project, ProjectInsert, ProjectUpdate> {
-  returnFields: '*' | (keyof Project)[] = [
+class ProjectDAO implements BasicDAO<Project, ProjectInsert, ProjectUpdate> {
+  returnFields: (keyof Project)[] = [
     'project_id',
     'description',
     'display_color',
@@ -19,8 +19,12 @@ class ProjectDAO extends BasicDAO<Project, ProjectInsert, ProjectUpdate> {
     return rows[0] as Project;
   }
 
-  get(where: Partial<Project>): Promise<Project | undefined> {
+  getOne(where: Partial<Project>): Promise<Project | undefined> {
     return db('projects').select(this.returnFields).where(where).first();
+  }
+
+  getMany(where: Partial<Project>): Promise<Project[] | undefined> {
+    return db('projects').select(this.returnFields).where(where);
   }
 
   async update(

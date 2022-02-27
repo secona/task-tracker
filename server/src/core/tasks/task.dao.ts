@@ -3,8 +3,8 @@ import db from '~/db';
 import { BasicDAO } from '~/interfaces/DAO';
 import { Task, TaskInsert, TaskUpdate } from './task.model';
 
-class TaskDAO extends BasicDAO<Task, TaskInsert, TaskUpdate> {
-  returnFields: '*' | (keyof Task)[] = '*';
+class TaskDAO implements BasicDAO<Task, TaskInsert, TaskUpdate> {
+  returnFields: (keyof Task)[] = Object.keys(new Task()) as (keyof Task)[];
 
   async create(data: TaskInsert): Promise<Task> {
     const rows = await db('tasks')
@@ -13,11 +13,16 @@ class TaskDAO extends BasicDAO<Task, TaskInsert, TaskUpdate> {
     return rows[0] as Task;
   }
 
-  async get(where: Partial<Task>): Promise<Task | undefined> {
+  async getOne(where: Partial<Task>): Promise<Task | undefined> {
     const task = await db('tasks')
       .select(this.returnFields)
       .where(where)
       .first();
+    return task;
+  }
+
+  async getMany(where: Partial<Task>): Promise<Task[] | undefined> {
+    const task = await db('tasks').select(this.returnFields).where(where);
     return task;
   }
 

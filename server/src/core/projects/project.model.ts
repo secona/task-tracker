@@ -33,5 +33,8 @@ export class ProjectUpdate {
 
 export const projectValidation = z.object({
   description: z.string(),
-  display_color: z.string().regex(/^#?(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$/),
+  display_color: z
+    .string()
+    .regex(/^#?(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$/)
+    .optional(),
 });
