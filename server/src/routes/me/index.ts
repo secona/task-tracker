@@ -25,10 +25,6 @@ router
       });
   })
 
-  .patch((req, res) => {
-    res.sendStatus(501);
-  })
-
   .delete((req, res) => {
     userDAO
       .del({ user_id: req.accessToken.user_id })
