@@ -14,7 +14,7 @@
   ],
   "devDependencies": {
     "rimraf": "^3.0.2",
-    "turbo": "^1.0.20"
+    "turbo": "^1.1.4"
   },
   "turbo": {
     "baseBranch": "origin/main",
