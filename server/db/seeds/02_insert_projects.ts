@@ -14,8 +14,8 @@ export async function seed(knex: Knex): Promise<void> {
       const p = new Project();
       p.project_id = nanoid(11);
       p.user_id = users[Math.floor(i / PROJECTS_PER_USER)].user_id;
+      p.name = faker.word.noun();
       p.description = faker.lorem.sentence(4);
-      p.display_color = 'ffffff';
       return p;
     })
   );

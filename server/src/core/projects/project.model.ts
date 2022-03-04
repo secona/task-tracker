@@ -3,38 +3,41 @@ import { z } from 'zod';
 export class Project {
   project_id!: string;
   user_id!: number;
+  name!: string;
   description!: string;
-  display_color!: string;
+  color!: number;
   created_at!: Date;
   updated_at!: Date;
 }
 
 export class ProjectInsert {
   user_id: number;
+  name: string;
   description: string;
-  display_color: string;
+  color: number;
 
   constructor(data: ProjectInsert) {
     this.user_id = data.user_id;
+    this.name = data.name;
     this.description = data.description;
-    this.display_color = data.display_color;
+    this.color = data.color;
   }
 }
 
 export class ProjectUpdate {
+  name: string;
   description: string;
-  display_color: string;
+  color: number;
 
   constructor(data: ProjectUpdate) {
+    this.name = data.name;
     this.description = data.description;
-    this.display_color = data.display_color;
+    this.color = data.color;
   }
 }
 
 export const projectValidation = z.object({
-  description: z.string(),
-  display_color: z
-    .string()
-    .regex(/^#?(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$/)
-    .optional(),
+  name: z.string().nonempty(),
+  description: z.string().optional(),
+  color: z.number().optional(),
 });

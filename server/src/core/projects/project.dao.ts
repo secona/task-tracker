@@ -6,8 +6,9 @@ import { Project, ProjectInsert, ProjectUpdate } from './project.model';
 class ProjectDAO implements BasicDAO<Project, ProjectInsert, ProjectUpdate> {
   returnFields: (keyof Project)[] = [
     'project_id',
+    'name',
     'description',
-    'display_color',
+    'color',
     'created_at',
     'updated_at',
   ];

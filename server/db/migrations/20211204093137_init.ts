@@ -12,10 +12,11 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.dropTableIfExists('projects').createTable('projects', t => {
     t.text('project_id').primary();
     t.integer('user_id').notNullable().references('user_id').inTable('users').onDelete('CASCADE');
+    t.text('name').notNullable();
     t.text('description').notNullable().defaultTo('');
-    t.text('display_color').notNullable().defaultTo('ffffff');
+    t.integer('color').notNullable().defaultTo(0);
     t.timestamps(true, true);
-  })
+  });
 
   await knex.schema.dropTableIfExists('tasks').createTable('tasks', t => {
     t.text('task_id').primary();
