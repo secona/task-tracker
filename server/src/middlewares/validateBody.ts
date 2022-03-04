@@ -3,11 +3,12 @@ import z from 'zod';
 
 export default (O: z.ZodObject<any>): RequestHandler =>
   (req, res, next) => {
-    try {
-      const parsed = O.parse(req.body);
-      req.parsedBody = parsed;
+    const result = O.safeParse(req.body);
+
+    if (result.success) {
+      req.parsedBody = result.data;
       next();
-    } catch (e) {
-      res.send(e);
+    } else {
+      next(result.error);
     }
   };
