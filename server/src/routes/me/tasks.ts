@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import db from '~/db';
+import db from '~/lib/db';
 import authenticate from '~/middlewares/authenticate';
 
 const router = Router();

@@ -1,17 +1,18 @@
 require('dotenv').config();
-import express from 'express';
-import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
-import routes from './routes';
+import db from './lib/db';
+import { createServer } from './server';
 
-const app = express();
+async function main() {
+  await db.raw('SELECT 1').then(() => console.log('DB Connected'));
 
-app.use(express.json());
-app.use(morgan('dev'));
-app.use(cookieParser());
+  const app = createServer();
 
-routes(app);
+  app.listen(5000, () => {
+    console.log('Listening on port 5000 for', process.env.NODE_ENV);
+  });
+}
 
-app.listen(5000, () => {
-  console.log('Listening on port 5000 for', process.env.NODE_ENV);
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
 });

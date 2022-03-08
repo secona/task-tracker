@@ -1,4 +1,4 @@
-import db from '~/db';
+import db from '~/lib/db';
 import { BasicDAO } from '~/interfaces/DAO';
 import { User, UserInsert } from './user.model';
 

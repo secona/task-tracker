@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import db from '~/db';
+import db from '~/lib/db';
 import { BasicDAO } from '~/interfaces/DAO';
 import { Project, ProjectInsert, ProjectUpdate } from './project.model';
 
