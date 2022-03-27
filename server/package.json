@@ -1,7 +1,6 @@
 {
   "name": "@task-tracker/server",
   "version": "1.0.0",
-  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "cross-env DEBUG=knex:query NODE_ENV=development tsnd --rs -r tsconfig-paths/register --files ./src/index.ts",
@@ -16,23 +15,23 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^1.0.3",
+    "knex": "^1.0.4",
     "morgan": "^1.10.0",
     "nanoid": "^3.3.1",
     "pg": "^8.7.3",
-    "zod": "^3.12.0"
+    "zod": "^3.14.3"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0-alpha.7",
+    "@faker-js/faker": "^6.0.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/morgan": "^1.9.3",
-    "@types/node": "^17.0.21",
+    "@types/node": "^17.0.23",
     "cross-env": "^7.0.3",
-    "ts-node": "^10.5.0",
+    "ts-node": "^10.7.0",
     "ts-node-dev": "^1.1.8",
-    "tsconfig-paths": "^3.11.0",
-    "typescript": "^4.5.5"
+    "tsconfig-paths": "^3.14.1",
+    "typescript": "^4.6.3"
   }
 }
