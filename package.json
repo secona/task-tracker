@@ -17,18 +17,5 @@
   "devDependencies": {
     "rimraf": "^3.0.2",
     "turbo": "^1.1.10"
-  },
-  "turbo": {
-    "baseBranch": "origin/main",
-    "pipeline": {
-      "build": {
-        "dependsOn": [
-          "^build"
-        ]
-      },
-      "dev": {
-        "cache": false
-      }
-    }
   }
 }
