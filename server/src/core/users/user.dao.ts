@@ -6,7 +6,6 @@ class UserDAO implements BasicDAO<User, UserInsert> {
   returnFields: (keyof User)[] = [
     'email',
     'name',
-    'picture',
     'created_at',
     'updated_at',
   ];

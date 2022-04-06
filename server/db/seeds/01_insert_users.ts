@@ -1,4 +1,5 @@
 import { Knex } from 'knex';
+import bcrypt from 'bcrypt';
 import { accessToken } from '../../src/lib/tokens';
 import { User } from '../../src/core/users/user.model';
 import faker from '@faker-js/faker';
@@ -11,9 +12,10 @@ export async function seed(knex: Knex): Promise<void> {
   const users = await knex('users').insert(
     new Array(USER_COUNT).fill(null).map(() => {
       const u = new User();
-      u.name = faker.fake('{{name.firstName}} {{name.lastName}}')
+      u.name = faker.fake('{{name.firstName}} {{name.lastName}}');
+      u.password = bcrypt.hashSync('12345678', 10);
       u.email = `${u.name.replace(' ', '.').toLowerCase()}@example.com`;
-      u.picture = faker.image.avatar();
+      u.verified = true;
       return u;
     }),
     'user_id'
