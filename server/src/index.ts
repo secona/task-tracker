@@ -1,9 +1,11 @@
 require('dotenv').config();
 import db from './lib/db';
+import { transporter } from './lib/email';
 import { createServer } from './server';
 
 async function main() {
   await db.raw('SELECT 1').then(() => console.log('DB Connected'));
+  await transporter.verify().then(() => console.log('SMTP Verified'));
 
   const app = createServer();
 
