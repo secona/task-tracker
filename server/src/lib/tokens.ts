@@ -30,3 +30,14 @@ export const accessToken = new TokenHandler<AccessToken>({
     expiresIn: '30d',
   },
 });
+
+export interface VerificationToken {
+  email: string;
+}
+
+export const verificationToken = new TokenHandler<VerificationToken>({
+  secretKey: process.env.VERIFICATION_TOKEN_SECRET,
+  signOptions: {
+    expiresIn: '1h',
+  },
+});

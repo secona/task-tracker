@@ -8,6 +8,8 @@ import validateBody from '~/middlewares/validateBody';
 
 const router = Router();
 
+router.use('/verify', require('./verify').default);
+
 router.post('/register', validateBody(userValidation), (req, res) => {
   const data = new UserInsert({
     ...(req.parsedBody as UserInsert),
