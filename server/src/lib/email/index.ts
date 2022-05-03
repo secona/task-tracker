@@ -1,19 +1,12 @@
 import nodemailer from 'nodemailer';
 import { getTemplates, SendTemplateOptions } from './templates';
+import clients from '~/clients';
 
 const templates = getTemplates();
 
-export const transporter = nodemailer.createTransport({
-  service: 'Outlook365',
-  auth: {
-    user: process.env.EMAIL_ADDRESS,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
-
 const email = {
   send(options: nodemailer.SendMailOptions) {
-    transporter.sendMail({
+    clients.email.sendMail({
       ...options,
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_ADDRESS}>`,
     });

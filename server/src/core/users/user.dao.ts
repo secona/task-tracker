@@ -1,14 +1,9 @@
-import db from '~/lib/db';
+import { db } from '~/clients';
 import { BasicDAO } from '~/interfaces/DAO';
 import { User, UserInsert } from './user.model';
 
 class UserDAO implements BasicDAO<User, UserInsert> {
-  returnFields: (keyof User)[] = [
-    'email',
-    'name',
-    'created_at',
-    'updated_at',
-  ];
+  returnFields: (keyof User)[] = ['email', 'name', 'created_at', 'updated_at'];
 
   async create(data: UserInsert): Promise<User> {
     const rows = await db('users')

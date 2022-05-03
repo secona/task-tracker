@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
-import db from '~/lib/db';
+import { db } from '~/clients';
 import { accessTokenConfig } from '~/config/cookie';
 import { UserInsert, userValidation } from '~/core/users/user.model';
 import { accessToken } from '~/lib/tokens';
@@ -39,7 +39,7 @@ router.post('/register', validateBody(userValidation), (req, res) => {
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
-  
+
   db.select('*')
     .from('users')
     .where({ email })

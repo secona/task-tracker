@@ -1,13 +1,9 @@
 require('dotenv').config();
-import db from './lib/db';
-import redis from './lib/redis';
-import { transporter } from './lib/email';
 import { createServer } from './server';
+import clients from './clients';
 
 async function main() {
-  await db.raw('SELECT 1').then(() => console.log('DB Connected'));
-  await transporter.verify().then(() => console.log('SMTP Verified'));
-  await redis.connect().then(() => console.log('Redis Connected'));
+  clients.connect();
 
   const app = createServer();
 
