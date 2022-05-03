@@ -1,17 +1,19 @@
 import { RequestHandler } from 'express';
-import { accessToken } from '~/lib/tokens';
+import sessionService from '~/services/sessionService';
+import { cookieKeys } from '../services/cookieService';
 
-const authenticate: RequestHandler = (req, res, next) => {
-  const accessTokenCookie = req.cookies.access_token;
-  if (!accessTokenCookie) return res.status(401).end();
+const authenticate: RequestHandler = async (req, res, next) => {
+  const sessionId = req.cookies[cookieKeys.SESSION_ID];
+  if (!sessionId) return res.status(401).end();
 
   try {
-    const decoded = accessToken.verify(accessTokenCookie);
-    if (decoded) req.accessToken = decoded;
+    const session = await sessionService.get(sessionId);
+    if (!session) throw new Error();
+    req.session = session;
     next();
   } catch (err) {
     console.error(err);
-    res.clearCookie('access_token');
+    res.clearCookie(cookieKeys.SESSION_ID);
     res.status(403).send(err);
   }
 };

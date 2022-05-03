@@ -20,17 +20,6 @@ export class TokenHandler<T extends object> {
   }
 }
 
-export interface AccessToken {
-  user_id: number;
-}
-
-export const accessToken = new TokenHandler<AccessToken>({
-  secretKey: process.env.ACCESS_TOKEN_SECRET!,
-  signOptions: {
-    expiresIn: '30d',
-  },
-});
-
 export interface VerificationToken {
   email: string;
 }

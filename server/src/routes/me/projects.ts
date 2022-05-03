@@ -11,20 +11,20 @@ const router = Router();
 
 router.get('/', authenticate, (req, res) => {
   projectDAO
-    .getMany({ user_id: req.accessToken.user_id })
+    .getMany({ user_id: req.session.user_id })
     .then(projects => {
       res.status(200).json({ success: true, data: { projects } });
     })
     .catch(err => {
       console.error(err);
       res.json({ err });
-    })
+    });
 });
 
 router.post('/', authenticate, validateBody(projectValidation), (req, res) => {
   const data = new ProjectInsert({
     ...(req.parsedBody as ProjectInsert),
-    user_id: req.accessToken.user_id,
+    user_id: req.session.user_id,
   });
 
   projectDAO
