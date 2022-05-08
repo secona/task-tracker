@@ -4,7 +4,7 @@ import { db } from '~/clients';
 import { UserInsert, userValidation } from '~/core/users/user.model';
 import validateBody from '~/middlewares/validateBody';
 import sessionService from '~/services/sessionService';
-import cookieService from '~/services/cookieService';
+import cookieService, { cookieKeys } from '~/services/cookieService';
 
 const router = Router();
 
@@ -13,7 +13,7 @@ router.use('/verify', require('./verify').default);
 router.post('/register', validateBody(userValidation), async (req, res) => {
   const data = new UserInsert({
     ...(req.parsedBody as UserInsert),
-    verified: false,
+    verified: true,
   });
 
   try {
@@ -52,5 +52,22 @@ router.post('/login', async (req, res) => {
     res.json({ err });
   }
 });
+
+router.post('/logout', async (req, res) => {
+  const sessionId = req.cookies[cookieKeys.SESSION_ID];
+
+  try {
+    const success = await sessionService.del(sessionId);
+    if (success) {
+      res.clearCookie(cookieKeys.SESSION_ID);
+      res.status(200).json({ success });
+    } else {
+      res.status(400).json({ success });
+    }
+  } catch (err) {
+    console.error(err);
+    res.json({ err });
+  }
+})
 
 export default router;

@@ -27,6 +27,11 @@ const sessionService = {
     const session = await redis.json.get(`session:${sessionId}`);
     return session as Session | null;
   },
+
+  async del(sessionId: string) {
+    const deleted = await redis.json.del(`session:${sessionId}`);
+    return deleted > 0;
+  }
 };
 
 export default sessionService;
