@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import tokenService from '~/services/tokenService';
-import emailService from '~/services/emailService';
 import { userDAO } from '~/core/users/user.dao';
+import emailVerificationService from '~/services/emailVerificationService';
 
 const router = Router();
 
@@ -11,16 +11,7 @@ router.post('/', (req, res) => {
     .getOne({ email })
     .then(user => {
       if (!user) throw new Error();
-
-      const token = tokenService.verification.sign({ email: user.email });
-      const url = `${process.env.ROOT_URL}/api/auth/verify/${token}`;
-
-      emailService.sendTemplate({
-        to: user.email,
-        templateName: 'email-verification',
-        props: { url, name: user.name },
-      });
-
+      emailVerificationService.sendEmail(user);
       res.send('Sent email!');
     })
     .catch(err => {

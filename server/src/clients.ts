@@ -13,7 +13,7 @@ export const redis = createClient({
 });
 
 export const email = nodemailer.createTransport({
-  service: 'Outlook365',
+  service: process.env.EMAIL_SERVICE,
   auth: {
     user: process.env.EMAIL_ADDRESS,
     pass: process.env.EMAIL_PASSWORD,

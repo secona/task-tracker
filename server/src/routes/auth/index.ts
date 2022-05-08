@@ -5,6 +5,7 @@ import { UserInsert, userValidation } from '~/core/users/user.model';
 import validateBody from '~/middlewares/validateBody';
 import sessionService from '~/services/sessionService';
 import cookieService, { cookieKeys } from '~/services/cookieService';
+import emailVerificationService from '~/services/emailVerificationService';
 
 const router = Router();
 
@@ -23,7 +24,7 @@ router.post('/register', validateBody(userValidation), async (req, res) => {
       .onConflict('email')
       .merge();
 
-    // verify email process
+    emailVerificationService.sendEmail(users[0]);
 
     const sessionId = await sessionService.create(users[0]);
     res.cookie(...cookieService.sessionId(sessionId));
