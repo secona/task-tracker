@@ -13,7 +13,7 @@ router.use('/verify', require('./verify').default);
 router.post('/register', validateBody(userValidation), async (req, res) => {
   const data = new UserInsert({
     ...(req.parsedBody as UserInsert),
-    verified: true,
+    verified: false,
   });
 
   try {
@@ -68,6 +68,6 @@ router.post('/logout', async (req, res) => {
     console.error(err);
     res.json({ err });
   }
-})
+});
 
 export default router;

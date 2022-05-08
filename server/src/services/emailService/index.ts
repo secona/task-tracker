@@ -4,7 +4,7 @@ import clients from '~/clients';
 
 const templates = getTemplates();
 
-const email = {
+const emailService = {
   send(options: nodemailer.SendMailOptions) {
     clients.email.sendMail({
       ...options,
@@ -23,4 +23,5 @@ const email = {
   },
 };
 
-export default email;
+export default emailService;
+

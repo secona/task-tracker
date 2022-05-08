@@ -1,5 +1,4 @@
 import { JwtPayload } from 'jsonwebtoken';
-import { AccessToken } from '~/lib/tokens';
 import { Session } from '~/services/sessionService';
 
 declare global {
@@ -10,3 +9,4 @@ declare global {
     }
   }
 }
+

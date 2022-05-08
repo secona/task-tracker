@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export class TokenHandler<T extends object> {
+export class TokenFns<T extends object> {
   constructor(
     private o: {
       secretKey: string;
@@ -24,9 +24,14 @@ export interface VerificationToken {
   email: string;
 }
 
-export const verificationToken = new TokenHandler<VerificationToken>({
-  secretKey: process.env.VERIFICATION_TOKEN_SECRET,
-  signOptions: {
-    expiresIn: '1h',
-  },
-});
+const tokenService = {
+  verification: new TokenFns<VerificationToken>({
+    secretKey: process.env.VERIFICATION_TOKEN_SECRET,
+    signOptions: {
+      expiresIn: '1h',
+    },
+  }),
+};
+
+export default tokenService;
+

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { verificationToken } from '~/lib/tokens';
-import emailService from '~/lib/email';
+import tokenService from '~/services/tokenService';
+import emailService from '~/services/emailService';
 import { userDAO } from '~/core/users/user.dao';
 
 const router = Router();
@@ -12,7 +12,7 @@ router.post('/', (req, res) => {
     .then(user => {
       if (!user) throw new Error();
 
-      const token = verificationToken.sign({ email: user.email });
+      const token = tokenService.verification.sign({ email: user.email });
       const url = `${process.env.ROOT_URL}/api/auth/verify/${token}`;
 
       emailService.sendTemplate({
@@ -33,7 +33,7 @@ router.get('/:vt', async (req, res) => {
   const { vt } = req.params;
 
   try {
-    const decoded = verificationToken.verify(vt);
+    const decoded = tokenService.verification.verify(vt);
     if (decoded) {
       // @ts-ignore
       await userDAO.update({ email: decoded.email }, { verified: true });
@@ -46,3 +46,4 @@ router.get('/:vt', async (req, res) => {
 });
 
 export default router;
+
