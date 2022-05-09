@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import db from '~/lib/db';
+import { db } from '~/clients';
 import { BasicDAO } from '~/interfaces/DAO';
 import { Task, TaskInsert, TaskUpdate } from './task.model';
 

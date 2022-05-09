@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export class TokenHandler<T extends object> {
+export class TokenFns<T extends object> {
   constructor(
     private o: {
       secretKey: string;
@@ -20,13 +20,18 @@ export class TokenHandler<T extends object> {
   }
 }
 
-export interface AccessToken {
-  user_id: number;
+export interface VerificationToken {
+  email: string;
 }
 
-export const accessToken = new TokenHandler<AccessToken>({
-  secretKey: process.env.ACCESS_TOKEN_SECRET!,
-  signOptions: {
-    expiresIn: '30d',
-  },
-});
+const tokenService = {
+  verification: new TokenFns<VerificationToken>({
+    secretKey: process.env.VERIFICATION_TOKEN_SECRET,
+    signOptions: {
+      expiresIn: '1h',
+    },
+  }),
+};
+
+export default tokenService;
+

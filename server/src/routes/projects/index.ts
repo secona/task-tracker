@@ -19,7 +19,7 @@ router
     projectDAO
       .getOne({
         project_id: req.params.projectId,
-        user_id: req.accessToken.user_id,
+        user_id: req.session.user_id,
       })
       .then(project => {
         const success = !!project;
@@ -38,7 +38,7 @@ router
       .update(
         {
           project_id: req.params.projectId,
-          user_id: req.accessToken.user_id,
+          user_id: req.session.user_id,
         },
         data
       )
@@ -57,7 +57,7 @@ router
     projectDAO
       .del({
         project_id: req.params.projectId,
-        user_id: req.accessToken.user_id,
+        user_id: req.session.user_id,
       })
       .then(n => {
         console.log(n);

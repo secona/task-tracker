@@ -5,7 +5,7 @@ export default {
   project(req, res, next) {
     projectDAO
       .getOne({
-        user_id: req.accessToken.user_id,
+        user_id: req.session.user_id,
         project_id: req.params.projectId,
       })
       .then(project => {

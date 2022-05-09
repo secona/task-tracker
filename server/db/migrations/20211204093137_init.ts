@@ -4,8 +4,9 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.dropTableIfExists('users').createTable('users', t => {
     t.increments('user_id').primary();
     t.text('email').notNullable().unique();
+    t.text('password').notNullable();
     t.text('name').notNullable();
-    t.text('picture').notNullable();
+    t.boolean('verified').notNullable().defaultTo(false);
     t.timestamps(true, true);
   });
 

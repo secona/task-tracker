@@ -1,9 +1,9 @@
 require('dotenv').config();
-import db from './lib/db';
 import { createServer } from './server';
+import clients from './clients';
 
 async function main() {
-  await db.raw('SELECT 1').then(() => console.log('DB Connected'));
+  clients.connect();
 
   const app = createServer();
 

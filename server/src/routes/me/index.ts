@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { userDAO } from '~/core/users/user.dao';
 import authenticate from '~/middlewares/authenticate';
+import { cookieKeys } from '~/services/cookieService';
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router
 
   .get((req, res) => {
     userDAO
-      .getOne({ user_id: req.accessToken.user_id })
+      .getOne({ user_id: req.session.user_id })
       .then(user => {
         const success = !!user;
         res.status(success ? 200 : 404);
@@ -27,10 +28,10 @@ router
 
   .delete((req, res) => {
     userDAO
-      .del({ user_id: req.accessToken.user_id })
+      .del({ user_id: req.session.user_id })
       .then(n => {
         const success = n > 0;
-        if (success) res.clearCookie('access_token');
+        if (success) res.clearCookie(cookieKeys.SESSION_ID);
         res.status(success ? 200 : 404);
         res.json({ success });
       })
