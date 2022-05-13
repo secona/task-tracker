@@ -1,39 +1,12 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import { db } from '~/clients';
-import { UserInsert, userValidation } from '~/core/users/user.model';
-import validateBody from '~/middlewares/validateBody';
 import sessionService from '~/services/sessionService';
 import cookieService, { cookieKeys } from '~/services/cookieService';
-import emailVerificationService from '~/services/emailVerificationService';
 
 const router = Router();
 
 router.use('/verify', require('./verify').default);
-
-router.post('/register', validateBody(userValidation), async (req, res) => {
-  const data = new UserInsert({
-    ...(req.parsedBody as UserInsert),
-    verified: false,
-  });
-
-  try {
-    const users = await db('users')
-      .insert(data)
-      .returning('*')
-      .onConflict('email')
-      .merge();
-
-    emailVerificationService.sendEmail(users[0]);
-
-    const sessionId = await sessionService.create(users[0]);
-    res.cookie(...cookieService.sessionId(sessionId));
-    res.status(201).json({ success: true });
-  } catch (err) {
-    console.error(err);
-    res.json({ err });
-  }
-});
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
