@@ -25,6 +25,16 @@ export class UserInsert {
   }
 }
 
+export class UserUpdate {
+  name?: string;
+  verified?: boolean;
+
+  constructor(data: UserUpdate) {
+    this.name = data.name;
+    this.verified = data.verified;
+  }
+}
+
 export const userValidation = z.object({
   email: z.string().email(),
   password: z.string().min(8).transform(p => bcrypt.hashSync(p, 10)),

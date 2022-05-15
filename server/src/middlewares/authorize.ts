@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
-import { projectDAO } from '~/core/projects/project.dao';
+import { projectRepository } from '~/core/projects/project.repository';
 
 export default {
   project(req, res, next) {
-    projectDAO
+    projectRepository
       .getOne({
         user_id: req.session.user_id,
         project_id: req.params.projectId,

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
-import { db } from '~/clients';
+import { userRepository } from '~/core/users/user.repository';
 import sessionService from '~/services/sessionService';
 import cookieService, { cookieKeys } from '~/services/cookieService';
 
@@ -12,7 +12,7 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await db.select('*').from('users').where({ email }).first();
+    const user = await userRepository.getOne({ email });
 
     if (!user) return res.status(404).json({ message: 'User does not exist!' });
     if (!bcrypt.compareSync(password, user.password))

@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { db } from '~/clients';
-import { userDAO } from '~/core/users/user.dao';
+import { userRepository } from '~/core/users/user.repository';
 import { userValidation, UserInsert } from '~/core/users/user.model';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
@@ -17,15 +16,11 @@ router.post('/', validateBody(userValidation), async (req, res) => {
   });
 
   try {
-    const users = await db('users')
-      .insert(data)
-      .returning('*')
-      .onConflict('email')
-      .merge();
+    const user = await userRepository.create(data);
 
-    emailVerificationService.sendEmail(users[0]);
+    emailVerificationService.sendEmail(user);
 
-    const sessionId = await sessionService.create(users[0]);
+    const sessionId = await sessionService.create(user);
     res.cookie(...cookieService.sessionId(sessionId));
     res.status(201).json({ success: true });
   } catch (err) {
@@ -39,8 +34,8 @@ router
   .all(authenticate)
 
   .get((req, res) => {
-    userDAO
-      .getOne({ user_id: req.session.user_id })
+    userRepository
+      .getOne({ user_id: req.session.user_id }, { complete: false })
       .then(user => {
         const success = !!user;
         res.status(success ? 200 : 404);
@@ -55,7 +50,7 @@ router
   // TODO: patch route
 
   .delete((req, res) => {
-    userDAO
+    userRepository
       .del({ user_id: req.session.user_id })
       .then(n => {
         const success = n > 0;

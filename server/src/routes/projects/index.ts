@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { projectDAO } from '~/core/projects/project.dao';
+import { projectRepository } from '~/core/projects/project.repository';
 import {
   ProjectInsert,
   ProjectUpdate,
@@ -13,7 +13,7 @@ const router = Router();
 router.use('/:projectId/tasks', require('./tasks').default);
 
 router.get('/', authenticate, (req, res) => {
-  projectDAO
+  projectRepository
     .getMany({ user_id: req.session.user_id })
     .then(projects => {
       res.status(200).json({ success: true, data: { projects } });
@@ -30,7 +30,7 @@ router.post('/', authenticate, validateBody(projectValidation), (req, res) => {
     user_id: req.session.user_id,
   });
 
-  projectDAO
+  projectRepository
     .create(data)
     .then(project => {
       res.status(201).json({
@@ -49,7 +49,7 @@ router
   .all(authenticate)
 
   .get((req, res) => {
-    projectDAO
+    projectRepository
       .getOne({
         project_id: req.params.projectId,
         user_id: req.session.user_id,
@@ -67,7 +67,7 @@ router
 
   .patch(validateBody(projectValidation.partial()), (req, res) => {
     const data = new ProjectUpdate({ ...(req.parsedBody as ProjectUpdate) });
-    projectDAO
+    projectRepository
       .update(
         {
           project_id: req.params.projectId,
@@ -87,7 +87,7 @@ router
   })
 
   .delete((req, res) => {
-    projectDAO
+    projectRepository
       .del({
         project_id: req.params.projectId,
         user_id: req.session.user_id,

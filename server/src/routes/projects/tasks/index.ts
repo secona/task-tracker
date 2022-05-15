@@ -1,5 +1,5 @@
 import { Request, Router } from 'express';
-import { taskDAO } from '~/core/tasks/task.dao';
+import { taskRepository } from '~/core/tasks/task.repository';
 import {
   TaskInsert,
   TaskUpdate,
@@ -16,7 +16,7 @@ router
   .all(authenticate, authorize.project)
 
   .post(validateBody(taskValidation), (req: Request<any>, res) => {
-    taskDAO
+    taskRepository
       .create({
         ...(req.parsedBody as TaskInsert),
         project_id: req.params.projectId,
@@ -34,7 +34,7 @@ router
   })
 
   .get((req: Request<any>, res) => {
-    taskDAO
+    taskRepository
       .getMany({ project_id: req.params.projectId })
       .then(tasks => {
         res.json({
@@ -53,7 +53,7 @@ router
   .all(authenticate, authorize.project)
 
   .get((req: Request<any>, res) => {
-    taskDAO
+    taskRepository
       .getOne({
         task_id: req.params.taskId,
         project_id: req.params.projectId,
@@ -72,7 +72,7 @@ router
   })
 
   .patch(validateBody(taskValidation.partial()), (req: Request<any>, res) => {
-    taskDAO
+    taskRepository
       .update(
         {
           task_id: req.params.taskId,
@@ -94,7 +94,7 @@ router
   })
 
   .delete((req: Request<any>, res) => {
-    taskDAO
+    taskRepository
       .del({
         task_id: req.params.taskId,
         project_id: req.params.projectId,
