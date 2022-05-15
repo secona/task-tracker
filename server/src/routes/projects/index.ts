@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { projectDAO } from '~/core/projects/project.dao';
 import {
+  ProjectInsert,
   ProjectUpdate,
   projectValidation,
 } from '~/core/projects/project.model';
@@ -10,6 +11,38 @@ import validateBody from '~/middlewares/validateBody';
 const router = Router();
 
 router.use('/:projectId/tasks', require('./tasks').default);
+
+router.get('/', authenticate, (req, res) => {
+  projectDAO
+    .getMany({ user_id: req.session.user_id })
+    .then(projects => {
+      res.status(200).json({ success: true, data: { projects } });
+    })
+    .catch(err => {
+      console.error(err);
+      res.json({ err });
+    });
+});
+
+router.post('/', authenticate, validateBody(projectValidation), (req, res) => {
+  const data = new ProjectInsert({
+    ...(req.parsedBody as ProjectInsert),
+    user_id: req.session.user_id,
+  });
+
+  projectDAO
+    .create(data)
+    .then(project => {
+      res.status(201).json({
+        success: true,
+        data: { project },
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.json({ err });
+    });
+});
 
 router
   .route('/:projectId')
