@@ -1,6 +1,5 @@
 import { Knex } from 'knex';
 import bcrypt from 'bcrypt';
-import { accessToken } from '../../src/lib/tokens';
 import { User } from '../../src/core/users/user.model';
 import faker from '@faker-js/faker';
 
@@ -18,13 +17,10 @@ export async function seed(knex: Knex): Promise<void> {
       u.verified = true;
       return u;
     }),
-    'user_id'
+    '*'
   );
 
-  console.log(
-    users.map(({ user_id }) => ({
-      user_id,
-      token: accessToken.sign({ user_id }),
-    }))
-  );
+  users.forEach(({ user_id, email }) => {
+    console.log(user_id, email);
+  })
 }
