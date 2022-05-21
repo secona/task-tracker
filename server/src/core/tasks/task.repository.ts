@@ -3,36 +3,63 @@ import { db } from '~/clients';
 import { Task, TaskInsert, TaskUpdate } from './task.model';
 
 class TaskRepository {
-  async create(data: TaskInsert): Promise<Task> {
-    const rows = await db('tasks')
-      .insert({ ...data, task_id: nanoid(11) })
-      .returning('*');
+  async create(user_id: number, data: TaskInsert): Promise<Task> {
+    const ent = Object.entries({ ...data, task_id: nanoid(11) });
+    const columns = `(${ent.map(v => v[0])})`;
+    const values = ent.map(v => `'${v[1]}'`);
+
+    const selectQuery = db('projects')
+      .select(db.raw(values))
+      .where('projects.project_id', data.project_id)
+      .andWhere('projects.user_id', user_id)
+      .toSQL();
+
+    const { rows } = await db.raw(
+      `INSERT INTO tasks ${columns} ${selectQuery.sql} RETURNING *`,
+      selectQuery.bindings
+    );
+
     return rows[0];
   }
 
-  async getOne(where: Partial<Task>): Promise<Task | undefined> {
+  async getOne(user_id: number, task_id: string): Promise<Task | undefined> {
     const task = await db('tasks')
-      .select('*')
-      .where(where)
+      .select('tasks.*')
+      .leftJoin('projects', { 'projects.project_id': 'tasks.project_id' })
+      .where('tasks.task_id', task_id)
+      .andWhere('projects.user_id', user_id)
       .first();
     return task;
   }
 
-  async getMany(where: Partial<Task>): Promise<Task[] | undefined> {
-    const task = await db('tasks').select('*').where(where);
-    return task;
-  }
-
   async update(
-    where: Partial<Task>,
+    user_id: number,
+    task_id: string,
     data: TaskUpdate
   ): Promise<Task | undefined> {
-    const rows = await db('tasks').update(data, '*').where(where);
+    const rows = await db('tasks')
+      .update(data)
+      .whereExists(
+        db.select(1)
+          .from('projects')
+          .where('projects.project_id', db.raw('tasks.project_id'))
+          .andWhere('projects.user_id', user_id)
+      )
+      .andWhere('tasks.task_id', task_id)
+      .returning('*');
     return rows[0];
   }
 
-  async del(where: Partial<Task>): Promise<number> {
-    return db('tasks').delete().where(where);
+  async del(user_id: number, task_id: string): Promise<number> {
+    return db('tasks')
+      .delete()
+      .whereExists(
+        db.select(1)
+          .from('projects')
+          .where('projects.project_id', db.raw('tasks.project_id'))
+          .andWhere('projects.user_id', user_id)
+      )
+      .andWhere('tasks.task_id', task_id);
   }
 }
 

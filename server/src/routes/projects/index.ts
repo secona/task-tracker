@@ -10,8 +10,6 @@ import validateBody from '~/middlewares/validateBody';
 
 const router = Router();
 
-router.use('/:projectId/tasks', require('./tasks').default);
-
 router.get('/', authenticate, (req, res) => {
   projectRepository
     .getMany({ user_id: req.session.user_id })

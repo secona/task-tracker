@@ -12,7 +12,7 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await userRepository.getOne({ email });
+    const user = await userRepository.getOne({ email }, { complete: true });
 
     if (!user) return res.status(404).json({ message: 'User does not exist!' });
     if (!bcrypt.compareSync(password, user.password))
