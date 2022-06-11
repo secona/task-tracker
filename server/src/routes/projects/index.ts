@@ -7,6 +7,8 @@ import {
 } from '~/core/projects/project.model';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
+import { TaskInsert, taskValidation } from '~/core/tasks/task.model';
+import { taskRepository } from '~/core/tasks/task.repository';
 
 const router = Router();
 
@@ -101,5 +103,31 @@ router
         res.json({ err });
       });
   });
+
+router.post(
+  '/:projectId/tasks',
+  authenticate,
+  validateBody(taskValidation),
+  (req, res) => {
+    taskRepository
+      .create(
+        req.session.user_id,
+        {
+          ...(req.parsedBody as TaskInsert),
+          project_id: String(req.params.projectId),
+        }
+      )
+      .then(task => {
+        res.status(201).json({
+          success: true,
+          data: { task },
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        res.json({ err });
+      });
+  }
+);
 
 export default router;

@@ -7,49 +7,20 @@ import validateBody from '~/middlewares/validateBody';
 
 const router = Router();
 
-router
-  .route('/')
-  .all(authenticate)
-
-  .get((req, res) => {
-    userRepository.getAllTasks(req.session.user_id) // TODO: project specific tasks
-      .then(tasks => {
-        res.status(200).json({
-          success: true,
-          data: { tasks },
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        res.json({ err });
+router.get('/', authenticate, (req, res) => {
+  userRepository
+    .getAllTasks(req.session.user_id, req.query)
+    .then(tasks => {
+      res.status(200).json({
+        success: true,
+        data: { tasks },
       });
-  })
-  
-  .post(validateBody(taskValidation), (req, res) => {
-    const { projectId } = req.query;
-
-    if (!projectId)
-      res.status(400).json({ msg: 'projectId query param required' });
-
-    taskRepository
-      .create(
-        req.session.user_id,
-        {
-          ...(req.parsedBody as TaskInsert),
-          project_id: String(projectId),
-        }
-      )
-      .then(task => {
-        res.status(201).json({
-          success: true,
-          data: { task },
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        res.json({ err });
-      });
-  });
+    })
+    .catch(err => {
+      console.error(err);
+      res.json({ err });
+    });
+});
 
 router
   .route('/:taskId')
