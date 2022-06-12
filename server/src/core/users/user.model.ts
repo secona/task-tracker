@@ -1,37 +1,39 @@
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
 
-export class User {
-  user_id!: number;
-  email!: string;
-  password!: string;
-  name!: string;
-  verified!: boolean;
-  created_at!: Date;
-  updated_at!: Date;
+export interface User {
+  user_id: number;
+  email: string;
+  password: string;
+  name: string;
+  verified: boolean;
+  created_at: Date;
+  updated_at: Date;
 }
 
-export class UserInsert {
+export interface UserInsert {
   email: string;
   password: string;
   name: string;
   verified?: boolean;
-
-  constructor(data: UserInsert) {
-    this.email = data.email;
-    this.password = data.password;
-    this.name = data.name;
-    this.verified = data.verified;
-  }
 }
 
-export class UserUpdate {
+export interface UserUpdate {
   name?: string;
   verified?: boolean;
+}
 
-  constructor(data: UserUpdate) {
-    this.name = data.name;
-    this.verified = data.verified;
+export class UserResponse {
+  email: string;
+  name: string;
+  created_at: Date;
+  updated_at: Date;
+
+  constructor(user: User) {
+    this.email = user.email;
+    this.name = user.name;
+    this.created_at = user.created_at;
+    this.updated_at = user.updated_at;
   }
 }
 

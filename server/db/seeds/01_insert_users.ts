@@ -10,12 +10,13 @@ export async function seed(knex: Knex): Promise<void> {
 
   const users = await knex('users').insert(
     new Array(USER_COUNT).fill(null).map(() => {
-      const u = new User();
-      u.name = faker.fake('{{name.firstName}} {{name.lastName}}');
-      u.password = bcrypt.hashSync('12345678', 10);
-      u.email = `${u.name.replace(' ', '.').toLowerCase()}@example.com`;
-      u.verified = true;
-      return u;
+      const name = faker.fake('{{name.firstName}} {{name.lastName}}');
+      return {
+        name,
+        password: bcrypt.hashSync('12345678', 10),
+        email: `${name.replace(' ', '.').toLowerCase()}@example.com`,
+        verified: true,
+      } as User
     }),
     '*'
   );

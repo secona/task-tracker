@@ -1,13 +1,7 @@
 import { db } from '~/clients';
 import { User, UserInsert, UserUpdate } from './user.model';
 
-interface GetOptions {
-  complete?: boolean;
-}
-
-class UserRepository {
-  returnFields: (keyof User)[] = ['email', 'name', 'created_at', 'updated_at'];
-
+export const userRepository = {
   async create(data: UserInsert): Promise<User> {
     const rows = await db('users')
       .insert(data)
@@ -15,15 +9,15 @@ class UserRepository {
       .onConflict('email')
       .merge();
     return rows[0];
-  }
+  },
 
-  async getOne(where: Partial<User>, opt?: GetOptions): Promise<User | undefined> {
+  async getOne(where: Partial<User>): Promise<User | undefined> {
     const user = await db('users')
-      .select(opt?.complete ? '*' : this.returnFields)
+      .select('*')
       .where(where)
       .first();
     return user;
-  }
+  },
 
   async update(
     where: Partial<User>,
@@ -31,11 +25,11 @@ class UserRepository {
   ): Promise<User | undefined> {
     const rows = await db('users').update(data, '*').where(where);
     return rows[0];
-  }
+  },
 
   async del(where: Partial<User>): Promise<number> {
     return db('users').delete().where(where);
-  }
+  },
 
   async getAllTasks(user_id: string, query: Record<string, any>) {
     return db('tasks')
@@ -44,8 +38,6 @@ class UserRepository {
       .where({
         'projects.user_id': user_id,
         ...(query.projectId && { 'tasks.project_id': query.projectId })
-      })
-  }
-}
-
-export const userRepository = new UserRepository();
+      });
+  },
+};

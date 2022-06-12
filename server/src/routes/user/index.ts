@@ -6,17 +6,16 @@ import validateBody from '~/middlewares/validateBody';
 import cookieService, { cookieKeys } from '~/services/cookieService';
 import emailVerificationService from '~/services/emailVerificationService';
 import sessionService from '~/services/sessionService';
+import { userUtil } from '~/core/users/user.util';
 
 const router = Router();
 
 router.post('/', validateBody(userValidation), async (req, res) => {
-  const data = new UserInsert({
-    ...(req.parsedBody as UserInsert),
-    verified: false,
-  });
-
   try {
-    const user = await userRepository.create(data);
+    const user = await userRepository.create({
+      ...(req.parsedBody as UserInsert),
+      verified: false,
+    });
 
     emailVerificationService.sendEmail(user);
 
@@ -35,11 +34,11 @@ router
 
   .get((req, res) => {
     userRepository
-      .getOne({ user_id: req.session.user_id }, { complete: false })
+      .getOne({ user_id: req.session.user_id })
       .then(user => {
         const success = !!user;
         res.status(success ? 200 : 404);
-        res.json({ success, data: { user } });
+        res.json({ success, user: userUtil.omitSensitive(user) });
       })
       .catch(err => {
         console.error(err);

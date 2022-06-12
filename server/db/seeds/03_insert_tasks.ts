@@ -10,13 +10,11 @@ export async function seed(knex: Knex): Promise<void> {
 
   const projects = await knex('projects').select('project_id');
   await knex('tasks').insert(
-    new Array(projects.length * TASKS_PER_PROJECT).fill(null).map((_, i) => {
-      const t = new Task();
-      t.task_id = nanoid(11);
-      t.project_id = projects[Math.floor(i / TASKS_PER_PROJECT)].project_id;
-      t.task = faker.fake('{{word.verb}} {{word.adjective}} {{word.noun}}');
-      t.description = faker.lorem.sentence(4);
-      return t;
-    })
+    new Array(projects.length * TASKS_PER_PROJECT).fill(null).map((_, i) => ({
+      task_id: nanoid(11),
+      project_id: projects[Math.floor(i / TASKS_PER_PROJECT)].project_id,
+      task: faker.fake('{{word.verb}} {{word.adjective}} {{word.noun}}'),
+      description: faker.lorem.sentence(4),
+    }))
   );
 }

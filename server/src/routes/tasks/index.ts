@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { taskValidation, TaskInsert, TaskUpdate } from '~/core/tasks/task.model';
+import { taskValidation, TaskUpdate } from '~/core/tasks/task.model';
 import { taskRepository } from '~/core/tasks/task.repository';
+import { taskUtil } from '~/core/tasks/task.util';
 import { userRepository } from '~/core/users/user.repository';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
@@ -13,7 +14,7 @@ router.get('/', authenticate, (req, res) => {
     .then(tasks => {
       res.status(200).json({
         success: true,
-        data: { tasks },
+        tasks: taskUtil.omitSensitive(tasks),
       });
     })
     .catch(err => {
@@ -33,7 +34,7 @@ router
         res.status(task ? 200 : 404)
         res.json({
           success: !!task,
-          data: { task },
+          task: taskUtil.omitSensitive(task),
         });
       })
       .catch(err => {
@@ -53,7 +54,7 @@ router
         res.status(task ? 200 : 404);
         res.json({
           success: !!task,
-          data: { task },
+          task: taskUtil.omitSensitive(task),
         });
       })
       .catch(err => {

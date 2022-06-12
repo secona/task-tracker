@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { db } from '~/clients';
 import { Task, TaskInsert, TaskUpdate } from './task.model';
 
-class TaskRepository {
+export const taskRepository = {
   async create(user_id: number, data: TaskInsert): Promise<Task> {
     const ent = Object.entries({ ...data, task_id: nanoid(11) });
     const columns = `(${ent.map(v => v[0])})`;
@@ -20,7 +20,7 @@ class TaskRepository {
     );
 
     return rows[0];
-  }
+  },
 
   async getOne(user_id: number, task_id: string): Promise<Task | undefined> {
     const task = await db('tasks')
@@ -30,7 +30,7 @@ class TaskRepository {
       .andWhere('projects.user_id', user_id)
       .first();
     return task;
-  }
+  },
 
   async update(
     user_id: number,
@@ -48,7 +48,7 @@ class TaskRepository {
       .andWhere('tasks.task_id', task_id)
       .returning('*');
     return rows[0];
-  }
+  },
 
   async del(user_id: number, task_id: string): Promise<number> {
     return db('tasks')
@@ -60,7 +60,5 @@ class TaskRepository {
           .andWhere('projects.user_id', user_id)
       )
       .andWhere('tasks.task_id', task_id);
-  }
+  },
 }
-
-export const taskRepository = new TaskRepository();

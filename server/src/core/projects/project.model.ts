@@ -1,38 +1,43 @@
 import { z } from 'zod';
 
-export class Project {
-  project_id!: string;
-  user_id!: number;
-  name!: string;
-  description!: string;
-  color!: number;
-  created_at!: Date;
-  updated_at!: Date;
-}
-
-export class ProjectInsert {
+export interface Project {
+  project_id: string;
   user_id: number;
   name: string;
   description: string;
   color: number;
-
-  constructor(data: ProjectInsert) {
-    this.user_id = data.user_id;
-    this.name = data.name;
-    this.description = data.description;
-    this.color = data.color;
-  }
+  created_at: Date;
+  updated_at: Date;
 }
 
-export class ProjectUpdate {
+export interface ProjectInsert {
+  user_id: number;
   name: string;
   description: string;
   color: number;
+}
 
-  constructor(data: ProjectUpdate) {
-    this.name = data.name;
-    this.description = data.description;
-    this.color = data.color;
+export interface ProjectUpdate {
+  name: string;
+  description: string;
+  color: number;
+}
+
+export class ProjectResponse {
+  project_id: string;
+  name: string;
+  description: string;
+  color: number;
+  created_at: Date;
+  updated_at: Date;
+
+  constructor(project: Project) {
+    this.project_id = project.project_id;
+    this.name = project.name;
+    this.description = project.description;
+    this.color = project.color;
+    this.created_at = project.created_at;
+    this.updated_at = project.updated_at;
   }
 }
 

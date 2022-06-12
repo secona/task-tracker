@@ -9,6 +9,8 @@ import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
 import { TaskInsert, taskValidation } from '~/core/tasks/task.model';
 import { taskRepository } from '~/core/tasks/task.repository';
+import { projectUtil } from '~/core/projects/project.util';
+import { taskUtil } from '~/core/tasks/task.util';
 
 const router = Router();
 
@@ -16,7 +18,10 @@ router.get('/', authenticate, (req, res) => {
   projectRepository
     .getMany({ user_id: req.session.user_id })
     .then(projects => {
-      res.status(200).json({ success: true, data: { projects } });
+      res.status(200).json({
+        success: true,
+        projects: projectUtil.omitSensitive(projects),
+      });
     })
     .catch(err => {
       console.error(err);
@@ -25,17 +30,15 @@ router.get('/', authenticate, (req, res) => {
 });
 
 router.post('/', authenticate, validateBody(projectValidation), (req, res) => {
-  const data = new ProjectInsert({
-    ...(req.parsedBody as ProjectInsert),
-    user_id: req.session.user_id,
-  });
-
   projectRepository
-    .create(data)
+    .create({
+      ...(req.parsedBody) as ProjectInsert,
+      user_id: req.session.user_id,
+    })
     .then(project => {
       res.status(201).json({
         success: true,
-        data: { project },
+        project: projectUtil.omitSensitive(project),
       });
     })
     .catch(err => {
@@ -57,7 +60,7 @@ router
       .then(project => {
         const success = !!project;
         res.status(success ? 200 : 404);
-        res.json({ success, data: { project } });
+        res.json({ success, project: projectUtil.omitSensitive(project) });
       })
       .catch(err => {
         console.error(err);
@@ -66,19 +69,18 @@ router
   })
 
   .patch(validateBody(projectValidation.partial()), (req, res) => {
-    const data = new ProjectUpdate({ ...(req.parsedBody as ProjectUpdate) });
     projectRepository
       .update(
         {
           project_id: req.params.projectId,
           user_id: req.session.user_id,
         },
-        data
+        req.parsedBody as ProjectUpdate
       )
       .then(project => {
         const success = !!project;
         res.status(success ? 200 : 404);
-        res.json({ success, data: { project } });
+        res.json({ success, project: projectUtil.omitSensitive(project) });
       })
       .catch(err => {
         console.error(err);
@@ -120,7 +122,7 @@ router.post(
       .then(task => {
         res.status(201).json({
           success: true,
-          data: { task },
+          task: taskUtil.omitSensitive(task),
         });
       })
       .catch(err => {
