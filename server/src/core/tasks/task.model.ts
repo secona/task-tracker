@@ -43,8 +43,12 @@ export class TaskResponse {
   }
 }
 
-export const taskValidation = z.object({
-  task: z.string().nonempty(),
-  description: z.string().optional(),
-  done: z.boolean().optional(),
-});
+export const taskSchemas = new class {
+  create = z.object({
+    task: z.string().nonempty(),
+    description: z.string().optional(),
+    done: z.boolean().optional(),
+  });
+
+  update = this.create.partial();
+}

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { taskValidation, TaskUpdate } from '~/core/tasks/task.model';
+import { taskSchemas, TaskUpdate } from '~/core/tasks/task.model';
 import { taskRepository } from '~/core/tasks/task.repository';
 import { taskUtil } from '~/core/tasks/task.util';
 import { userRepository } from '~/core/users/user.repository';
@@ -43,7 +43,7 @@ router
       });
   })
 
-  .patch(validateBody(taskValidation.partial()), (req, res) => {
+  .patch(validateBody(taskSchemas.update), (req, res) => {
     taskRepository
       .update(
         req.session.user_id,

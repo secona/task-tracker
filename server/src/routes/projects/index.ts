@@ -3,11 +3,11 @@ import { projectRepository } from '~/core/projects/project.repository';
 import {
   ProjectInsert,
   ProjectUpdate,
-  projectValidation,
+  projectSchemas,
 } from '~/core/projects/project.model';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
-import { TaskInsert, taskValidation } from '~/core/tasks/task.model';
+import { TaskInsert, taskSchemas } from '~/core/tasks/task.model';
 import { taskRepository } from '~/core/tasks/task.repository';
 import { projectUtil } from '~/core/projects/project.util';
 import { taskUtil } from '~/core/tasks/task.util';
@@ -29,23 +29,28 @@ router.get('/', authenticate, (req, res) => {
     });
 });
 
-router.post('/', authenticate, validateBody(projectValidation), (req, res) => {
-  projectRepository
-    .create({
-      ...(req.parsedBody) as ProjectInsert,
-      user_id: req.session.user_id,
-    })
-    .then(project => {
-      res.status(201).json({
-        success: true,
-        project: projectUtil.omitSensitive(project),
+router.post(
+  '/',
+  authenticate,
+  validateBody(projectSchemas.create),
+  (req, res) => {
+    projectRepository
+      .create({
+        ...(req.parsedBody) as ProjectInsert,
+        user_id: req.session.user_id,
+      })
+      .then(project => {
+        res.status(201).json({
+          success: true,
+          project: projectUtil.omitSensitive(project),
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        res.json({ err });
       });
-    })
-    .catch(err => {
-      console.error(err);
-      res.json({ err });
-    });
-});
+  }
+);
 
 router
   .route('/:projectId')
@@ -68,7 +73,7 @@ router
       });
   })
 
-  .patch(validateBody(projectValidation.partial()), (req, res) => {
+  .patch(validateBody(projectSchemas.update), (req, res) => {
     projectRepository
       .update(
         {
@@ -109,7 +114,7 @@ router
 router.post(
   '/:projectId/tasks',
   authenticate,
-  validateBody(taskValidation),
+  validateBody(taskSchemas.create),
   (req, res) => {
     taskRepository
       .create(

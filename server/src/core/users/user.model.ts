@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import bcrypt from 'bcrypt';
 
 export interface User {
   user_id: number;
@@ -37,8 +36,15 @@ export class UserResponse {
   }
 }
 
-export const userValidation = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).transform(p => bcrypt.hashSync(p, 10)),
-  name: z.string().nonempty(),
-});
+export const userSchemas = new class {
+  create = z.object({
+    email: z.string().email(),
+    password: z.string().min(8),
+    name: z.string().nonempty(),
+  });
+
+  updateProfile = this.create.omit({
+    email: true,
+    password: true,
+  });
+}

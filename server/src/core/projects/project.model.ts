@@ -41,8 +41,12 @@ export class ProjectResponse {
   }
 }
 
-export const projectValidation = z.object({
-  name: z.string().nonempty(),
-  description: z.string().optional(),
-  color: z.number().optional(),
-});
+export const projectSchemas = new class {
+  create = z.object({
+    name: z.string().nonempty(),
+    description: z.string().optional(),
+    color: z.number().optional(),
+  });
+
+  update = this.create.partial();
+}

@@ -1,6 +1,7 @@
 import { Router } from 'express';
+import bcrypt from 'bcrypt';
 import { userRepository } from '~/core/users/user.repository';
-import { userValidation, UserInsert } from '~/core/users/user.model';
+import { UserInsert, userSchemas } from '~/core/users/user.model';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
 import cookieService, { cookieKeys } from '~/services/cookieService';
@@ -10,10 +11,11 @@ import { userUtil } from '~/core/users/user.util';
 
 const router = Router();
 
-router.post('/', validateBody(userValidation), async (req, res) => {
+router.post('/', validateBody(userSchemas.create), async (req, res) => {
   try {
     const user = await userRepository.create({
       ...(req.parsedBody as UserInsert),
+      password: bcrypt.hashSync(req.parsedBody.password, 10),
       verified: false,
     });
 
@@ -46,8 +48,6 @@ router
       });
   })
 
-  // TODO: patch route
-
   .delete((req, res) => {
     userRepository
       .del({ user_id: req.session.user_id })
@@ -62,5 +62,35 @@ router
         res.json({ err });
       });
   });
+
+router.patch(
+  '/profile',
+  authenticate,
+  validateBody(userSchemas.updateProfile),
+  (req, res) => {
+    userRepository
+      .update(
+        { user_id: req.session.user_id },
+        req.parsedBody,
+      )
+      .then(user => {
+        const success = !!user;
+        res.status(success ? 200 : 404);
+        res.json({ success, user: userUtil.omitSensitive(user) });
+      })
+      .catch(err => {
+        console.error(err);
+        res.json({ err });
+      })
+  }
+);
+
+router.put('/password', (req, res) => {
+  res.sendStatus(501);
+});
+
+router.put('/email', (req, res) => {
+  res.sendStatus(501);
+});
 
 export default router;
