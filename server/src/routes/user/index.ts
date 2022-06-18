@@ -114,8 +114,27 @@ router.put(
   }
 );
 
-router.put('/email', (req, res) => {
-  res.sendStatus(501);
-});
+router.put(
+  '/email',
+  authenticate,
+  validateBody(userSchemas.updateEmail),
+  async (req, res) => {
+    try {
+      const user = await userRepository.update(
+        { user_id: req.session.user_id },
+        { ...req.parsedBody, verified: false }
+      );
+
+      if (!user)
+        return res.status(404).json({ msg: 'user not found' });
+
+      await emailVerificationService.sendEmail(user);
+      res.status(200).json({ success: true });
+    } catch (err) {
+      console.log(err);
+      res.json({ err });
+    }
+  }
+);
 
 export default router;

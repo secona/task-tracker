@@ -18,8 +18,9 @@ export interface UserInsert {
 }
 
 export interface UserUpdate {
-  name?: string;
+  email?: string;
   password?: string;
+  name?: string;
   verified?: boolean;
 }
 
@@ -53,4 +54,6 @@ export const userSchemas = new class {
     current_password: z.string(),
     new_password: z.string().min(8),
   });
+
+  updateEmail = this.create.pick({ email: true });
 }
