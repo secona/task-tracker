@@ -18,9 +18,9 @@ export interface ProjectInsert {
 }
 
 export interface ProjectUpdate {
-  name: string;
-  description: string;
-  color: number;
+  name?: string;
+  description?: string;
+  color?: number;
 }
 
 export class ProjectResponse {

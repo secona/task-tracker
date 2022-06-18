@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { taskSchemas, TaskUpdate } from '~/core/tasks/task.model';
+import { taskSchemas } from '~/core/tasks/task.model';
 import { taskRepository } from '~/core/tasks/task.repository';
 import { taskUtil } from '~/core/tasks/task.util';
 import { userRepository } from '~/core/users/user.repository';
@@ -48,7 +48,7 @@ router
       .update(
         req.session.user_id,
         req.params.taskId,
-        req.parsedBody as TaskUpdate
+        req.parsedBody
       )
       .then(task => {
         res.status(task ? 200 : 404);

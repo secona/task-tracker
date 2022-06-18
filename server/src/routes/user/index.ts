@@ -85,9 +85,34 @@ router.patch(
   }
 );
 
-router.put('/password', (req, res) => {
-  res.sendStatus(501);
-});
+router.put(
+  '/password',
+  authenticate,
+  validateBody(userSchemas.updatePassword),
+  async (req, res) => {
+    try {
+      const user = await userRepository.getOne(
+        { user_id: req.session.user_id }
+      );
+
+      if (!user)
+        return res.status(404).json({ msg: 'user not found' });
+
+      if (!bcrypt.compareSync(req.body.current_password, user.password))
+        return res.status(403).json({ msg: 'incorrect password' });
+
+      await userRepository.update(
+        { user_id: req.session.user_id },
+        { password: bcrypt.hashSync(req.body.new_password, 10) }
+      );
+
+      res.status(200).json({ success: true })
+    } catch (err) {
+      console.error(err);
+      res.json({ err });
+    }
+  }
+);
 
 router.put('/email', (req, res) => {
   res.sendStatus(501);

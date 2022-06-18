@@ -18,9 +18,9 @@ export interface TaskInsert {
 }
 
 export interface TaskUpdate {
-  task: string;
-  description: string;
-  done: boolean;
+  task?: string;
+  description?: string;
+  done?: boolean;
 }
 
 export class TaskResponse {

@@ -1,10 +1,6 @@
 import { Router } from 'express';
 import { projectRepository } from '~/core/projects/project.repository';
-import {
-  ProjectInsert,
-  ProjectUpdate,
-  projectSchemas,
-} from '~/core/projects/project.model';
+import { ProjectInsert, projectSchemas } from '~/core/projects/project.model';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
 import { TaskInsert, taskSchemas } from '~/core/tasks/task.model';
@@ -80,7 +76,7 @@ router
           project_id: req.params.projectId,
           user_id: req.session.user_id,
         },
-        req.parsedBody as ProjectUpdate
+        req.parsedBody
       )
       .then(project => {
         const success = !!project;

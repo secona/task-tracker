@@ -19,6 +19,7 @@ export interface UserInsert {
 
 export interface UserUpdate {
   name?: string;
+  password?: string;
   verified?: boolean;
 }
 
@@ -46,5 +47,10 @@ export const userSchemas = new class {
   updateProfile = this.create.omit({
     email: true,
     password: true,
+  });
+
+  updatePassword = z.object({
+    current_password: z.string(),
+    new_password: z.string().min(8),
   });
 }
