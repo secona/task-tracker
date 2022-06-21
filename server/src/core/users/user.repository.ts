@@ -31,7 +31,7 @@ export const userRepository = {
     return db('users').delete().where(where);
   },
 
-  async getAllTasks(user_id: string, query: Record<string, any>) {
+  async getAllTasks(user_id: number, query: Record<string, any>) {
     return db('tasks')
       .select('tasks.*')
       .leftJoin('projects', { 'projects.project_id': 'tasks.project_id' })

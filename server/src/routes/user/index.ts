@@ -21,7 +21,7 @@ router.post('/', validateBody(userSchemas.create), async (req, res) => {
 
     emailVerificationService.sendEmail(user);
 
-    const sessionId = await sessionService.create(user);
+    const sessionId = await sessionService.create(user, req.headers, req.ip);
     res.cookie(...cookieService.sessionId(sessionId));
     res.status(201).json({ success: true });
   } catch (err) {

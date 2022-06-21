@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
     if (!bcrypt.compareSync(password, user.password))
       return res.status(400).json({ message: 'Incorrect password!' });
 
-    const sessionId = await sessionService.create(user);
+    const sessionId = await sessionService.create(user, req.headers, req.ip);
     res.cookie(...cookieService.sessionId(sessionId));
     res.status(201).json({ success: true });
   } catch (err) {

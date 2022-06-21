@@ -1,22 +1,52 @@
 import { nanoid } from 'nanoid';
+import { IncomingHttpHeaders } from 'http';
+import useragent from 'useragent';
+import geoip from 'geoip-lite';
 import { redis } from '~/clients';
 import { User } from '~/core/users/user.model';
 
-interface Session {
-  user_id: string;
+const SESSION_EXPIRE = 2_592_000_000; // 30 days
+
+function getCurrentTimeAndPlace(ip: string) {
+  const { city, region, country } = geoip.lookup(ip) || {};
+
+  return {
+    date: Date.now(),
+    loc: `${city}, ${region}, ${country}`,
+  };
+}
+
+export type Session = {
+  user_id: number;
+  client: string;
+  last_accessed: {
+    date: number;
+    loc: string;
+  };
+  signed_in: {
+    date: number;
+    loc: string;
+  };
 }
 
 const sessionService = {
-  async create(user: User) {
+  async create(user: User, headers: IncomingHttpHeaders, ip: string) {
     const sessionId = nanoid(24);
-    const key = `session:${sessionId}`;
+    const sessionKey = `session:${sessionId}`;
     const multi = redis.multi();
-
-    multi.json.set(key, '$', {
+    
+    const ua = useragent.parse(headers['user-agent']);
+    const current = getCurrentTimeAndPlace(ip);
+    const value: Session = {
       user_id: user.user_id,
-    });
+      client: ua.toString(),
+      last_accessed: current,
+      signed_in: current,
+    }
 
-    multi.expire(key, 2_592_000_000); // 30 days
+    multi.sAdd(`user:${user.user_id}`, sessionId);
+    multi.json.set(sessionKey, '$', value);
+    multi.expire(sessionKey, SESSION_EXPIRE);
 
     await multi.exec();
 
