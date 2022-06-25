@@ -4,9 +4,8 @@ import { userRepository } from '~/core/users/user.repository';
 import { UserInsert, userSchemas } from '~/core/users/user.model';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
-import cookieService, { cookieKeys } from '~/services/cookieService';
+import { cookieKeys } from '~/services/cookieService';
 import emailVerificationService from '~/services/emailVerificationService';
-import sessionService from '~/services/sessionService';
 import { userUtil } from '~/core/users/user.util';
 
 const router = Router();
@@ -20,9 +19,6 @@ router.post('/', validateBody(userSchemas.create), async (req, res) => {
     });
 
     emailVerificationService.sendEmail(user);
-
-    const sessionId = await sessionService.create(user, req.headers, req.ip);
-    res.cookie(...cookieService.sessionId(sessionId));
     res.status(201).json({ success: true });
   } catch (err) {
     console.error(err);
