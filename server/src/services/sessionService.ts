@@ -19,7 +19,7 @@ function getCurrentTimeAndPlace(ip: string) {
 export type Session = {
   user_id: number;
   client: string;
-  last_accessed: {
+  last_activity: {
     date: number;
     loc: string;
   };
@@ -40,7 +40,7 @@ const sessionService = {
     const value: Session = {
       user_id: user.user_id,
       client: ua.toString(),
-      last_accessed: current,
+      last_activity: current,
       signed_in: current,
     }
 
