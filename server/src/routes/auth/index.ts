@@ -9,9 +9,20 @@ const router = Router();
 router.use('/verify', require('./verify').default);
 
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
   try {
+    const { email, password } = req.body;
+    const cookie = req.cookies[cookieKeys.SESSION_ID];
+
+    if (cookie) {
+      const session = await sessionService.get(cookie);
+  
+      if (session) {
+        return res.status(400).json({ msg: 'Already logged in' });
+      } else {
+        res.clearCookie(cookieKeys.SESSION_ID);
+      }
+    }
+
     const user = await userRepository.getOne({ email });
 
     if (!user) return res.status(404).json({ message: 'User does not exist!' });
@@ -30,14 +41,14 @@ router.post('/login', async (req, res) => {
 router.post('/logout', async (req, res) => {
   const sessionId = req.cookies[cookieKeys.SESSION_ID];
 
+  if (!sessionId) {
+    return res.status(400).json({ msg: 'You are not logged in' });
+  }
+
   try {
-    const success = await sessionService.del(sessionId);
-    if (success) {
-      res.clearCookie(cookieKeys.SESSION_ID);
-      res.status(200).json({ success });
-    } else {
-      res.status(400).json({ success });
-    }
+    await sessionService.del(sessionId);
+    res.clearCookie(cookieKeys.SESSION_ID);
+    res.status(200).json({ success: true });
   } catch (err) {
     console.error(err);
     res.json({ err });
