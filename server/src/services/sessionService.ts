@@ -53,8 +53,21 @@ const sessionService = {
     return sessionId;
   },
 
-  async get(sessionId: string) {
+  async update(sessionId: string, ip: string, data: Partial<Session> = {}) {
+    data.last_activity = getCurrentTimeAndPlace(ip);
+
+    const multi = redis.multi();
+    const sessionKey = `session:${sessionId}`;
+    Object.entries(data).forEach(([key, val]) => {
+      multi.json.set(sessionKey, key, val);
+    });
+  
+    return multi.exec();
+  },
+
+  async get(sessionId: string, ip?: string) {
     const session = await redis.json.get(`session:${sessionId}`);
+    if (ip) await this.update(sessionId, ip);
     return session as Session | null;
   },
 

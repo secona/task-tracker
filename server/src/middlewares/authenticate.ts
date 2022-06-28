@@ -7,14 +7,19 @@ const authenticate: RequestHandler = async (req, res, next) => {
   if (!sessionId) return res.status(401).end();
 
   try {
-    const session = await sessionService.get(sessionId);
-    if (!session) throw new Error();
-    req.session = session;
-    next();
+    const session = await sessionService.get(sessionId, req.ip);
+
+    if (!session) {
+      res.clearCookie(cookieKeys.SESSION_ID);
+      res.status(403).json({ msg: 'You are not logged in' });
+    } else {
+      req.sessionId = sessionId;
+      req.session = session;
+      next();
+    }
   } catch (err) {
     console.error(err);
-    res.clearCookie(cookieKeys.SESSION_ID);
-    res.status(403).send(err);
+    res.send(err);
   }
 };
 
