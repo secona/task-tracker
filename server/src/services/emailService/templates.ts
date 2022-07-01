@@ -9,7 +9,8 @@ interface Template<N extends string, P extends object> {
 }
 
 type TemplateContext =
-  | Template<'email-verification', { name: string; url: string }>;
+  | Template<'email-verification', { name: string; url: string }>
+  | Template<'forgot-password', { name: string; url: string }>;
 
 export type SendTemplateOptions = SendMailOptions & TemplateContext;
 
@@ -21,7 +22,8 @@ interface TemplateExtract {
 }
 
 const templateNames = [
-  'email-verification'
+  'email-verification',
+  'forgot-password',
 ];
 
 export function getTemplates() {

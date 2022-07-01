@@ -3,7 +3,9 @@ declare namespace NodeJS {
     NODE_ENV: string;
     DATABASE_URL: string;
     ROOT_URL: string;
+    FRONTEND_ROOT_URL: string;
     VERIFICATION_TOKEN_SECRET: string;
+    FORGOT_PASSWORD_TOKEN_SECRET: string;
     EMAIL_SERVICE: string;
     EMAIL_ADDRESS: string;
     EMAIL_PASSWORD: string;

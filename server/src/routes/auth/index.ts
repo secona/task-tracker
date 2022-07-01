@@ -7,6 +7,7 @@ import cookieService, { cookieKeys } from '~/services/cookieService';
 const router = Router();
 
 router.use('/verify', require('./verify').default);
+router.use('/password', require('./password').default);
 
 router.post('/login', async (req, res) => {
   try {

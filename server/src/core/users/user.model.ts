@@ -55,5 +55,12 @@ export const userSchemas = new class {
     new_password: z.string().min(8),
   });
 
+  resetPassword = z.object({
+    token: z.string(),
+    new_password: z.string().min(8),
+  });
+
   updateEmail = this.create.pick({ email: true });
+
+  forgotPassword = this.create.pick({ email: true });
 }
