@@ -42,9 +42,8 @@ const sessionService = {
       client: ua.toString(),
       last_activity: current,
       signed_in: current,
-    }
+    };
 
-    multi.sAdd(`user:${user.user_id}`, sessionId);
     multi.json.set(sessionKey, '$', value);
     multi.expire(sessionKey, SESSION_EXPIRE);
 
@@ -69,6 +68,25 @@ const sessionService = {
     const session = await redis.json.get(`session:${sessionId}`);
     if (ip) await this.update(sessionId, ip);
     return session as Session | null;
+  },
+
+  async getAll(user_id: number) {
+    const result = await redis.ft.search(
+      'idx:session',
+      `@user_id:[${user_id} ${user_id}]`
+    );
+    return result;
+  },
+
+  async delAll(user_id: number) {
+    const all = await this.getAll(user_id);
+    const multi = redis.multi();
+
+    all.documents.forEach(({ id }) => {
+      multi.json.del(id);
+    });
+
+    return multi.exec();
   },
 
   async del(sessionId: string) {

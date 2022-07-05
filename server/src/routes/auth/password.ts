@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { userSchemas } from '~/core/users/user.model';
 import { userRepository } from '~/core/users/user.repository';
 import validateBody from '~/middlewares/validateBody';
+import sessionService from '~/services/sessionService';
 import emailService from '~/services/emailService';
 import tokenService from '~/services/tokenService';
 
@@ -24,6 +25,7 @@ router.post(
       if (!user) {
         res.status(400).json({ msg: 'Token no longer usable' });
       } else {
+        await sessionService.delAll(user.user_id);
         res.status(200).json({ success: true });
       }
     } catch (err) {

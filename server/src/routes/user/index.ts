@@ -7,6 +7,7 @@ import validateBody from '~/middlewares/validateBody';
 import { cookieKeys } from '~/services/cookieService';
 import emailVerificationService from '~/services/emailVerificationService';
 import { userUtil } from '~/core/users/user.util';
+import sessionService from '~/services/sessionService';
 
 const router = Router();
 
@@ -102,6 +103,7 @@ router.put(
         { password: bcrypt.hashSync(req.body.new_password, 10) }
       );
 
+      await sessionService.delAll(user.user_id);
       res.status(200).json({ success: true })
     } catch (err) {
       console.error(err);
@@ -125,6 +127,7 @@ router.put(
         return res.status(404).json({ msg: 'user not found' });
 
       await emailVerificationService.sendEmail(user);
+      await sessionService.delAll(user.user_id);
       res.status(200).json({ success: true });
     } catch (err) {
       console.log(err);
