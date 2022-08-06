@@ -30,7 +30,9 @@ router.post(
       }
     } catch (err) {
       console.error(err);
-      res.json({ err });
+      res.status(500).json({
+        msg: 'An unexpected error has occurred.',
+      });
     }
   }
 );
@@ -42,12 +44,12 @@ router.post(
     try {
       const user = await userRepository.getOne({ email: req.body.email });
       if (!user) return res.status(400).json({ msg: 'user not found' });
-    
+
       const token = tokenService.forgotPassword.sign({
         email: user.email,
         current_password: user.password,
       });
-    
+
       emailService.sendTemplate({
         templateName: 'forgot-password',
         to: user.email,
@@ -60,7 +62,9 @@ router.post(
       res.status(200).json({ success: true });
     } catch (err) {
       console.error(err);
-      res.json({ err });
+      res.status(500).json({
+        msg: 'An unexpected error has occurred.',
+      });
     }
   }
 );

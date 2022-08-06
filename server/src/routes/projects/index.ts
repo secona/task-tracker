@@ -21,7 +21,9 @@ router.get('/', authenticate, (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.json({ err });
+      res.status(500).json({
+        msg: 'An unexpected error has occurred.',
+      });
     });
 });
 
@@ -32,7 +34,7 @@ router.post(
   (req, res) => {
     projectRepository
       .create({
-        ...(req.parsedBody) as ProjectInsert,
+        ...(req.parsedBody as ProjectInsert),
         user_id: req.session.user_id,
       })
       .then(project => {
@@ -43,7 +45,9 @@ router.post(
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   }
 );
@@ -65,7 +69,9 @@ router
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   })
 
@@ -85,7 +91,9 @@ router
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   })
 
@@ -103,7 +111,9 @@ router
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   });
 
@@ -113,13 +123,10 @@ router.post(
   validateBody(taskSchemas.create),
   (req, res) => {
     taskRepository
-      .create(
-        req.session.user_id,
-        {
-          ...(req.parsedBody as TaskInsert),
-          project_id: String(req.params.projectId),
-        }
-      )
+      .create(req.session.user_id, {
+        ...(req.parsedBody as TaskInsert),
+        project_id: String(req.params.projectId),
+      })
       .then(task => {
         res.status(201).json({
           success: true,
@@ -128,7 +135,9 @@ router.post(
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   }
 );

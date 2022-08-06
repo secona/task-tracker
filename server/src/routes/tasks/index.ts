@@ -19,7 +19,9 @@ router.get('/', authenticate, (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.json({ err });
+      res.status(500).json({
+        msg: 'An unexpected error has occurred.',
+      });
     });
 });
 
@@ -31,7 +33,7 @@ router
     taskRepository
       .getOne(req.session.user_id, req.params.taskId)
       .then(task => {
-        res.status(task ? 200 : 404)
+        res.status(task ? 200 : 404);
         res.json({
           success: !!task,
           task: taskUtil.omitSensitive(task),
@@ -39,17 +41,15 @@ router
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   })
 
   .patch(validateBody(taskSchemas.update), (req, res) => {
     taskRepository
-      .update(
-        req.session.user_id,
-        req.params.taskId,
-        req.parsedBody
-      )
+      .update(req.session.user_id, req.params.taskId, req.parsedBody)
       .then(task => {
         res.status(task ? 200 : 404);
         res.json({
@@ -59,16 +59,15 @@ router
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   })
 
   .delete((req, res) => {
     taskRepository
-      .del(
-        req.session.user_id,
-        req.params.taskId
-      )
+      .del(req.session.user_id, req.params.taskId)
       .then(n => {
         const success = n > 0;
         res.status(success ? 200 : 404);
@@ -76,8 +75,11 @@ router
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   });
 
 export default router;
+

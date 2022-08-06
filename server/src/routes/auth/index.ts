@@ -10,6 +10,12 @@ const router = Router();
 router.use('/verify', require('./verify').default);
 router.use('/password', require('./password').default);
 
+/*
+- Have to be logged out (no `session_id` cookie and no session in redis)
+- if !cookie (user is logged out) -> continue (BEST SCENARIO)
+- if cookie and !redis (user remote logged out) -> clear cookie and continue
+- if cookie and redis (user is logged in) -> error 
+*/
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -36,10 +42,18 @@ router.post('/login', async (req, res) => {
     res.status(201).json({ success: true });
   } catch (err) {
     console.error(err);
-    res.json({ err });
+    res.status(500).json({
+      msg: 'An unexpected error has occurred.',
+    });
   }
 });
 
+/*
+- Have to be logged in (a cookie and a session in redis)
+- if !cookie (user is logged out) -> error
+- if cookie and !redis (user remotely logged out) -> clear cookie and error
+- if cookie and redis (user is logged in) -> clear cookie and session (BEST SCENARIO)
+*/
 router.post('/logout', async (req, res) => {
   const sessionId = req.cookies[cookieKeys.SESSION_ID];
 
@@ -53,7 +67,9 @@ router.post('/logout', async (req, res) => {
     res.status(200).json({ success: true });
   } catch (err) {
     console.error(err);
-    res.json({ err });
+    res.status(500).json({
+      msg: 'An unexpected error has occurred.',
+    });
   }
 });
 
@@ -63,7 +79,9 @@ router.get('/sessions', authenticate, async (req, res) => {
     res.status(200).json({ sessions: sessions.documents });
   } catch (err) {
     console.error(err);
-    res.json({ err });
+    res.status(500).json({
+      msg: 'An unexpected error has occurred.',
+    });
   }
 });
 

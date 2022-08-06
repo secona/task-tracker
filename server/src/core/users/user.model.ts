@@ -38,17 +38,19 @@ export class UserResponse {
   }
 }
 
-export const userSchemas = new class {
+export const userSchemas = new (class {
   create = z.object({
     email: z.string().email(),
     password: z.string().min(8),
     name: z.string().nonempty(),
   });
 
-  updateProfile = this.create.omit({
-    email: true,
-    password: true,
-  });
+  updateProfile = this.create
+    .omit({
+      email: true,
+      password: true,
+    })
+    .partial();
 
   updatePassword = z.object({
     current_password: z.string(),
@@ -63,4 +65,4 @@ export const userSchemas = new class {
   updateEmail = this.create.pick({ email: true });
 
   forgotPassword = this.create.pick({ email: true });
-}
+})();

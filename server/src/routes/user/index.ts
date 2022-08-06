@@ -30,7 +30,9 @@ router.post('/', validateBody(userSchemas.create), async (req, res) => {
     }
 
     console.error(err);
-    res.json({ err });
+    res.status(500).json({
+      msg: 'An unexpected error has occurred.',
+    });
   }
 });
 
@@ -48,7 +50,9 @@ router
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   })
 
@@ -63,7 +67,9 @@ router
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   });
 
@@ -81,7 +87,9 @@ router.patch(
       })
       .catch(err => {
         console.error(err);
-        res.json({ err });
+        res.status(500).json({
+          msg: 'An unexpected error has occurred.',
+        });
       });
   }
 );
@@ -96,10 +104,10 @@ router.put(
         user_id: req.session.user_id,
       });
 
-      if (!user) return res.status(404).json({ msg: 'user not found' });
+      if (!user) return res.status(404).json({ msg: 'User not found' });
 
       if (!bcrypt.compareSync(req.body.current_password, user.password))
-        return res.status(403).json({ msg: 'incorrect password' });
+        return res.status(403).json({ msg: 'Incorrect password' });
 
       await userRepository.update(
         { user_id: req.session.user_id },
@@ -110,7 +118,9 @@ router.put(
       res.status(200).json({ success: true });
     } catch (err) {
       console.error(err);
-      res.json({ err });
+      res.status(500).json({
+        msg: 'An unexpected error has occurred.',
+      });
     }
   }
 );
@@ -133,7 +143,9 @@ router.put(
       res.status(200).json({ success: true });
     } catch (err) {
       console.log(err);
-      res.json({ err });
+      res.status(500).json({
+        msg: 'An unexpected error has occurred.',
+      });
     }
   }
 );

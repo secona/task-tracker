@@ -16,7 +16,9 @@ router.post('/', (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.json({ err });
+      res.status(500).json({
+        msg: 'An unexpected error has occurred.',
+      });
     });
 });
 
@@ -31,7 +33,9 @@ router.get('/:vt', async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.json({ err });
+    res.status(500).json({
+      msg: 'An unexpected error has occurred.',
+    });
   }
 });
 
