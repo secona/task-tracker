@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
+import { DatabaseError } from 'pg';
 import { userRepository } from '~/core/users/user.repository';
 import { UserInsert, userSchemas } from '~/core/users/user.model';
 import authenticate from '~/middlewares/authenticate';
@@ -22,6 +23,12 @@ router.post('/', validateBody(userSchemas.create), async (req, res) => {
     emailVerificationService.sendEmail(user);
     res.status(201).json({ success: true });
   } catch (err) {
+    if (err instanceof DatabaseError) {
+      if (err.code === '23505') {
+        return res.status(422).json({ msg: 'Email already exists!' });
+      }
+    }
+
     console.error(err);
     res.json({ err });
   }
@@ -66,10 +73,7 @@ router.patch(
   validateBody(userSchemas.updateProfile),
   (req, res) => {
     userRepository
-      .update(
-        { user_id: req.session.user_id },
-        req.parsedBody,
-      )
+      .update({ user_id: req.session.user_id }, req.parsedBody)
       .then(user => {
         const success = !!user;
         res.status(success ? 200 : 404);
@@ -78,7 +82,7 @@ router.patch(
       .catch(err => {
         console.error(err);
         res.json({ err });
-      })
+      });
   }
 );
 
@@ -88,12 +92,11 @@ router.put(
   validateBody(userSchemas.updatePassword),
   async (req, res) => {
     try {
-      const user = await userRepository.getOne(
-        { user_id: req.session.user_id }
-      );
+      const user = await userRepository.getOne({
+        user_id: req.session.user_id,
+      });
 
-      if (!user)
-        return res.status(404).json({ msg: 'user not found' });
+      if (!user) return res.status(404).json({ msg: 'user not found' });
 
       if (!bcrypt.compareSync(req.body.current_password, user.password))
         return res.status(403).json({ msg: 'incorrect password' });
@@ -104,7 +107,7 @@ router.put(
       );
 
       await sessionService.delAll(user.user_id);
-      res.status(200).json({ success: true })
+      res.status(200).json({ success: true });
     } catch (err) {
       console.error(err);
       res.json({ err });
@@ -123,8 +126,7 @@ router.put(
         { ...req.parsedBody, verified: false }
       );
 
-      if (!user)
-        return res.status(404).json({ msg: 'user not found' });
+      if (!user) return res.status(404).json({ msg: 'user not found' });
 
       await emailVerificationService.sendEmail(user);
       await sessionService.delAll(user.user_id);
