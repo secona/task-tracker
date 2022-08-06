@@ -104,7 +104,6 @@ router
         user_id: req.session.user_id,
       })
       .then(n => {
-        console.log(n);
         const success = n > 0;
         res.status(success ? 200 : 404);
         res.json({ success });
@@ -128,10 +127,16 @@ router.post(
         project_id: String(req.params.projectId),
       })
       .then(task => {
-        res.status(201).json({
-          success: true,
-          task: taskUtil.omitSensitive(task),
-        });
+        if (task) {
+          res.status(201).json({
+            success: true,
+            task: taskUtil.omitSensitive(task),
+          });
+        } else {
+          res.status(404).json({
+            success: false,
+          });
+        }
       })
       .catch(err => {
         console.error(err);
