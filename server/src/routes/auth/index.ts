@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { userRepository } from '~/core/users/user.repository';
 import sessionService from '~/services/sessionService';
 import cookieService, { cookieKeys } from '~/services/cookieService';
+import authenticate from '~/middlewares/authenticate';
 
 const router = Router();
 
@@ -16,7 +17,7 @@ router.post('/login', async (req, res) => {
 
     if (cookie) {
       const session = await sessionService.get(cookie);
-  
+
       if (session) {
         return res.status(400).json({ msg: 'Already logged in' });
       } else {
@@ -50,6 +51,16 @@ router.post('/logout', async (req, res) => {
     await sessionService.del(sessionId);
     res.clearCookie(cookieKeys.SESSION_ID);
     res.status(200).json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.json({ err });
+  }
+});
+
+router.get('/sessions', authenticate, async (req, res) => {
+  try {
+    const sessions = await sessionService.getAll(req.session.user_id);
+    res.status(200).json({ sessions: sessions.documents });
   } catch (err) {
     console.error(err);
     res.json({ err });
