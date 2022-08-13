@@ -33,9 +33,19 @@ router.post('/login', async (req, res) => {
 
     const user = await userRepository.getOne({ email });
 
-    if (!user) return res.status(404).json({ message: 'User does not exist!' });
-    if (!bcrypt.compareSync(password, user.password))
+    if (!user) {
+      return res.status(404).json({ message: 'User does not exist!' });
+    }
+
+    if (!user.verified) {
+      return res.status(403).json({
+        message: 'You need to verify your email!',
+      });
+    }
+
+    if (!bcrypt.compareSync(password, user.password)) {
       return res.status(400).json({ message: 'Incorrect password!' });
+    }
 
     const sessionId = await sessionService.create(user, req.headers, req.ip);
     res.cookie(...cookieService.sessionId(sessionId));
