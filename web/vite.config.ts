@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import path from 'path';
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker';
 
@@ -8,6 +9,18 @@ export default defineConfig({
     react(),
     checker({ typescript: true }),
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
+  css: { 
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/global.scss";`
+      },
+    },
+  },
   server: {
     port: 3000,
     proxy: {
