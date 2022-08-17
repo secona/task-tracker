@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 import { App } from './App';
+import GlobalStyles from './GlobalStyles';
 import theme from './theme';
 
 const el = document.getElementById('root');
@@ -10,6 +11,8 @@ root.render(
   <>
     {/** @ts-ignore */}
     <ThemeProvider theme={theme}>
+      {/** @ts-ignore */}
+      <GlobalStyles />
       <App />
     </ThemeProvider>
   </>
