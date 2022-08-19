@@ -1,6 +1,11 @@
 import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
+  elevation: {
+    0: '#000000',
+    1: '#121212',
+  },
+
   fontSizes: {
     xs: '.75rem',
     sm: '.875rem',

@@ -2,6 +2,11 @@ import 'styled-components';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
+    elevation: {
+      0: string;
+      1: string;
+    };
+
     fontSizes: {
       xs: string;
       sm: string;

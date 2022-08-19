@@ -20,4 +20,11 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  backgrounds: {
+    default: 'Elevation 0',
+    values: Object.entries(theme.elevation).map(([k, v]) => ({
+      name: 'Elevation ' + k,
+      value: v,
+    })),
+  },
 };
