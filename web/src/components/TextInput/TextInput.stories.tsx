@@ -12,23 +12,27 @@ const Template: ComponentStory<typeof TextInput> = args => <TextInput {...args} 
 export const Default = Template.bind({});
 Default.args = {
   placeholder: 'Placeholder',
+  fieldName: 'Email'
 };
 
 export const WithLeftIcon = Template.bind({});
 WithLeftIcon.args = {
   placeholder: 'Placeholder',
+  fieldName: 'Email',
   LeftIcon: Mail,
 };
 
 export const WithRightIcon = Template.bind({});
 WithRightIcon.args = {
   placeholder: 'Placeholder',
+  fieldName: 'Email',
   RightIcon: ArrowRight,
 };
 
 export const WithRightAndLeftIcon = Template.bind({});
 WithRightAndLeftIcon.args = {
   placeholder: 'Placeholder',
+  fieldName: 'Email',
   LeftIcon: Mail,
   RightIcon: ArrowRight,
 };
