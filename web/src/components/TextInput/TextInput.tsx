@@ -10,51 +10,49 @@ const LabelWrapper = styled.label`
   display: inline-block;
   position: relative;
   padding: 0;
-
-  & > .textinput-icon-left {
-    position: absolute;
-    bottom: 0.35rem;
-    left: 0.25rem;
-    color: ${activeColor};
-  }
-
-  & > .textinput-icon-right {
-    position: absolute;
-    bottom: 0.35rem;
-    right: 0.25rem;
-    color: ${activeColor};
-  }
 `;
 
 const FieldName = styled.span`
   font-size: ${p => p.theme.fontSizes.xs};
-  color: white;
+  color: ${p => p.theme.color.grey};
 `;
 
 const _Input = styled.input<{
   LeftIcon?: Icon;
   RightIcon?: Icon;
 }>`
+  outline: none;
   box-sizing: border-box;
   width: 100%;
   border-width: 0 0 1px 0;
   border-color: ${inactiveColor};
-  padding: 0.25rem;
+  padding: 0.25rem 0;
   background-color: transparent;
   color: whitesmoke;
-  ${p => p.LeftIcon && `padding-left: 1.5rem;`}
-  ${p => p.RightIcon && `padding-right: 1.5rem;`}
+  font-family: inherit;
+  ${p => p.LeftIcon && `padding-left: 1.25rem;`}
+  ${p => p.RightIcon && `padding-right: 1.25rem;`}
+
+  & ~ .textinput-icon-left {
+    position: absolute;
+    bottom: 0.35rem;
+    left: 0;
+    color: ${activeColor};
+  }
+
+  & ~ .textinput-icon-right {
+    position: absolute;
+    bottom: 0.35rem;
+    right: 0;
+    color: ${activeColor};
+  }
 
   &::placeholder {
     color: ${placeholderColor};
   }
 
   &:focus {
-    outline: none;
     border-color: ${activeColor};
-    ~ .textinput-icon {
-      color: ${activeColor};
-    }
   }
 `;
 
