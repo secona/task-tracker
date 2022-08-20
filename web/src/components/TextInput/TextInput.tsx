@@ -13,14 +13,14 @@ const LabelWrapper = styled.label`
 
   & > .textinput-icon-left {
     position: absolute;
-    bottom: 0.3rem;
+    bottom: 0.35rem;
     left: 0.25rem;
     color: ${activeColor};
   }
 
   & > .textinput-icon-right {
     position: absolute;
-    bottom: 0.3rem;
+    bottom: 0.35rem;
     right: 0.25rem;
     color: ${activeColor};
   }
@@ -47,7 +47,6 @@ const _Input = styled.input<{
 
   &::placeholder {
     color: ${placeholderColor};
-    font-family: Poppins;
   }
 
   &:focus {
