@@ -12,7 +12,9 @@ const Template: ComponentStory<typeof TextInput> = args => <TextInput {...args} 
 export const Default = Template.bind({});
 Default.args = {
   placeholder: 'Placeholder',
-  fieldName: 'Email'
+  fieldName: 'Email',
+  disabled: false,
+  error: undefined,
 };
 
 export const WithLeftIcon = Template.bind({});
@@ -20,6 +22,8 @@ WithLeftIcon.args = {
   placeholder: 'Placeholder',
   fieldName: 'Email',
   LeftIcon: Mail,
+  disabled: false,
+  error: undefined,
 };
 
 export const WithRightIcon = Template.bind({});
@@ -27,6 +31,8 @@ WithRightIcon.args = {
   placeholder: 'Placeholder',
   fieldName: 'Email',
   RightIcon: ArrowRight,
+  disabled: false,
+  error: undefined,
 };
 
 export const WithRightAndLeftIcon = Template.bind({});
@@ -35,4 +41,6 @@ WithRightAndLeftIcon.args = {
   fieldName: 'Email',
   LeftIcon: Mail,
   RightIcon: ArrowRight,
+  disabled: false,
+  error: undefined,
 };
