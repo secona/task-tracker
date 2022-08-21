@@ -11,24 +11,30 @@ const Template: ComponentStory<typeof Button> = props => <Button {...props} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  children: 'Hello'
+  children: 'Hello',
+  loading: false,
+  disabled: false,
 };
 
 export const WithLeftIcon = Template.bind({});
 WithLeftIcon.args = {
   LeftIcon: Trash2,
-  children: 'Hello'
+  children: 'Hello',
+  loading: false,
+  disabled: false,
 };
 
 export const WithRightIcon = Template.bind({});
 WithRightIcon.args = {
   RightIcon: Send,
-  children: 'Hello'
+  children: 'Hello',
+  disabled: false,
 };
 
 export const WithRightAndLeftIcon = Template.bind({});
 WithRightAndLeftIcon.args = {
   LeftIcon: Bookmark,
   RightIcon: Download,
-  children: 'Hello'
+  children: 'Hello',
+  disabled: false,
 };
