@@ -73,7 +73,7 @@ const _Button = styled.button`
         ${p => p.theme.color['teal-600']} 10px,
         ${p => p.theme.color['teal-600']} 20px
       );
-      animation: ${Slide} 0.5s infinite linear;
+      animation: ${Slide} 0.25s infinite linear;
     }
   }
 `;

@@ -3,9 +3,9 @@ import { Icon } from 'react-feather';
 import styled from 'styled-components';
 import { FieldError } from 'react-hook-form';
 
-const active = 'grey-200';
-const placeholderActive = 'grey-600';
+const active = 'grey-400';
 const disabled = 'grey-700';
+const placeholderColor = 'grey-600';
 const error = 'red-500';
 const placeholderError = 'red-900';
 
@@ -26,7 +26,7 @@ const FieldName = styled.span`
 
 const Underline = styled.span`
   width: 100%;
-  height: 1px;
+  height: 0.5px;
   position: absolute;
   bottom: 1rem;
   left: 0;
@@ -72,12 +72,12 @@ const _Input = styled.input<{
   }
 
   &::placeholder {
-    color: ${p => p.theme.color[placeholderActive]};
+    color: ${p => p.theme.color[placeholderColor]};
   }
 
   &:focus {
     & ~ ${Underline} {
-      box-shadow: 0 0 0 0.4px white;
+      box-shadow: 0 0 0 0.3px white;
       background-color: white;
     }
   }
