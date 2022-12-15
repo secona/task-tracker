@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { App } from './App';
 import GlobalStyles from './GlobalStyles';
@@ -8,12 +9,12 @@ const el = document.getElementById('root');
 const root = createRoot(el!);
 
 root.render(
-  <>
+  <BrowserRouter>
     {/** @ts-ignore */}
     <ThemeProvider theme={theme}>
       {/** @ts-ignore */}
       <GlobalStyles />
       <App />
     </ThemeProvider>
-  </>
+  </BrowserRouter>
 );
