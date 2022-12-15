@@ -10,9 +10,7 @@ const root = createRoot(el!);
 
 root.render(
   <BrowserRouter>
-    {/** @ts-ignore */}
     <ThemeProvider theme={theme}>
-      {/** @ts-ignore */}
       <GlobalStyles />
       <App />
     </ThemeProvider>
