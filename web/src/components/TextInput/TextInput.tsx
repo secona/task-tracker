@@ -145,7 +145,7 @@ export const TextInput = (props: TextInputProps) => {
 
   return (
     <LabelWrapper>
-      <_Input {...props} type='text' data-is-error={!!error} />
+      <_Input {...props} data-is-error={!!error} />
       <FieldName>{fieldName}</FieldName>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
       {LeftIcon && (

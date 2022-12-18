@@ -2,21 +2,22 @@ import { Button } from '@/components/Button';
 import { FormPage } from '@/components/FormPage/FormPage';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
-import { Mail, Key, LogIn } from 'react-feather';
+import { Mail, User, Key, LogIn } from 'react-feather';
 import styled from 'styled-components';
 
-const LoginForm = styled.div`
+const RegisterForm = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 1rem;
 `;
 
-export const Login = () => {
+export const Register = () => {
   return (
     <FormPage>
-      <Heading fontSize='6xl'>Welcome Back!</Heading>
-      <LoginForm>
+      <Heading fontSize='6xl'>Greetings!</Heading>
+      <RegisterForm>
+        <TextInput LeftIcon={User} placeholder='Rick Astley' fieldName='Name' />
         <TextInput
           LeftIcon={Mail}
           placeholder='me@example.com'
@@ -28,8 +29,8 @@ export const Login = () => {
           type='password'
           fieldName='Password'
         />
-      </LoginForm>
-      <Button RightIcon={LogIn}>Log In</Button>
+      </RegisterForm>
+      <Button RightIcon={LogIn}>Register</Button>
     </FormPage>
   );
 };
