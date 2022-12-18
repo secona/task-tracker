@@ -1,4 +1,4 @@
-import { ComponentPropsWithRef } from 'react';
+import { ComponentPropsWithRef, forwardRef } from 'react';
 import { Icon } from 'react-feather';
 import styled from 'styled-components';
 import { FieldError } from 'react-hook-form';
@@ -13,7 +13,8 @@ const LabelWrapper = styled.label`
   display: inline-block;
   position: relative;
   padding: 0;
-  padding: 1rem 0;
+  padding: 1rem 0 0 0;
+  min-height: 3.1rem;
 `;
 
 const FieldName = styled.span`
@@ -28,18 +29,20 @@ const Underline = styled.span`
   width: 100%;
   height: 0.5px;
   position: absolute;
-  bottom: 1rem;
+  top: 2.6rem;
   left: 0;
   background-color: ${p => p.theme.color[active]};
 `;
 
-const ErrorMessage = styled.span`
+const ErrorList = styled.ul`
+  display: inline-block;
   color: ${p => p.theme.color[error]};
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: ${p => p.theme.fontSizes.xs};
+  padding: 0;
+  margin: 0;
+  margin-top: 4px;
   font-size: ${p => p.theme.fontSizes.xs};
+  overflow: auto;
+  list-style-position: inside;
 `;
 
 const _Input = styled.input<{
@@ -59,14 +62,14 @@ const _Input = styled.input<{
 
   & ~ .textinput-icon-left {
     position: absolute;
-    bottom: 1.35rem;
+    top: 1.25rem;
     left: 0;
     color: ${p => p.theme.color[active]};
   }
 
   & ~ .textinput-icon-right {
     position: absolute;
-    bottom: 1.35rem;
+    top: 1.25rem;
     right: 0;
     color: ${p => p.theme.color[active]};
   }
@@ -98,7 +101,7 @@ const _Input = styled.input<{
     }
 
     &::placeholder {
-      color: ${p => p.theme.color[placeholderError]}
+      color: ${p => p.theme.color[placeholderError]};
     }
 
     &:focus {
@@ -123,7 +126,7 @@ const _Input = styled.input<{
       color: ${p => p.theme.color[disabled]};
     }
 
-    & ~ ${ErrorMessage} {
+    & ~ ${ErrorList} {
       color: ${p => p.theme.color[disabled]};
     }
 
@@ -140,21 +143,32 @@ export interface TextInputProps extends ComponentPropsWithRef<'input'> {
   error?: FieldError;
 }
 
-export const TextInput = (props: TextInputProps) => {
-  const { LeftIcon, RightIcon, fieldName, error } = props;
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+  (props, ref) => {
+    const { LeftIcon, RightIcon, fieldName, error } = props;
 
-  return (
-    <LabelWrapper>
-      <_Input {...props} data-is-error={!!error} />
-      <FieldName>{fieldName}</FieldName>
-      {error && <ErrorMessage>{error.message}</ErrorMessage>}
-      {LeftIcon && (
-        <LeftIcon className='textinput-icon textinput-icon-left' size={16} />
-      )}
-      {RightIcon && (
-        <RightIcon className='textinput-icon textinput-icon-right' size={16} />
-      )}
-      <Underline />
-    </LabelWrapper>
-  );
-};
+    return (
+      <LabelWrapper>
+        <_Input {...props} ref={ref} data-is-error={!!error} />
+        <FieldName>{fieldName}</FieldName>
+        <Underline />
+        {error && (
+          <ErrorList>
+            {error.message?.split('|').map(v => (
+              <li>{v}</li>
+            ))}
+          </ErrorList>
+        )}
+        {LeftIcon && (
+          <LeftIcon className='textinput-icon textinput-icon-left' size={16} />
+        )}
+        {RightIcon && (
+          <RightIcon
+            className='textinput-icon textinput-icon-right'
+            size={16}
+          />
+        )}
+      </LabelWrapper>
+    );
+  }
+);
