@@ -154,8 +154,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <Underline />
         {error && (
           <ErrorList>
-            {error.message?.split('|').map(v => (
-              <li>{v}</li>
+            {error.message?.split('|').map((v, i) => (
+              <li key={i}>{v}</li>
             ))}
           </ErrorList>
         )}
