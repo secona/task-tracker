@@ -1,0 +1,136 @@
+$active: var(--color-grey-400);
+$disabled: var(--color-grey-700);
+$placeholderColor: var(--color-grey-600);
+$error: var(--color-red-500);
+$placeholderError: var(--color-red-900);
+
+.textinput__label {
+  display: inline-block;
+  position: relative;
+  padding: 0;
+  padding: 1rem 0 0 0;
+  min-height: 3.1rem;
+}
+
+.textinput__underline {
+  width: 100%;
+  height: 0.5px;
+  position: absolute;
+  top: 2.6rem;
+  left: 0;
+  background-color: $active;
+}
+
+.textinput__fieldname {
+  font-size: var(--font-size-xs);
+  color: $active;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.textinput__error-list {
+  display: inline-block;
+  color: $error;
+  padding: 0;
+  margin: 0;
+  margin-top: 4px;
+  font-size: var(--font-size-xs);
+  overflow: auto;
+  list-style-position: inside;
+}
+
+.textinput__input {
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  padding: 0.25rem 0;
+  background-color: transparent;
+  color: white;
+  font-family: inherit;
+
+  &::placeholder {
+    color: $placeholderColor;
+  }
+
+  &:focus {
+    & ~ .textinput__underline {
+      box-shadow: 0 0 0 0.3px white;
+      background-color: white;
+    }
+  }
+
+  &--icon--left {
+    padding-left: 1.25rem;
+  }
+
+  &--icon--right {
+    padding-right: 1.25rem;
+  }
+
+  &--error {
+    border-color: $error;
+
+    & ~ .textinput__icon {
+      color: $error;
+    }
+
+    & ~ .textinput__underline {
+      background-color: $error !important;
+    }
+
+    & ~ .textinput__fieldname {
+      color: $error;
+    }
+
+    &::placeholder {
+      color: $placeholderError;
+    }
+
+    &:focus {
+      border-color: $error;
+
+      & ~ .textinput__underline {
+        box-shadow: 0 0 0 0.4px $error !important;
+      }
+    }
+  }
+
+  &:disabled {
+    & ~ .textinput__icon {
+      color: $disabled;
+    }
+
+    & ~ .textinput__underline {
+      background-color: $disabled;
+    }
+
+    & ~ .textinput__fieldname {
+      color: $disabled;
+    }
+
+    & ~ .textinput__error-list {
+      color: $disabled;
+    }
+
+    &::placeholder {
+      color: $disabled;
+    }
+  }
+}
+
+@mixin icon($position) {
+  position: absolute;
+  top: 1.25rem;
+  #{$position}: 0;
+  color: $active;
+}
+
+.textinput__icon--left {
+  @include icon(left)
+}
+
+.textinput__icon--right {
+  @include icon(right)
+}
