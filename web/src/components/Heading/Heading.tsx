@@ -1,19 +1,14 @@
+import { GlobalVariables } from '@/styles/global';
+import { mc } from '@/utils/mergeClassnames';
 import { ComponentPropsWithRef } from 'react';
-import styled, { DefaultTheme } from 'styled-components';
 
-export interface StrippedHeadingProps {
-  fontSize?: keyof DefaultTheme['fontSizes'];
-  fontColor?: keyof DefaultTheme['color'];
+import './Heading.scss';
+
+export interface HeadingProps extends ComponentPropsWithRef<'h1'> {
+  fontSize?: keyof GlobalVariables['fontSizes'];
 }
 
-export interface HeadingProps
-  extends ComponentPropsWithRef<'h1'>,
-    StrippedHeadingProps {}
-
-export const Heading = styled.h1<StrippedHeadingProps>`
-  line-height: 1;
-  font-weight: 700;
-  font-size: ${p => p.theme.fontSizes[p.fontSize || 'md']} !important;
-  color: ${p => p.theme.color[p.fontColor || 'white']};
-  font-size: 1rem;
-`;
+export const Heading = (props: HeadingProps) => {
+  const { fontSize = 'md', ...rest } = props;
+  return <h1 {...mc(rest, 'heading', `heading--font-${fontSize}`)} />;
+};

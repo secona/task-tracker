@@ -16,5 +16,4 @@ export const Default = Template.bind({});
 Default.args = {
   children: 'Hello, World!',
   fontSize: 'md',
-  fontColor: 'white',
 };
