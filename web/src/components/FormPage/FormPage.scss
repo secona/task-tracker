@@ -1,0 +1,24 @@
+.form-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.form-page__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2.15rem;
+  width: 22rem;
+  background-color: var(--elevation-1);
+  padding: 2rem 4.25rem;
+}
+
+.form-page__form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
