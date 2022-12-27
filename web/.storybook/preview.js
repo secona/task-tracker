@@ -1,16 +1,6 @@
-import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import theme from '../src/theme';
+import { globalVariables } from '../src/styles/global';
 
 import '../src/styles/global.scss';
-
-export const decorators = [
-  Story => (
-    <ThemeProvider theme={theme}>
-      <Story />
-    </ThemeProvider>
-  ),
-];
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -22,7 +12,7 @@ export const parameters = {
   },
   backgrounds: {
     default: 'Elevation 0',
-    values: Object.entries(theme.elevation).map(([k, v]) => ({
+    values: Object.entries(globalVariables.elevation).map(([k, v]) => ({
       name: 'Elevation ' + k,
       value: v,
     })),
