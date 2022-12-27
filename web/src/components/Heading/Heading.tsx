@@ -1,5 +1,5 @@
-import { GlobalVariables } from '@/styles/global';
-import { mc } from '@/utils/mergeClassnames';
+import { GlobalVariables } from '../../styles/global';
+import { mc } from '../../utils/mergeClassnames';
 import { ComponentPropsWithRef } from 'react';
 
 import './Heading.scss';
