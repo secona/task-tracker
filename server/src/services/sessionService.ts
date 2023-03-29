@@ -8,10 +8,20 @@ import { User } from '~/core/users/user.model';
 const SESSION_EXPIRE = 2_592_000_000; // 30 days
 
 function getCurrentTimeAndPlace(ip: string) {
-  const { city, region, country } = geoip.lookup(ip) || {};
+  const timeNow = Date.now();
+  const lookup = geoip.lookup(ip);
+
+  if (lookup === null) {
+    return {
+      date: timeNow,
+      loc: 'Unknown',
+    }
+  }
+
+  const { city, region, country } = lookup;
 
   return {
-    date: Date.now(),
+    date: timeNow,
     loc: `${city}, ${region}, ${country}`,
   };
 }
