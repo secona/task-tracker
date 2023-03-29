@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 import { nanoid } from 'nanoid';
 import { Project } from '../../src/core/projects/project.model'
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 const PROJECTS_PER_USER = 3;
 
