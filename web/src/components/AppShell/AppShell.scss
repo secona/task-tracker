@@ -1,0 +1,25 @@
+.app-shell {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell__topbar {
+  height: 3rem;
+  background-color: var(--elevation-1);
+}
+
+.app-shell__sidebar {
+  background-color: var(--elevation-1);
+}
+
+.app-shell__main {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 15rem auto;
+
+  > * {
+    height: 100%;
+  }
+}
