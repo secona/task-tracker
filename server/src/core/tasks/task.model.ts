@@ -45,7 +45,7 @@ export class TaskResponse {
 
 export const taskSchemas = new class {
   create = z.object({
-    task: z.string().nonempty(),
+    task: z.string().min(1),
     description: z.string().optional(),
     done: z.boolean().optional(),
   });

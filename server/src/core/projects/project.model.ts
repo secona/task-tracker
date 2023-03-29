@@ -43,7 +43,7 @@ export class ProjectResponse {
 
 export const projectSchemas = new class {
   create = z.object({
-    name: z.string().nonempty(),
+    name: z.string().min(1),
     description: z.string().optional(),
     color: z.number().optional(),
   });
