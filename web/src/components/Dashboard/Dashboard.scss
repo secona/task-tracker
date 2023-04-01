@@ -1,20 +1,20 @@
-.app-shell {
+.dashboard {
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.app-shell__topbar {
+.dashboard__topbar {
   height: 3rem;
   background-color: var(--elevation-1);
 }
 
-.app-shell__sidebar {
+.dashboard__sidebar {
   background-color: var(--elevation-1);
 }
 
-.app-shell__main {
+.dashboard__main {
   flex-grow: 1;
   display: grid;
   grid-template-columns: 15rem auto;

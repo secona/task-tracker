@@ -6,10 +6,10 @@ export interface DashboardProps extends ComponentPropsWithRef<'div'> {}
 export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
   ({ children, ...otherProps }, ref) => {
     return (
-      <div className='app-shell'>
-        <div className='app-shell__topbar'></div>
-        <div className='app-shell__main'>
-          <div className='app-shell__sidebar'></div>
+      <div className='dashboard'>
+        <div className='dashboard__topbar'></div>
+        <div className='dashboard__main'>
+          <div className='dashboard__sidebar'></div>
           <div {...otherProps} ref={ref}>
             {children}
           </div>
