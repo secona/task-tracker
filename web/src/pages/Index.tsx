@@ -1,7 +1,7 @@
-import { AppShell } from "@/components/AppShell/AppShell"
+import { Dashboard } from "@/components/Dashboard"
 
 export const Index = () => {
   return (
-    <AppShell></AppShell>
+    <Dashboard></Dashboard>
   );
 }

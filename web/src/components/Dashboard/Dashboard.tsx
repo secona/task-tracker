@@ -1,6 +1,6 @@
-import './AppShell.scss';
+import './Dashboard.scss';
 
-export const AppShell = () => {
+export const Dashboard = () => {
   return (
     <div className='app-shell'>
       <div className='app-shell__topbar'></div>
