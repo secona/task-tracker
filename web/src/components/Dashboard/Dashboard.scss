@@ -10,14 +10,10 @@
   background-color: var(--elevation-1);
 }
 
-.dashboard__sidebar {
-  background-color: var(--elevation-1);
-}
-
 .dashboard__main {
   flex-grow: 1;
-  display: grid;
-  grid-template-columns: 15rem auto;
+  display: flex;
+  flex-direction: row;
 
   > * {
     height: 100%;
