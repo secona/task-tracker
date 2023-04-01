@@ -1,3 +1,19 @@
+.dashboard__sidebar__item {
+  text-decoration: none;
+  height: 2.75rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+  align-items: center;
+  color: white;
+  padding: 0 1rem;
+  border-width: 0 0 0 0.2rem;
+  border-style: solid;
+  border-color: transparent;
+  font-size: var(--font-size-sm);
+}
+
 .dashboard__sidebar__item--active {
-  color: yellow;
+  background-color: #262626;
+  border-color: white;
 }
