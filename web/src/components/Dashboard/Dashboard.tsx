@@ -1,5 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 import { Sidebar } from './Sidebar';
+import { Topbar } from './Topbar';
 
 import './Dashboard.scss';
 
@@ -9,7 +10,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
   ({ children, ...otherProps }, ref) => {
     return (
       <div className='dashboard'>
-        <div className='dashboard__topbar'></div>
+        <Topbar />
         <div className='dashboard__main'>
           <Sidebar />
           <div {...otherProps} ref={ref}>
