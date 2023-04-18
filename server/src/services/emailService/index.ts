@@ -6,10 +6,12 @@ const templates = getTemplates();
 
 const emailService = {
   send(options: nodemailer.SendMailOptions) {
-    clients.email.sendMail({
-      ...options,
-      from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_ADDRESS}>`,
-    });
+    // NOTE: currently broken
+  
+    // clients.email.sendMail({
+    //   ...options,
+    //   from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_ADDRESS}>`,
+    // });
   },
 
   sendTemplate({ templateName, props, ...options }: SendTemplateOptions) {
