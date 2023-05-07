@@ -1,3 +1,5 @@
+@import '../../../styles/project-colors';
+
 .dashboard__sidebar__item {
   text-decoration: none;
   height: 2.75rem;
@@ -23,6 +25,6 @@
   border-color: white;
 }
 
-.dashboard__sidebar__item__icon--color-0 {
-  stroke: var(--color-blue-400);
+.dashboard__sidebar__item__icon {
+  @include project-colors(stroke);
 }

@@ -1,0 +1,5 @@
+@mixin project-colors($property) {
+  &--color-0 {
+    #{$property}: var(--color-blue-100);
+  }
+}

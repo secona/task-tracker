@@ -1,3 +1,5 @@
+@import '../../styles/project-colors';
+
 .project-card {
   border-radius: 0.3rem;
   background-color: var(--elevation-1);
@@ -9,10 +11,7 @@
   padding: 0.5rem 0.5rem 0.5rem 1rem;
   border-width: 0 0 0 0.3rem;
   border-style: solid;
-}
-
-.project-card--color-0 {
-  border-color: var(--color-blue-400);
+  @include project-colors(border-color);
 }
 
 .project-card > * {
