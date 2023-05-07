@@ -1,0 +1,17 @@
+.steps-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.steps-page__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2.15rem;
+  width: 22rem;
+  background-color: var(--elevation-1);
+  padding: 2rem 4.25rem;
+}

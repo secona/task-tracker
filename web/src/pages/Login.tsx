@@ -1,11 +1,15 @@
 import user, { ILogin } from '@/api/user';
 import { Button } from '@/components/Button';
-import { FormPage } from '@/components/FormPage/FormPage';
+import { StepsPage } from '@/components/StepsPage/StepsPage';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Mail, Key, LogIn } from 'react-feather';
 import { useForm } from 'react-hook-form';
+import { StepsPageForm } from '@/components/StepsPage/StepsPageForm/StepsPageForm';
+import { Link } from 'react-router-dom';
+
+import './LoginSlashRegister.scss';
 
 export const Login = () => {
   const {
@@ -17,31 +21,36 @@ export const Login = () => {
   });
 
   return (
-    <FormPage
-      onSubmit={handleSubmit(async v => {
-        const res = await user.login.login(v);
-        console.log(res);
-      })}
-    >
-      <Heading fontSize='6xl'>Welcome Back!</Heading>
-      <TextInput
-        {...register('email')}
-        LeftIcon={Mail}
-        placeholder='me@example.com'
-        fieldName='Email'
-        error={errors.email}
-      />
-      <TextInput
-        {...register('password')}
-        LeftIcon={Key}
-        placeholder='shhh...'
-        type='password'
-        fieldName='Password'
-        error={errors.password}
-      />
-      <Button RightIcon={LogIn} type='submit'>
-        Log In
-      </Button>
-    </FormPage>
+    <StepsPage className='login-slash-register-page'>
+      <StepsPageForm
+        onSubmit={handleSubmit(async v => {
+          const res = await user.login.login(v);
+          console.log(res);
+        })}
+      >
+        <Heading fontSize='6xl'>Welcome Back!</Heading>
+        <TextInput
+          {...register('email')}
+          LeftIcon={Mail}
+          placeholder='me@example.com'
+          fieldName='Email'
+          error={errors.email}
+        />
+        <TextInput
+          {...register('password')}
+          LeftIcon={Key}
+          placeholder='shhh...'
+          type='password'
+          fieldName='Password'
+          error={errors.password}
+        />
+        <Button RightIcon={LogIn} type='submit'>
+          Log In
+        </Button>
+      </StepsPageForm>
+      <span className='login-slash-register-page__alt-action'>
+        Don't have an account? <Link to='/register'>Register</Link> instead.
+      </span>
+    </StepsPage>
   );
 };

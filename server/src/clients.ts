@@ -27,7 +27,7 @@ export default {
 
   async connect() {
     await this.db.raw('SELECT 1').then(() => console.log('DB Connected'));
-    await this.email.verify().then(() => console.log('SMTP Verified'));
+    // await this.email.verify().then(() => console.log('SMTP Verified'));
     await this.redis.connect().then(() => console.log('Redis Connected'));
 
     await this.redis.ft.create(
