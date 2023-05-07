@@ -6,6 +6,7 @@ import './SidebarItem.scss';
 interface SidebarItemProps {
   to: string;
   label: string;
+  color?: number;
   Icon: Icon;
 }
 
@@ -22,8 +23,15 @@ export const SidebarItem = (props: SidebarItemProps) => {
         ].join(' ')
       }
     >
-      <props.Icon className='dashboard__sidebar__item__icon' size={16} />
-      {/* <span>{props.label}</span> */}
+      <props.Icon
+        className={
+          'dashboard__sidebar__item__icon' +
+          (props.color === undefined
+            ? ''
+            : ` dashboard__sidebar__item__icon--color-${props.color}`)
+        }
+        size={16}
+      />
       {props.label}
     </NavLink>
   );

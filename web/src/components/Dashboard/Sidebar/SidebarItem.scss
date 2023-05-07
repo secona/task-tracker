@@ -6,12 +6,12 @@
   gap: 1.2rem;
   align-items: center;
   color: white;
-  padding: 0 calc(
-    2.5rem/2 /* TopbarButton radius */
-    + 0.75rem /* Topbar horizontal padding */
-    - 16px/2 /* TopbarButton Icon radius */
-    - 0.2rem /* SidebarItem left border */
-  );
+  padding: 0
+    calc(
+      2.5rem / 2 /* TopbarButton radius */ + 0.75rem
+        /* Topbar horizontal padding */ - 16px / 2
+        /* TopbarButton Icon radius */ - 0.2rem /* SidebarItem left border */
+    );
   border-width: 0 0 0 0.2rem;
   border-style: solid;
   border-color: transparent;
@@ -21,4 +21,8 @@
 .dashboard__sidebar__item--active {
   background-color: #262626;
   border-color: white;
+}
+
+.dashboard__sidebar__item__icon--color-0 {
+  stroke: var(--color-blue-400);
 }
