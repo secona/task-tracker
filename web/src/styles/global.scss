@@ -1,4 +1,8 @@
-$font: "Sora";
+$font: 'Sora';
+
+p {
+  margin: 0;
+}
 
 body {
   font-family: $font;
@@ -7,7 +11,7 @@ body {
   margin: 0;
 }
 
-input[type=text]::placeholder {
+input[type='text']::placeholder {
   font-family: $font;
 }
 
@@ -15,8 +19,8 @@ input[type=text]::placeholder {
   --elevation-0: #000000;
   --elevation-1: #121212;
 
-  --font-size-xs: .75rem;
-  --font-size-sm: .875rem;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
@@ -580,3 +584,4 @@ input[type=text]::placeholder {
   --color-blue-grey-800-contrast: white;
   --color-blue-grey-900-contrast: white;
 }
+

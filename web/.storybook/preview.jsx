@@ -1,4 +1,5 @@
 import { globalVariables } from '../src/styles/global';
+import { MemoryRouter } from 'react-router-dom';
 
 import '../src/styles/global.scss';
 
@@ -19,3 +20,11 @@ export const parameters = {
     })),
   },
 };
+
+export const decorators = [
+  Story => (
+    <MemoryRouter>
+      <Story />
+    </MemoryRouter>
+  ),
+];

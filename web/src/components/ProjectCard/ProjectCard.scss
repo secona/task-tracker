@@ -1,0 +1,53 @@
+.project-card {
+  border-radius: 0.3rem;
+  background-color: var(--elevation-1);
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-width: 0 0 0 0.3rem;
+  border-style: solid;
+}
+
+.project-card--color-0 {
+  border-color: var(--color-blue-400);
+}
+
+.project-card > * {
+  margin: 0.3rem 0;
+}
+
+.project-card__name {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  font-size: var(--font-size-lg);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.project-card__description {
+  font-size: var(--font-size-xs);
+}
+
+.project-card__more {
+  $radius: 2.25rem;
+  background-color: transparent;
+  border-radius: 50%;
+  height: $radius;
+  width: $radius;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--color-grey-900);
+  }
+}
