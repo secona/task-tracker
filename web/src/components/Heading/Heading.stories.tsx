@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { Heading, HeadingProps } from './Heading';
 
 const HeadingWrapper = (props: HeadingProps) => <Heading {...props} />;
@@ -6,9 +6,9 @@ const HeadingWrapper = (props: HeadingProps) => <Heading {...props} />;
 export default {
   title: 'Heading',
   component: HeadingWrapper,
-} as ComponentMeta<typeof HeadingWrapper>;
+} as Meta<typeof HeadingWrapper>;
 
-const Template: ComponentStory<typeof HeadingWrapper> = props => (
+const Template: StoryFn<typeof HeadingWrapper> = props => (
   <HeadingWrapper {...props} />
 );
 
@@ -17,3 +17,4 @@ Default.args = {
   children: 'Hello, World!',
   fontSize: 'md',
 };
+

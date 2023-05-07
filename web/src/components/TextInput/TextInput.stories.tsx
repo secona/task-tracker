@@ -1,13 +1,13 @@
 import { TextInput } from './TextInput';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { ArrowRight, Mail } from 'react-feather';
 
 export default {
   title: 'TextInput',
   component: TextInput,
-} as ComponentMeta<typeof TextInput>;
+} as Meta<typeof TextInput>;
 
-const Template: ComponentStory<typeof TextInput> = args => <TextInput {...args} />;
+const Template: StoryFn<typeof TextInput> = args => <TextInput {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -44,3 +44,4 @@ WithRightAndLeftIcon.args = {
   disabled: false,
   error: undefined,
 };
+

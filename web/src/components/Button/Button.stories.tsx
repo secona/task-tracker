@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { Bookmark, Download, Send, Trash2 } from 'react-feather';
 import { Button } from './Button';
 
 export default {
   title: 'Button',
   component: Button,
-} as ComponentMeta<typeof Button>;
+} as Meta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = props => <Button {...props} />;
+const Template: StoryFn<typeof Button> = props => <Button {...props} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -38,3 +38,4 @@ WithRightAndLeftIcon.args = {
   children: 'Hello',
   disabled: false,
 };
+
