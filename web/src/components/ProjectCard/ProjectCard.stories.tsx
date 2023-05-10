@@ -12,5 +12,5 @@ export const Default = Template.bind({});
 Default.args = {
   name: 'School',
   description: 'For school things',
-  color: 0,
+  colorCode: 0,
 };

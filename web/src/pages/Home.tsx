@@ -7,10 +7,26 @@ export const Home = () => {
     <>
       <Heading fontSize='6xl'>Good Morning!</Heading>
       <div className='home'>
-        <ProjectCard name='School' description='For school things' color={0} />
-        <ProjectCard name='School' description='For school things' color={0} />
-        <ProjectCard name='School' description='For school things' color={0} />
-        <ProjectCard name='School' description='For school things' color={0} />
+        <ProjectCard
+          name='School'
+          description='For school things'
+          colorCode={0}
+        />
+        <ProjectCard
+          name='School'
+          description='For school things'
+          colorCode={0}
+        />
+        <ProjectCard
+          name='School'
+          description='For school things'
+          colorCode={0}
+        />
+        <ProjectCard
+          name='School'
+          description='For school things'
+          colorCode={0}
+        />
       </div>
     </>
   );
