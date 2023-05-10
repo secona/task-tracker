@@ -9,6 +9,7 @@ body {
   background-color: var(--elevation-0);
   color: white;
   margin: 0;
+  overflow-y: scroll;
 }
 
 input[type='text']::placeholder {
@@ -16,6 +17,8 @@ input[type='text']::placeholder {
 }
 
 :root {
+  color-scheme: dark;
+
   --elevation-0: #000000;
   --elevation-1: #121212;
 
@@ -584,4 +587,3 @@ input[type='text']::placeholder {
   --color-blue-grey-800-contrast: white;
   --color-blue-grey-900-contrast: white;
 }
-
