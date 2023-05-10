@@ -1,20 +1,20 @@
 import { mc } from '@/utils/mergeClassnames';
-import { forwardRef } from 'react';
+import { ComponentPropsWithRef, forwardRef } from 'react';
 import './ProjectCard.scss';
 import { Link } from 'react-router-dom';
 import { MoreVertical } from 'react-feather';
 
-interface ProjectCardProps {
+interface ProjectCardProps extends ComponentPropsWithRef<'div'> {
   name: string;
   description: string;
-  color: number;
+  colorCode: number;
 }
 
 export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
-  ({ name, description, color, ...props }, ref) => {
+  ({ name, description, colorCode, ...props }, ref) => {
     return (
       <div
-        {...mc(props, 'project-card', `project-card--color-${color}`)}
+        {...mc(props, 'project-card', `project-card--color-${colorCode}`)}
         ref={ref}
       >
         <div>
