@@ -3,7 +3,15 @@ export type GlobalVariables = typeof globalVariables;
 export const globalVariables = {
   elevation: {
     0: '#000000',
-    1: '#121212',
+    1: '#0d0d0d',
+    2: '#121212',
+    3: '#141414',
+    4: '#171717',
+    5: '#1c1c1c',
+    6: '#1f1f1f',
+    7: '#242424',
+    8: '#262626',
+    9: '#292929',
   },
 
   fontSizes: {
@@ -575,3 +583,4 @@ export const globalVariables = {
     'blue-grey-900-contrast': 'white',
   },
 };
+
