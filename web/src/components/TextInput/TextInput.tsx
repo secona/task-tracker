@@ -17,39 +17,41 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     const { LeftIcon, RightIcon, fieldName, error, ...otherProps } = props;
 
     return (
-      <label className='textinput textinput__label'>
-        <input
+      <div className='textinput__outer'>
+        <div
           {...mc(
-            otherProps,
-            'textinput__input',
-            !!error && 'textinput__input--error',
-            !!LeftIcon && 'textinput__input--icon--left',
-            !!RightIcon && 'textinput__input--icon--right'
+            {},
+            'textinput',
+            LeftIcon ? 'textinput--icon--left' : '',
+            RightIcon ? 'textinput--icon--right' : ''
           )}
-          ref={ref}
-        />
-        <span className='textinput__fieldname'>{fieldName}</span>
-        <span className='textinput__underline' />
-        {error && (
-          <ul className='textinput__error-list'>
-            {error.message?.split('|').map((v, i) => (
-              <li key={i}>{v}</li>
-            ))}
-          </ul>
-        )}
-        {LeftIcon && (
-          <LeftIcon
-            className='textinput__icon textinput__icon--left'
-            size={16}
+        >
+          {LeftIcon && <LeftIcon size={16} color='var(--color-grey-300)' />}
+          <input
+            {...mc(
+              otherProps,
+              'textinput__input',
+              error === undefined ? '' : 'textinput__input--error'
+            )}
+            ref={ref}
           />
+          {RightIcon && <RightIcon size={16} color='var(--color-grey-300)' />}
+          <fieldset className='textinput__fieldset'>
+            {fieldName ? <legend>{fieldName}</legend> : ''}
+          </fieldset>
+        </div>
+        {error !== undefined ? (
+          <div className='textinput__error-list'>
+            <ul>
+              {error.message?.split('|').map((v, i) => (
+                <li key={i}>{v}</li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          ''
         )}
-        {RightIcon && (
-          <RightIcon
-            className='textinput__icon textinput__icon--right'
-            size={16}
-          />
-        )}
-      </label>
+      </div>
     );
   }
 );

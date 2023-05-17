@@ -4,133 +4,121 @@ $placeholderColor: var(--color-grey-600);
 $error: var(--color-red-500);
 $placeholderError: var(--color-red-900);
 
-.textinput__label {
-  display: inline-block;
-  position: relative;
-  padding: 0;
-  padding: 1rem 0 0 0;
-  min-height: 3.1rem;
-}
-
-.textinput__underline {
-  width: 100%;
-  height: 0.5px;
-  position: absolute;
-  top: 2.6rem;
-  left: 0;
-  background-color: $active;
-}
-
-.textinput__fieldname {
-  font-size: var(--font-size-xs);
-  color: $active;
-  position: absolute;
-  top: 0;
-  left: 0;
+.textinput__outer {
+  display: inline-flex;
+  flex-direction: column;
 }
 
 .textinput__error-list {
-  display: inline-block;
-  color: $error;
-  padding: 0;
-  margin: 0;
-  margin-top: 4px;
-  font-size: var(--font-size-xs);
-  overflow: auto;
-  list-style-position: inside;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0 0 0.3rem 0.3rem;
+  background-color: rgba(255, 0, 0, 0.25);
+  border-color: var(--color-red-900);
+  border-style: solid;
+  border-width: 0 1px 1px 0.3rem;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    padding-left: 1rem;
+    font-size: var(--font-size-xs);
+    color: var(--color-grey-200);
+  }
 }
 
-.textinput__input {
-  outline: none;
-  box-sizing: border-box;
-  width: 100%;
-  border: none;
-  padding: 0.25rem 0;
-  background-color: transparent;
-  color: white;
-  font-family: inherit;
+.textinput {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  gap: 0.5rem;
 
-  &::placeholder {
-    color: $placeholderColor;
-  }
-
-  &:focus {
-    & ~ .textinput__underline {
-      box-shadow: 0 0 0 0.3px white;
-      background-color: white;
+  &--icon--right {
+    padding-right: 0.8rem;
+    .textinput__input {
+      padding-right: 0;
     }
   }
 
   &--icon--left {
-    padding-left: 1.25rem;
+    padding-left: 1.1rem;
+    .textinput__input {
+      padding-left: 0;
+    }
+  }
+}
+
+.textinput__fieldset {
+  position: absolute;
+  inset: calc(var(--font-size-xs) / -2) 0 0 0;
+  margin: 0;
+  padding: 0 0.4rem;
+  box-sizing: border-box;
+  width: 100%;
+  border-width: 1px 1px 1px 0.3rem;
+  border-color: rgba(255, 255, 255, 0.25);
+  border-left-color: rgba(255, 255, 255, 0.3);
+  border-style: solid;
+  border-radius: 0.3rem;
+  pointer-events: none;
+
+  legend {
+    font-size: var(--font-size-xs);
+    line-height: var(--font-size-xs);
+    display: block;
+    padding: 0 5px;
+    margin: 0;
   }
 
-  &--icon--right {
-    padding-right: 1.25rem;
+  &:empty {
+    inset: 0;
+  }
+}
+
+.textinput__input {
+  background: transparent;
+  display: block;
+  border: none;
+  font-family: inherit;
+  flex-grow: 1;
+  padding: 0.8rem;
+  padding-left: 1.1rem;
+  outline: none;
+
+  &:focus {
+    ~ .textinput__fieldset {
+      border-color: var(--color-white);
+      color: var(--color-white);
+    }
   }
 
-  &--error {
-    border-color: $error;
-
-    & ~ .textinput__icon {
-      color: $error;
-    }
-
-    & ~ .textinput__underline {
-      background-color: $error !important;
-    }
-
-    & ~ .textinput__fieldname {
-      color: $error;
-    }
-
-    &::placeholder {
-      color: $placeholderError;
-    }
-
-    &:focus {
-      border-color: $error;
-
-      & ~ .textinput__underline {
-        box-shadow: 0 0 0 0.4px $error !important;
-      }
+  &:hover {
+    ~ .textinput__fieldset {
+      border-color: var(--color-white);
+      color: var(--color-white);
     }
   }
 
   &:disabled {
-    & ~ .textinput__icon {
-      color: $disabled;
-    }
-
-    & ~ .textinput__underline {
-      background-color: $disabled;
-    }
-
-    & ~ .textinput__fieldname {
-      color: $disabled;
-    }
-
-    & ~ .textinput__error-list {
-      color: $disabled;
-    }
-
     &::placeholder {
-      color: $disabled;
+      color: var(--color-grey-700);
+    }
+
+    ~ .textinput__fieldset {
+      border-color: var(--color-grey-700);
+      color: var(--color-grey-700);
     }
   }
-}
 
-@mixin icon($position) {
-  position: absolute;
-  top: 1.25rem;
-  #{$position}: 0;
-  color: $active;
-}
+  &--error {
+    &::placeholder {
+      color: var(--color-red-700);
+    }
 
-.textinput__icon--left {
-  @include icon(left)
-}
-
-.textinput__icon--right {
-  @include icon(right)
+    ~ .textinput__fieldset {
+      border-color: var(--color-red-500) !important;
+      color: var(--color-red-500) !important;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
 }
