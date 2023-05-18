@@ -10,6 +10,9 @@ export const db = Knex({
 export const redis = createClient({
   url: process.env.REDIS_URL,
   password: process.env.REDIS_PASSWORD,
+  socket: {
+    connectTimeout: 50000,
+  },
 });
 
 export const email = nodemailer.createTransport({
