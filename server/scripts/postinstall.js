@@ -6,8 +6,12 @@ function copyEnvExample() {
   const envPath = path.join(serverRoot, '.env');
   const envExamplePath = path.join(serverRoot, '.env.example');
 
-  if (fs.existsSync(envPath)) return;
-  fs.copyFileSync(envExamplePath, envPath);
+  if (fs.existsSync(envPath)) {
+    console.log('`.env` file already exists...');
+  } else {
+    fs.copyFileSync(envExamplePath, envPath);
+    console.log('Copied `.env.example` to `.env`...');
+  }
 }
 
 copyEnvExample();
