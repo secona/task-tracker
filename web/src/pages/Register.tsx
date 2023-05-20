@@ -25,7 +25,7 @@ export const Register = () => {
       console.log(data);
       switch (data.status) {
         case 201:
-          return navigate('/');
+          return navigate(`/register/post?email=${getValues('email')}`);
         case 422:
           return setError('email', { message: data.data.msg });
         default:
@@ -39,6 +39,7 @@ export const Register = () => {
     formState: { errors },
     setError,
     handleSubmit,
+    getValues,
   } = useForm<IRegister>({
     resolver: yupResolver(user.register.validation),
   });

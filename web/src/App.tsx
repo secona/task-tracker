@@ -7,12 +7,14 @@ import { Inbox } from './pages/Inbox';
 import { Project } from './pages/Project';
 import { NotFound } from './pages/NotFound';
 import { Verify } from './pages/Verify';
+import { PostRegister } from './pages/PostRegister';
 
 export const App = () => {
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
+      <Route path='/register/post' element={<PostRegister />} />
       <Route path='/verify' element={<Verify />} />
 
       <Route path='/' element={<Index />}>
