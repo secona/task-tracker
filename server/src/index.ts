@@ -1,6 +1,7 @@
 require('dotenv').config();
 import { createServer } from './server';
 import clients from './clients';
+import { logger } from './utils/logger';
 
 async function main() {
   clients.connect();
@@ -8,7 +9,7 @@ async function main() {
   const app = createServer();
 
   app.listen(5000, () => {
-    console.log('Listening on port 5000 for', process.env.NODE_ENV);
+    logger.info('Listening on port 5000 for ' + process.env.NODE_ENV);
   });
 }
 

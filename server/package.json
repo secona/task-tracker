@@ -25,6 +25,7 @@
     "pg": "^8.11.0",
     "redis": "^4.6.6",
     "useragent": "^2.3.0",
+    "winston": "^3.8.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {

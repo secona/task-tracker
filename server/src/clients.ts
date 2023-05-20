@@ -1,6 +1,7 @@
 import Knex from 'knex';
 import nodemailer from 'nodemailer';
 import { createClient } from 'redis';
+import { logger } from './utils/logger';
 
 export const db = Knex({
   client: 'pg',
@@ -29,8 +30,8 @@ export default {
   email,
 
   async connect() {
-    await this.db.raw('SELECT 1').then(() => console.log('DB Connected'));
-    await this.email.verify().then(() => console.log('SMTP Verified'));
-    await this.redis.connect().then(() => console.log('Redis Connected'));
+    await this.db.raw('SELECT 1').then(() => logger.info('DB Connected'));
+    await this.email.verify().then(() => logger.info('SMTP Verified'));
+    await this.redis.connect().then(() => logger.info('Redis Connected'));
   },
 };
