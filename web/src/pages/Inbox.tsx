@@ -6,7 +6,7 @@ import './Project.scss';
 export const Inbox = () => {
   return (
     <div className='project'>
-      <Heading fontSize='6xl'>School</Heading>
+      <Heading fontSize='6xl'>Good Morning!</Heading>
       <TaskGroup title='Unfinished'>
         <Task
           task='Math Homework'
