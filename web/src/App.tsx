@@ -6,13 +6,15 @@ import { Home } from './pages/Home';
 import { Inbox } from './pages/Inbox';
 import { Project } from './pages/Project';
 import { NotFound } from './pages/NotFound';
+import { Verify } from './pages/Verify';
 
 export const App = () => {
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
-      
+      <Route path='/verify' element={<Verify />} />
+
       <Route path='/' element={<Index />}>
         <Route path='/' element={<Home />} />
         <Route path='/inbox' element={<Inbox />} />
@@ -22,4 +24,3 @@ export const App = () => {
     </Routes>
   );
 };
-

@@ -12,7 +12,7 @@ router.post('/', (req, res) => {
     .then(user => {
       if (!user) throw new Error();
       emailVerificationService.sendEmail(user);
-      res.send('Sent email!');
+      res.json({ success: true });
     })
     .catch(err => {
       console.error(err);
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/:vt', async (req, res) => {
+router.post('/:vt', async (req, res) => {
   const { vt } = req.params;
 
   try {
