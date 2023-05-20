@@ -1,14 +1,13 @@
-import { Button } from '@/components/Button';
-import { StepsPage } from '@/components/StepsPage/StepsPage';
-import { Heading } from '@/components/Heading';
-import { TextInput } from '@/components/TextInput';
-import user, { IRegister } from '@/api/user';
-import { Mail, User, Key, LogIn } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { StepsPageForm } from '@/components/StepsPage/StepsPageForm/StepsPageForm';
+import { Mail, User, Key, LogIn } from 'react-feather';
+import user, { IRegister } from '@/api/user';
+import { Button } from '@/components/Button';
+import { StepsPage, StepsPageForm } from '@/components/StepsPage';
+import { Heading } from '@/components/Heading';
+import { TextInput } from '@/components/TextInput';
 
 import './LoginSlashRegister.scss';
 

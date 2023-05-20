@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import './SidebarItem.scss';
 
-interface SidebarItemProps {
+export interface SidebarItemProps {
   to: string;
   label: string;
   color?: number;

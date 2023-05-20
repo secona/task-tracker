@@ -3,7 +3,7 @@ import { mc } from '@/utils/mergeClassnames';
 
 import './StepsPage.scss';
 
-interface StepsPageProps extends React.ComponentPropsWithRef<'div'> {}
+export interface StepsPageProps extends React.ComponentPropsWithRef<'div'> {}
 
 export const StepsPage = forwardRef<HTMLDivElement, StepsPageProps>(props => {
   return (

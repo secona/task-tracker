@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef } from 'react';
 
 import './TaskGroup.scss';
 
-interface TaskGroupProps extends ComponentPropsWithoutRef<'div'> {
+export interface TaskGroupProps extends ComponentPropsWithoutRef<'div'> {
   title: string;
 }
 
@@ -15,4 +15,3 @@ export const TaskGroup = ({ title, children, ...props }: TaskGroupProps) => {
     </div>
   );
 };
-

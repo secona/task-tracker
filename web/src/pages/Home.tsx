@@ -1,6 +1,7 @@
 import { Heading } from '@/components/Heading';
+import { ProjectCard } from '@/components/ProjectCard';
+
 import './Home.scss';
-import { ProjectCard } from '@/components/ProjectCard/ProjectCard';
 
 export const Home = () => {
   return (

@@ -1,6 +1,6 @@
 import { Heading } from '@/components/Heading';
-import { Task } from '@/components/Task/Task';
-import { TaskGroup } from '@/components/Task/TaskGroup/TaskGroup';
+import { Task, TaskGroup } from '@/components/Task';
+
 import './Project.scss';
 
 export const Project = () => {

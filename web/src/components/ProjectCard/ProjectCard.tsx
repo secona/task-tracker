@@ -4,7 +4,7 @@ import './ProjectCard.scss';
 import { Link } from 'react-router-dom';
 import { MoreVertical } from 'react-feather';
 
-interface ProjectCardProps extends ComponentPropsWithRef<'div'> {
+export interface ProjectCardProps extends ComponentPropsWithRef<'div'> {
   name: string;
   description: string;
   colorCode: number;

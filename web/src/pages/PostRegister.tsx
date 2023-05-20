@@ -1,6 +1,6 @@
-import { Heading } from '@/components/Heading';
-import { StepsPage } from '@/components/StepsPage/StepsPage';
 import { useSearchParams } from 'react-router-dom';
+import { Heading } from '@/components/Heading';
+import { StepsPage } from '@/components/StepsPage';
 
 export const PostRegister = () => {
   const [searchParams] = useSearchParams();

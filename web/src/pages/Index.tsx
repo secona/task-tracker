@@ -1,5 +1,5 @@
-import { Dashboard } from "@/components/Dashboard"
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
+import { Dashboard } from '@/components/Dashboard';
 
 export const Index = () => {
   return (
@@ -7,4 +7,4 @@ export const Index = () => {
       <Outlet />
     </Dashboard>
   );
-}
+};

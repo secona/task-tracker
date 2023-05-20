@@ -1,13 +1,12 @@
-import user, { ILogin } from '@/api/user';
-import { Button } from '@/components/Button';
-import { StepsPage } from '@/components/StepsPage/StepsPage';
-import { Heading } from '@/components/Heading';
-import { TextInput } from '@/components/TextInput';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Mail, Key, LogIn } from 'react-feather';
 import { useForm } from 'react-hook-form';
-import { StepsPageForm } from '@/components/StepsPage/StepsPageForm/StepsPageForm';
 import { Link } from 'react-router-dom';
+import user, { ILogin } from '@/api/user';
+import { Button } from '@/components/Button';
+import { StepsPage, StepsPageForm } from '@/components/StepsPage';
+import { Heading } from '@/components/Heading';
+import { TextInput } from '@/components/TextInput';
 
 import './LoginSlashRegister.scss';
 

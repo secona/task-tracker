@@ -3,7 +3,7 @@ import './Task.scss';
 import { mc } from '@/utils/mergeClassnames';
 import { CheckCircle, Circle } from 'react-feather';
 
-interface TaskProps extends ComponentPropsWithoutRef<'div'> {
+export interface TaskProps extends ComponentPropsWithoutRef<'div'> {
   task: string;
   description: string;
   colorCode?: number;
