@@ -1,8 +1,8 @@
 @import '../../styles/font-size';
 
 .heading {
-  line-height: 1;
   font-weight: 700;
   color: white;
+  margin: 0;
   @include font-size();
 }

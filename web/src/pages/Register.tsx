@@ -45,13 +45,13 @@ export const Register = () => {
   });
 
   return (
-    <StepsPage className='login-slash-register-page'>
+    <StepsPage>
+      <Heading fontSize='6xl'>Greetings!</Heading>
       <StepsPageForm
         onSubmit={handleSubmit(data => {
           mutation.mutate(data);
         })}
       >
-        <Heading fontSize='6xl'>Greetings!</Heading>
         <TextInput
           {...register('name')}
           LeftIcon={User}

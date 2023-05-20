@@ -1,5 +1,11 @@
 .home {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.home__grid {
   display: grid;
   grid-template-columns: auto auto;
-  gap: 1rem;
+  gap: 0.5rem;
 }

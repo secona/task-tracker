@@ -21,14 +21,14 @@ export const Login = () => {
   });
 
   return (
-    <StepsPage className='login-slash-register-page'>
+    <StepsPage>
+      <Heading fontSize='6xl'>Welcome Back!</Heading>
       <StepsPageForm
         onSubmit={handleSubmit(async v => {
           const res = await user.login.login(v);
           console.log(res);
         })}
       >
-        <Heading fontSize='6xl'>Welcome Back!</Heading>
         <TextInput
           {...register('email')}
           LeftIcon={Mail}
