@@ -1,5 +1,9 @@
 $font: 'Sora';
 
+* {
+  box-sizing: border-box;
+}
+
 p {
   margin: 0;
   line-height: 1.6 !important;
@@ -10,7 +14,7 @@ body {
   background-color: var(--elevation-0);
   color: white;
   margin: 0;
-  overflow-y: scroll;
+  overflow: hidden;
 }
 
 input[type='text']::placeholder {
