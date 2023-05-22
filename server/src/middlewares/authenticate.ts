@@ -19,8 +19,7 @@ const authenticate: RequestHandler = async (req, res, next) => {
       next();
     }
   } catch (err) {
-    console.error(err);
-    res.send(err);
+    next(err);
   }
 };
 

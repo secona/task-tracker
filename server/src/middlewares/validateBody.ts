@@ -16,8 +16,11 @@ export default (O: z.ZodObject<any>): RequestHandler =>
       req.parsedBody = result.data;
       next();
     } else {
-      res.status(422).json({
-        validationErrors: result.error.flatten().fieldErrors,
-      });
+      next(
+        new HTTPError(422, {
+          errType: 'VALIDATION_FAILED',
+          details: result.error.flatten().fieldErrors,
+        })
+      );
     }
   };
