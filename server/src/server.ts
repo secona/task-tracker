@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import routes from './routes';
 import { logger } from './utils/logger';
+import { errorHandler } from './middlewares/errorHandler';
 
 export function createServer() {
   const app = express();
@@ -21,6 +22,8 @@ export function createServer() {
   app.use(cookieParser());
 
   routes(app);
+
+  app.use(errorHandler);
 
   return app;
 }

@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import z from 'zod';
+import { HTTPError } from '~/utils/HTTPError';
 import isEmptyObject from '~/utils/isEmptyObject';
 
 export default (O: z.ZodObject<any>): RequestHandler =>
@@ -8,7 +9,9 @@ export default (O: z.ZodObject<any>): RequestHandler =>
 
     if (result.success) {
       if (isEmptyObject(result.data)) {
-        return res.status(422).json({ msg: 'Empty update' });
+        return next(
+          new HTTPError(422, { errType: 'VALIDATION_FAILED', details: {} })
+        );
       }
       req.parsedBody = result.data;
       next();

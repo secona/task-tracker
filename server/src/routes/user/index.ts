@@ -9,10 +9,11 @@ import { cookieKeys } from '~/services/cookieService';
 import emailVerificationService from '~/services/emailVerificationService';
 import { userUtil } from '~/core/users/user.util';
 import sessionService from '~/services/sessionService';
+import { HTTPError } from '~/utils/HTTPError';
 
 const router = Router();
 
-router.post('/', validateBody(userSchemas.create), async (req, res) => {
+router.post('/', validateBody(userSchemas.create), async (req, res, next) => {
   try {
     const user = await userRepository.create({
       ...(req.parsedBody as UserInsert),
@@ -25,14 +26,16 @@ router.post('/', validateBody(userSchemas.create), async (req, res) => {
   } catch (err) {
     if (err instanceof DatabaseError) {
       if (err.code === '23505') {
-        return res.status(422).json({ msg: 'Email already exists!' });
+        next(
+          new HTTPError(422, {
+            errType: 'VALIDATION_FAILED',
+            details: { email: ['email already taken'] },
+          })
+        );
       }
     }
 
-    console.error(err);
-    res.status(500).json({
-      msg: 'An unexpected error has occurred.',
-    });
+    next(err);
   }
 });
 
@@ -40,7 +43,7 @@ router
   .route('/')
   .all(authenticate)
 
-  .get((req, res) => {
+  .get((req, res, next) => {
     userRepository
       .getOne({ user_id: req.session.user_id })
       .then(user => {
@@ -49,14 +52,11 @@ router
         res.json({ success, user: userUtil.omitSensitive(user) });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   })
 
-  .delete((req, res) => {
+  .delete((req, res, next) => {
     userRepository
       .del({ user_id: req.session.user_id })
       .then(n => {
@@ -66,10 +66,7 @@ router
         res.json({ success });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   });
 
@@ -77,7 +74,7 @@ router.patch(
   '/profile',
   authenticate,
   validateBody(userSchemas.updateProfile),
-  (req, res) => {
+  (req, res, next) => {
     userRepository
       .update({ user_id: req.session.user_id }, req.parsedBody)
       .then(user => {
@@ -86,10 +83,7 @@ router.patch(
         res.json({ success, user: userUtil.omitSensitive(user) });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   }
 );
@@ -98,16 +92,27 @@ router.put(
   '/password',
   authenticate,
   validateBody(userSchemas.updatePassword),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const user = await userRepository.getOne({
         user_id: req.session.user_id,
       });
 
-      if (!user) return res.status(404).json({ msg: 'User not found' });
+      if (!user) {
+        await sessionService.delAll(req.session.user_id);
+        res.clearCookie(cookieKeys.SESSION_ID);
+        return next(new HTTPError(401, { errType: 'NOT_LOGGED_IN' }));
+      }
 
       if (!bcrypt.compareSync(req.body.current_password, user.password))
-        return res.status(403).json({ msg: 'Incorrect password' });
+        return next(
+          new HTTPError(403, {
+            errType: 'VALIDATION_FAILED',
+            details: {
+              password: ['incorrect password'],
+            },
+          })
+        );
 
       await userRepository.update(
         { user_id: req.session.user_id },
@@ -117,10 +122,7 @@ router.put(
       await sessionService.delAll(user.user_id);
       res.status(200).json({ success: true });
     } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        msg: 'An unexpected error has occurred.',
-      });
+      next(err);
     }
   }
 );
@@ -129,23 +131,24 @@ router.put(
   '/email',
   authenticate,
   validateBody(userSchemas.updateEmail),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const user = await userRepository.update(
         { user_id: req.session.user_id },
         { ...req.parsedBody, verified: false }
       );
 
-      if (!user) return res.status(404).json({ msg: 'user not found' });
+      if (!user) {
+        await sessionService.delAll(req.session.user_id);
+        res.clearCookie(cookieKeys.SESSION_ID);
+        return next(new HTTPError(401, { errType: 'NOT_LOGGED_IN' }));
+      }
 
       await emailVerificationService.sendEmail(user);
       await sessionService.delAll(user.user_id);
       res.status(200).json({ success: true });
     } catch (err) {
-      console.log(err);
-      res.status(500).json({
-        msg: 'An unexpected error has occurred.',
-      });
+      next(err);
     }
   }
 );

@@ -2,10 +2,12 @@ import { Router } from 'express';
 import tokenService from '~/services/tokenService';
 import { userRepository } from '~/core/users/user.repository';
 import emailVerificationService from '~/services/emailVerificationService';
+import { JsonWebTokenError } from 'jsonwebtoken';
+import { HTTPError } from '~/utils/HTTPError';
 
 const router = Router();
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   const { email } = req.body;
   userRepository
     .getOne({ email })
@@ -15,14 +17,11 @@ router.post('/', (req, res) => {
       res.json({ success: true });
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        msg: 'An unexpected error has occurred.',
-      });
+      next(err);
     });
 });
 
-router.post('/:vt', async (req, res) => {
+router.post('/:vt', async (req, res, next) => {
   const { vt } = req.params;
 
   try {
@@ -32,12 +31,12 @@ router.post('/:vt', async (req, res) => {
       res.json({ success: true });
     }
   } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      msg: 'An unexpected error has occurred.',
-    });
+    if (err instanceof JsonWebTokenError) {
+      return next(new HTTPError(400, { errType: 'TOKEN_MALFORMED' }));
+    }
+
+    next(err);
   }
 });
 
 export default router;
-

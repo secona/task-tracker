@@ -6,16 +6,18 @@ import validateBody from '~/middlewares/validateBody';
 import sessionService from '~/services/sessionService';
 import emailService from '~/services/emailService';
 import tokenService from '~/services/tokenService';
+import { JsonWebTokenError } from 'jsonwebtoken';
+import { HTTPError } from '~/utils/HTTPError';
 
 const router = Router();
 
 router.post(
   '/reset',
   validateBody(userSchemas.resetPassword),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const decoded = tokenService.forgotPassword.verify(req.body.token);
-      if (!decoded) return res.status(400).json({ msg: 'Invalid token' });
+      if (!decoded) throw new HTTPError(400, { errType: 'TOKEN_MALFORMED' });
 
       const user = await userRepository.update(
         { email: decoded.email, password: decoded.current_password },
@@ -23,16 +25,17 @@ router.post(
       );
 
       if (!user) {
-        res.status(400).json({ msg: 'Token no longer usable' });
+        next(new HTTPError(400, { errType: 'TOKEN_EXPIRED' }));
       } else {
         await sessionService.delAll(user.user_id);
         res.status(200).json({ success: true });
       }
     } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        msg: 'An unexpected error has occurred.',
-      });
+      if (err instanceof JsonWebTokenError) {
+        return next(new HTTPError(400, { errType: 'TOKEN_MALFORMED' }));
+      }
+
+      next(err);
     }
   }
 );
@@ -40,10 +43,16 @@ router.post(
 router.post(
   '/forgot',
   validateBody(userSchemas.forgotPassword),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const user = await userRepository.getOne({ email: req.body.email });
-      if (!user) return res.status(400).json({ msg: 'user not found' });
+      if (!user)
+        return next(
+          new HTTPError(400, {
+            errType: 'VALIDATION_FAILED',
+            details: { email: ['account does not exist'] },
+          })
+        );
 
       const token = tokenService.forgotPassword.sign({
         email: user.email,
@@ -61,10 +70,7 @@ router.post(
 
       res.status(200).json({ success: true });
     } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        msg: 'An unexpected error has occurred.',
-      });
+      next(err);
     }
   }
 );

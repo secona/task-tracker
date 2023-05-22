@@ -10,7 +10,7 @@ import { taskUtil } from '~/core/tasks/task.util';
 
 const router = Router();
 
-router.get('/', authenticate, (req, res) => {
+router.get('/', authenticate, (req, res, next) => {
   projectRepository
     .getMany({ user_id: req.session.user_id })
     .then(projects => {
@@ -20,10 +20,7 @@ router.get('/', authenticate, (req, res) => {
       });
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        msg: 'An unexpected error has occurred.',
-      });
+      next(err);
     });
 });
 
@@ -31,7 +28,7 @@ router.post(
   '/',
   authenticate,
   validateBody(projectSchemas.create),
-  (req, res) => {
+  (req, res, next) => {
     projectRepository
       .create({
         ...(req.parsedBody as ProjectInsert),
@@ -44,10 +41,7 @@ router.post(
         });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   }
 );
@@ -56,7 +50,7 @@ router
   .route('/:projectId')
   .all(authenticate)
 
-  .get((req, res) => {
+  .get((req, res, next) => {
     projectRepository
       .getOne({
         project_id: req.params.projectId,
@@ -68,14 +62,11 @@ router
         res.json({ success, project: projectUtil.omitSensitive(project) });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   })
 
-  .patch(validateBody(projectSchemas.update), (req, res) => {
+  .patch(validateBody(projectSchemas.update), (req, res, next) => {
     projectRepository
       .update(
         {
@@ -90,14 +81,11 @@ router
         res.json({ success, project: projectUtil.omitSensitive(project) });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   })
 
-  .delete((req, res) => {
+  .delete((req, res, next) => {
     projectRepository
       .del({
         project_id: req.params.projectId,
@@ -109,10 +97,7 @@ router
         res.json({ success });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   });
 
@@ -120,7 +105,7 @@ router.post(
   '/:projectId/tasks',
   authenticate,
   validateBody(taskSchemas.create),
-  (req, res) => {
+  (req, res, next) => {
     taskRepository
       .create(req.session.user_id, {
         ...(req.parsedBody as TaskInsert),
@@ -139,10 +124,7 @@ router.post(
         }
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   }
 );

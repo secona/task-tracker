@@ -8,7 +8,7 @@ import validateBody from '~/middlewares/validateBody';
 
 const router = Router();
 
-router.get('/', authenticate, (req, res) => {
+router.get('/', authenticate, (req, res, next) => {
   userRepository
     .getAllTasks(req.session.user_id, req.query)
     .then(tasks => {
@@ -18,10 +18,7 @@ router.get('/', authenticate, (req, res) => {
       });
     })
     .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        msg: 'An unexpected error has occurred.',
-      });
+      next(err);
     });
 });
 
@@ -29,7 +26,7 @@ router
   .route('/:taskId')
   .all(authenticate)
 
-  .get((req, res) => {
+  .get((req, res, next) => {
     taskRepository
       .getOne(req.session.user_id, req.params.taskId)
       .then(task => {
@@ -40,14 +37,11 @@ router
         });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   })
 
-  .patch(validateBody(taskSchemas.update), (req, res) => {
+  .patch(validateBody(taskSchemas.update), (req, res, next) => {
     taskRepository
       .update(req.session.user_id, req.params.taskId, req.parsedBody)
       .then(task => {
@@ -58,14 +52,11 @@ router
         });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   })
 
-  .delete((req, res) => {
+  .delete((req, res, next) => {
     taskRepository
       .del(req.session.user_id, req.params.taskId)
       .then(n => {
@@ -74,10 +65,7 @@ router
         res.json({ success });
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).json({
-          msg: 'An unexpected error has occurred.',
-        });
+        next(err);
       });
   });
 

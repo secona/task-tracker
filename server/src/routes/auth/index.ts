@@ -4,6 +4,7 @@ import { userRepository } from '~/core/users/user.repository';
 import sessionService from '~/services/sessionService';
 import cookieService, { cookieKeys } from '~/services/cookieService';
 import authenticate from '~/middlewares/authenticate';
+import { HTTPError } from '~/utils/HTTPError';
 
 const router = Router();
 
@@ -16,7 +17,7 @@ router.use('/password', require('./password').default);
 - if cookie and !redis (user remote logged out) -> clear cookie and continue
 - if cookie and redis (user is logged in) -> error 
 */
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const cookie = req.cookies[cookieKeys.SESSION_ID];
@@ -25,7 +26,7 @@ router.post('/login', async (req, res) => {
       const session = await sessionService.get(cookie);
 
       if (session) {
-        return res.status(400).json({ msg: 'Already logged in' });
+        next(new HTTPError(400, { errType: 'ALREADY_LOGGED_IN' }));
       } else {
         res.clearCookie(cookieKeys.SESSION_ID);
       }
@@ -34,27 +35,34 @@ router.post('/login', async (req, res) => {
     const user = await userRepository.getOne({ email });
 
     if (!user) {
-      return res.status(404).json({ message: 'User does not exist!' });
+      return next(
+        new HTTPError(404, {
+          errType: 'VALIDATION_FAILED',
+          details: {
+            email: ['account does not exist'],
+          },
+        })
+      );
     }
 
     if (!user.verified) {
-      return res.status(403).json({
-        message: 'You need to verify your email!',
-      });
+      return next(new HTTPError(403, { errType: 'UNVERIFIED_EMAIL' }));
     }
 
     if (!bcrypt.compareSync(password, user.password)) {
-      return res.status(400).json({ message: 'Incorrect password!' });
+      return next(
+        new HTTPError(400, {
+          errType: 'VALIDATION_FAILED',
+          details: { password: ['incorrect password'] },
+        })
+      );
     }
 
     const sessionId = await sessionService.create(user, req.headers, req.ip);
     res.cookie(...cookieService.sessionId(sessionId));
     res.status(201).json({ success: true });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      msg: 'An unexpected error has occurred.',
-    });
+    next(err);
   }
 });
 
@@ -64,11 +72,11 @@ router.post('/login', async (req, res) => {
 - if cookie and !redis (user remotely logged out) -> clear cookie and error
 - if cookie and redis (user is logged in) -> clear cookie and session (BEST SCENARIO)
 */
-router.post('/logout', async (req, res) => {
+router.post('/logout', async (req, res, next) => {
   const sessionId = req.cookies[cookieKeys.SESSION_ID];
 
   if (!sessionId) {
-    return res.status(400).json({ msg: 'You are not logged in' });
+    return next(new HTTPError(400, { errType: 'NOT_LOGGED_IN' }));
   }
 
   try {
@@ -76,22 +84,16 @@ router.post('/logout', async (req, res) => {
     res.clearCookie(cookieKeys.SESSION_ID);
     res.status(200).json({ success: true });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      msg: 'An unexpected error has occurred.',
-    });
+    next(err);
   }
 });
 
-router.get('/sessions', authenticate, async (req, res) => {
+router.get('/sessions', authenticate, async (req, res, next) => {
   try {
     const sessions = await sessionService.getAll(req.session.user_id);
     res.status(200).json({ sessions: sessions.documents });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      msg: 'An unexpected error has occurred.',
-    });
+    next(err);
   }
 });
 
