@@ -4,7 +4,7 @@ import login from './login';
 export { type IRegister } from './register';
 export { type ILogin } from './login';
 
-export default { 
+export default {
   register,
   login,
-}
+};

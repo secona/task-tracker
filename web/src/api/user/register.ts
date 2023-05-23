@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { SchemaOf, object, string } from 'yup';
+import { ResponseBody } from '@/api';
 
 export interface IRegister {
   name: string;
   email: string;
   password: string;
 }
+
+export type RegisterResponse = ResponseBody;
 
 const validation: SchemaOf<IRegister> = object().shape({
   name: string().required(),
@@ -48,8 +51,8 @@ const validation: SchemaOf<IRegister> = object().shape({
 });
 
 const register = async (data: IRegister) => {
-  return axios.post('/api/user', data);
-}
+  return axios.post<RegisterResponse>('/api/user', data);
+};
 
 export default {
   validation,

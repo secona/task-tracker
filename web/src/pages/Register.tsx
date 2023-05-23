@@ -20,15 +20,19 @@ export const Register = () => {
       return user.register.register(data!);
     },
     // whatever the status code, onSuccess will trigger
-    onSuccess: data => {
+    onSuccess: ({ data }) => {
       console.log(data);
-      switch (data.status) {
-        case 201:
-          return navigate(`/register/post?email=${getValues('email')}`);
-        case 422:
-          return setError('email', { message: data.data.msg });
-        default:
-          alert('An unexpected error has occurred.');
+      if (data.msg !== 'SUCCESS') {
+        switch (data.msg) {
+          case 'VALIDATION_FAILED':
+            return Object.entries(data.details).forEach(([k, v]) => {
+              setError(k as keyof IRegister, { message: v.join('|') });
+            });
+          default:
+            return alert('An unexpected error has occurred.');
+        }
+      } else {
+        navigate(`/register/post?email=${getValues('email')}`);
       }
     },
   });

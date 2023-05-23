@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { object, SchemaOf, string } from 'yup';
+import { ResponseBody } from '..';
 
 export interface ILogin {
   email: string;
   password: string;
 }
+
+export type LoginResponse = ResponseBody;
 
 const validation: SchemaOf<ILogin> = object().shape({
   email: string().required(),
@@ -12,7 +15,7 @@ const validation: SchemaOf<ILogin> = object().shape({
 });
 
 const login = async (data: ILogin) => {
-  return axios.post('/api/auth/login', data);
+  return axios.post<LoginResponse>('/api/auth/login', data);
 };
 
 export default {
