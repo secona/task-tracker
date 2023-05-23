@@ -45,7 +45,7 @@ router
       .getOne({ user_id: req.session.user_id })
       .then(user => {
         if (user) {
-          res.status(200).json(<Body<['user']>>{
+          res.status(200).json(<Body<'user'>>{
             msg: 'SUCCESS',
             user: userUtil.omitSensitive(user),
           });
@@ -85,7 +85,7 @@ router.patch(
       .update({ user_id: req.session.user_id }, req.parsedBody)
       .then(user => {
         if (user) {
-          res.status(200).json(<Body<['user']>>{
+          res.status(200).json(<Body<'user'>>{
             msg: 'SUCCESS',
             user: userUtil.omitSensitive(user),
           });

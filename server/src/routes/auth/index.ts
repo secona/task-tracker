@@ -86,7 +86,7 @@ router.post('/logout', async (req, res, next) => {
 router.get('/sessions', authenticate, async (req, res, next) => {
   try {
     const sessions = await sessionService.getAll(req.session.user_id);
-    res.status(200).json(<Body<['sessions']>>{
+    res.status(200).json(<Body<'sessions'>>{
       msg: 'SUCCESS',
       sessions: sessions.documents,
     });

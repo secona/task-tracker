@@ -12,7 +12,7 @@ router.get('/', authenticate, (req, res, next) => {
   userRepository
     .getAllTasks(req.session.user_id, req.query)
     .then(tasks => {
-      res.status(200).json(<Body<['tasks']>>{
+      res.status(200).json(<Body<'tasks'>>{
         msg: 'SUCCESS',
         tasks: taskUtil.omitSensitive(tasks),
       });
@@ -31,7 +31,7 @@ router
       .getOne(req.session.user_id, req.params.taskId)
       .then(task => {
         if (task) {
-          res.status(200).json(<Body<['task']>>{
+          res.status(200).json(<Body<'task'>>{
             msg: 'SUCCESS',
             task: taskUtil.omitSensitive(task),
           });
@@ -49,7 +49,7 @@ router
       .update(req.session.user_id, req.params.taskId, req.parsedBody)
       .then(task => {
         if (task) {
-          res.status(200).json(<Body<['task']>>{
+          res.status(200).json(<Body<'task'>>{
             msg: 'SUCCESS',
             task: taskUtil.omitSensitive(task),
           });

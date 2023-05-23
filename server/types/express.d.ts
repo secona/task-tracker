@@ -12,7 +12,7 @@ declare global {
 }
 
 declare module 'express' {
-  type Body<Keys extends string[] = []> =
+  type Body<Keys extends string = void> =
     | {
         msg: 'VALIDATION_FAILED';
         details: typeToFlattenedError<{ [x: string]: any }>['fieldErrors'];

@@ -14,7 +14,7 @@ router.get('/', authenticate, (req, res, next) => {
   projectRepository
     .getMany({ user_id: req.session.user_id })
     .then(projects => {
-      res.status(200).json(<Body<['projects']>>{
+      res.status(200).json(<Body<'projects'>>{
         msg: 'SUCCESS',
         projects: projectUtil.omitSensitive(projects),
       });
@@ -35,7 +35,7 @@ router.post(
         user_id: req.session.user_id,
       })
       .then(project => {
-        res.status(201).json(<Body<['projects']>>{
+        res.status(201).json(<Body<'project'>>{
           msg: 'SUCCESS',
           project: projectUtil.omitSensitive(project),
         });
@@ -59,7 +59,7 @@ router
       .then(project => {
         const success = !!project;
         if (project) {
-          res.status(200).json(<Body<['projects']>>{
+          res.status(200).json(<Body<'project'>>{
             msg: 'SUCCESS',
             project: projectUtil.omitSensitive(project),
           });
@@ -85,7 +85,7 @@ router
       )
       .then(project => {
         if (project) {
-          res.status(200).json(<Body<['projects']>>{
+          res.status(200).json(<Body<'projects'>>{
             msg: 'SUCCESS',
             projects: projectUtil.omitSensitive(project),
           });
@@ -134,7 +134,7 @@ router.post(
       })
       .then(task => {
         if (task) {
-          res.status(201).json(<Body<['task']>>{
+          res.status(201).json(<Body<'task'>>{
             msg: 'SUCCESS',
             task: taskUtil.omitSensitive(task),
           });
