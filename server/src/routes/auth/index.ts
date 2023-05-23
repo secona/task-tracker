@@ -25,7 +25,7 @@ router.post('/login', async (req, res, next) => {
       const session = await sessionService.get(cookie);
 
       if (session) {
-        res.status(400).json(<Body>{ msg: 'ALREADY_LOGGED_IN' });
+        return res.status(400).json(<Body>{ msg: 'ALREADY_LOGGED_IN' });
       } else {
         res.clearCookie(cookieKeys.SESSION_ID);
       }
