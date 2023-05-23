@@ -1,12 +1,7 @@
-import { ErrorRequestHandler } from 'express';
-import { HTTPError } from '~/utils/HTTPError';
+import { Body, ErrorRequestHandler } from 'express';
 import { logger } from '~/utils/logger';
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  if (err instanceof HTTPError) {
-    return res.status(err.status).json(err.body);
-  }
-
   logger.error(
     JSON.stringify(
       {
@@ -28,5 +23,5 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       err.stack,
     { category: 'HTTP' }
   );
-  res.status(500).json({ errType: 'UNKNOWN' });
+  res.status(500).json(<Body>{ msg: 'UNKNOWN' });
 };

@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Body, Router } from 'express';
 import { projectRepository } from '~/core/projects/project.repository';
 import { ProjectInsert, projectSchemas } from '~/core/projects/project.model';
 import authenticate from '~/middlewares/authenticate';
@@ -14,8 +14,8 @@ router.get('/', authenticate, (req, res, next) => {
   projectRepository
     .getMany({ user_id: req.session.user_id })
     .then(projects => {
-      res.status(200).json({
-        success: true,
+      res.status(200).json(<Body<['projects']>>{
+        msg: 'SUCCESS',
         projects: projectUtil.omitSensitive(projects),
       });
     })
@@ -35,8 +35,8 @@ router.post(
         user_id: req.session.user_id,
       })
       .then(project => {
-        res.status(201).json({
-          success: true,
+        res.status(201).json(<Body<['projects']>>{
+          msg: 'SUCCESS',
           project: projectUtil.omitSensitive(project),
         });
       })
@@ -58,8 +58,16 @@ router
       })
       .then(project => {
         const success = !!project;
-        res.status(success ? 200 : 404);
-        res.json({ success, project: projectUtil.omitSensitive(project) });
+        if (project) {
+          res.status(200).json(<Body<['projects']>>{
+            msg: 'SUCCESS',
+            project: projectUtil.omitSensitive(project),
+          });
+        } else {
+          res.status(400).json(<Body>{
+            msg: 'NOT_FOUND',
+          });
+        }
       })
       .catch(err => {
         next(err);
@@ -76,9 +84,16 @@ router
         req.parsedBody
       )
       .then(project => {
-        const success = !!project;
-        res.status(success ? 200 : 404);
-        res.json({ success, project: projectUtil.omitSensitive(project) });
+        if (project) {
+          res.status(200).json(<Body<['projects']>>{
+            msg: 'SUCCESS',
+            projects: projectUtil.omitSensitive(project),
+          });
+        } else {
+          res.status(404).json(<Body>{
+            msg: 'NOT_FOUND',
+          });
+        }
       })
       .catch(err => {
         next(err);
@@ -92,9 +107,15 @@ router
         user_id: req.session.user_id,
       })
       .then(n => {
-        const success = n > 0;
-        res.status(success ? 200 : 404);
-        res.json({ success });
+        if (n > 0) {
+          res.status(200).json(<Body>{
+            msg: 'SUCCESS',
+          });
+        } else {
+          res.status(404).json(<Body>{
+            msg: 'NOT_FOUND',
+          });
+        }
       })
       .catch(err => {
         next(err);
@@ -113,13 +134,13 @@ router.post(
       })
       .then(task => {
         if (task) {
-          res.status(201).json({
-            success: true,
+          res.status(201).json(<Body<['task']>>{
+            msg: 'SUCCESS',
             task: taskUtil.omitSensitive(task),
           });
         } else {
-          res.status(404).json({
-            success: false,
+          res.status(404).json(<Body>{
+            msg: 'NOT_FOUND',
           });
         }
       })

@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Body, Router } from 'express';
 import bcrypt from 'bcrypt';
 import { DatabaseError } from 'pg';
 import { userRepository } from '~/core/users/user.repository';
@@ -9,7 +9,6 @@ import { cookieKeys } from '~/services/cookieService';
 import emailVerificationService from '~/services/emailVerificationService';
 import { userUtil } from '~/core/users/user.util';
 import sessionService from '~/services/sessionService';
-import { HTTPError } from '~/utils/HTTPError';
 
 const router = Router();
 
@@ -22,16 +21,14 @@ router.post('/', validateBody(userSchemas.create), async (req, res, next) => {
     });
 
     emailVerificationService.sendEmail(user);
-    res.status(201).json({ success: true });
+    res.status(201).json(<Body>{ msg: 'SUCCESS' });
   } catch (err) {
     if (err instanceof DatabaseError) {
       if (err.code === '23505') {
-        next(
-          new HTTPError(422, {
-            errType: 'VALIDATION_FAILED',
-            details: { email: ['email already taken'] },
-          })
-        );
+        res.status(422).json(<Body>{
+          msg: 'VALIDATION_FAILED',
+          details: { email: ['email already taken'] },
+        });
       }
     }
 
@@ -47,9 +44,16 @@ router
     userRepository
       .getOne({ user_id: req.session.user_id })
       .then(user => {
-        const success = !!user;
-        res.status(success ? 200 : 404);
-        res.json({ success, user: userUtil.omitSensitive(user) });
+        if (user) {
+          res.status(200).json(<Body<['user']>>{
+            msg: 'SUCCESS',
+            user: userUtil.omitSensitive(user),
+          });
+        } else {
+          res.status(404).json(<Body>{
+            msg: 'NOT_FOUND',
+          });
+        }
       })
       .catch(err => {
         next(err);
@@ -60,10 +64,12 @@ router
     userRepository
       .del({ user_id: req.session.user_id })
       .then(n => {
-        const success = n > 0;
-        if (success) res.clearCookie(cookieKeys.SESSION_ID);
-        res.status(success ? 200 : 404);
-        res.json({ success });
+        if (n > 0) {
+          res.clearCookie(cookieKeys.SESSION_ID);
+          res.status(200).json(<Body>{ msg: 'SUCCESS' });
+        } else {
+          res.status(404).json(<Body>{ msg: 'NOT_FOUND' });
+        }
       })
       .catch(err => {
         next(err);
@@ -78,9 +84,14 @@ router.patch(
     userRepository
       .update({ user_id: req.session.user_id }, req.parsedBody)
       .then(user => {
-        const success = !!user;
-        res.status(success ? 200 : 404);
-        res.json({ success, user: userUtil.omitSensitive(user) });
+        if (user) {
+          res.status(200).json(<Body<['user']>>{
+            msg: 'SUCCESS',
+            user: userUtil.omitSensitive(user),
+          });
+        } else {
+          res.status(404).json(<Body>{ msg: 'NOT_FOUND' });
+        }
       })
       .catch(err => {
         next(err);
@@ -101,18 +112,14 @@ router.put(
       if (!user) {
         await sessionService.delAll(req.session.user_id);
         res.clearCookie(cookieKeys.SESSION_ID);
-        return next(new HTTPError(401, { errType: 'NOT_LOGGED_IN' }));
+        return res.status(401).json(<Body>{ msg: 'NOT_LOGGED_IN' });
       }
 
       if (!bcrypt.compareSync(req.body.current_password, user.password))
-        return next(
-          new HTTPError(403, {
-            errType: 'VALIDATION_FAILED',
-            details: {
-              password: ['incorrect password'],
-            },
-          })
-        );
+        return res.status(403).json(<Body>{
+          msg: 'VALIDATION_FAILED',
+          details: { password: ['incorrect password'] },
+        });
 
       await userRepository.update(
         { user_id: req.session.user_id },
@@ -120,7 +127,7 @@ router.put(
       );
 
       await sessionService.delAll(user.user_id);
-      res.status(200).json({ success: true });
+      res.status(200).json(<Body>{ msg: 'SUCCESS' });
     } catch (err) {
       next(err);
     }
@@ -141,12 +148,12 @@ router.put(
       if (!user) {
         await sessionService.delAll(req.session.user_id);
         res.clearCookie(cookieKeys.SESSION_ID);
-        return next(new HTTPError(401, { errType: 'NOT_LOGGED_IN' }));
+        return res.status(401).json(<Body>{ msg: 'NOT_LOGGED_IN' });
       }
 
       await emailVerificationService.sendEmail(user);
       await sessionService.delAll(user.user_id);
-      res.status(200).json({ success: true });
+      res.status(200).json(<Body>{ msg: 'SUCCESS' });
     } catch (err) {
       next(err);
     }

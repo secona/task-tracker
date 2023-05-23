@@ -1,13 +1,12 @@
-import { Router } from 'express';
+import { Body, Router } from 'express';
 import bcrypt from 'bcrypt';
+import { JsonWebTokenError } from 'jsonwebtoken';
 import { userSchemas } from '~/core/users/user.model';
 import { userRepository } from '~/core/users/user.repository';
 import validateBody from '~/middlewares/validateBody';
 import sessionService from '~/services/sessionService';
 import emailService from '~/services/emailService';
 import tokenService from '~/services/tokenService';
-import { JsonWebTokenError } from 'jsonwebtoken';
-import { HTTPError } from '~/utils/HTTPError';
 
 const router = Router();
 
@@ -17,7 +16,8 @@ router.post(
   async (req, res, next) => {
     try {
       const decoded = tokenService.forgotPassword.verify(req.body.token);
-      if (!decoded) throw new HTTPError(400, { errType: 'TOKEN_MALFORMED' });
+      if (!decoded)
+        return res.status(400).json(<Body>{ msg: 'TOKEN_MALFORMED' });
 
       const user = await userRepository.update(
         { email: decoded.email, password: decoded.current_password },
@@ -25,14 +25,14 @@ router.post(
       );
 
       if (!user) {
-        next(new HTTPError(400, { errType: 'TOKEN_EXPIRED' }));
+        res.status(400).json(<Body>{ msg: 'TOKEN_EXPIRED' });
       } else {
         await sessionService.delAll(user.user_id);
-        res.status(200).json({ success: true });
+        res.status(200).json(<Body>{ msg: 'SUCCESS' });
       }
     } catch (err) {
       if (err instanceof JsonWebTokenError) {
-        return next(new HTTPError(400, { errType: 'TOKEN_MALFORMED' }));
+        return res.status(400).json(<Body>{ msg: 'TOKEN_MALFORMED' });
       }
 
       next(err);
@@ -47,12 +47,10 @@ router.post(
     try {
       const user = await userRepository.getOne({ email: req.body.email });
       if (!user)
-        return next(
-          new HTTPError(400, {
-            errType: 'VALIDATION_FAILED',
-            details: { email: ['account does not exist'] },
-          })
-        );
+        return res.status(400).json(<Body>{
+          msg: 'VALIDATION_FAILED',
+          details: { email: ['account does not exist'] },
+        });
 
       const token = tokenService.forgotPassword.sign({
         email: user.email,
@@ -68,7 +66,7 @@ router.post(
         },
       });
 
-      res.status(200).json({ success: true });
+      res.status(200).json(<Body>{ msg: 'SUCCESS' });
     } catch (err) {
       next(err);
     }

@@ -11,3 +11,18 @@ declare global {
   }
 }
 
+declare module 'express' {
+  type Body<Keys extends string[] = []> =
+    | {
+        msg: 'VALIDATION_FAILED';
+        details: typeToFlattenedError<{ [x: string]: any }>['fieldErrors'];
+      }
+    | { msg: 'NOT_LOGGED_IN' }
+    | { msg: 'ALREADY_LOGGED_IN' }
+    | { msg: 'UNVERIFIED_EMAIL' }
+    | { msg: 'TOKEN_EXPIRED' }
+    | { msg: 'TOKEN_MALFORMED' }
+    | { msg: 'UNKNOWN' }
+    | ({ msg: 'SUCCESS' } & Record<Keys, any>)
+    | ({ msg: 'NOT_FOUND' } & Record<Keys, {}>);
+}

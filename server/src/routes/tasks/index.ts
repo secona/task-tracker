@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Body, Router } from 'express';
 import { taskSchemas } from '~/core/tasks/task.model';
 import { taskRepository } from '~/core/tasks/task.repository';
 import { taskUtil } from '~/core/tasks/task.util';
@@ -12,8 +12,8 @@ router.get('/', authenticate, (req, res, next) => {
   userRepository
     .getAllTasks(req.session.user_id, req.query)
     .then(tasks => {
-      res.status(200).json({
-        success: true,
+      res.status(200).json(<Body<['tasks']>>{
+        msg: 'SUCCESS',
         tasks: taskUtil.omitSensitive(tasks),
       });
     })
@@ -30,11 +30,14 @@ router
     taskRepository
       .getOne(req.session.user_id, req.params.taskId)
       .then(task => {
-        res.status(task ? 200 : 404);
-        res.json({
-          success: !!task,
-          task: taskUtil.omitSensitive(task),
-        });
+        if (task) {
+          res.status(200).json(<Body<['task']>>{
+            msg: 'SUCCESS',
+            task: taskUtil.omitSensitive(task),
+          });
+        } else {
+          res.status(404).json(<Body>{ msg: 'NOT_FOUND' });
+        }
       })
       .catch(err => {
         next(err);
@@ -45,11 +48,14 @@ router
     taskRepository
       .update(req.session.user_id, req.params.taskId, req.parsedBody)
       .then(task => {
-        res.status(task ? 200 : 404);
-        res.json({
-          success: !!task,
-          task: taskUtil.omitSensitive(task),
-        });
+        if (task) {
+          res.status(200).json(<Body<['task']>>{
+            msg: 'SUCCESS',
+            task: taskUtil.omitSensitive(task),
+          });
+        } else {
+          res.status(404).json(<Body>{ msg: 'NOT_FOUND' });
+        }
       })
       .catch(err => {
         next(err);
@@ -60,9 +66,15 @@ router
     taskRepository
       .del(req.session.user_id, req.params.taskId)
       .then(n => {
-        const success = n > 0;
-        res.status(success ? 200 : 404);
-        res.json({ success });
+        if (n > 0) {
+          res.status(200).json(<Body>{
+            msg: 'SUCCESS',
+          });
+        } else {
+          res.status(404).json(<Body>{
+            msg: 'NOT_FOUND',
+          });
+        }
       })
       .catch(err => {
         next(err);
@@ -70,4 +82,3 @@ router
   });
 
 export default router;
-
