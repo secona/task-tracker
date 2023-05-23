@@ -1,4 +1,9 @@
-import { Route, Routes } from 'react-router-dom';
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from 'react-router-dom';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Index } from './pages/Index';
@@ -10,19 +15,46 @@ import { Verify } from './pages/Verify';
 import { PostRegister } from './pages/PostRegister';
 
 export const App = () => {
-  return (
-    <Routes>
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/register/post' element={<PostRegister />} />
-      <Route path='/verify' element={<Verify />} />
-
-      <Route path='/' element={<Index />}>
-        <Route path='/' element={<Home />} />
-        <Route path='/inbox' element={<Inbox />} />
-        <Route path='/p/:projectId' element={<Project />} />
-        <Route path='*' element={<NotFound />} />
-      </Route>
-    </Routes>
-  );
+  return <RouterProvider router={router} />;
 };
+
+export const router = createBrowserRouter([
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/register',
+    element: <Register />,
+  },
+  {
+    path: '/register/post',
+    element: <PostRegister />,
+  },
+  {
+    path: '/verify',
+    element: <Verify />,
+  },
+  {
+    path: '/',
+    element: <Index />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/inbox',
+        element: <Inbox />,
+      },
+      {
+        path: '/p/:projectId',
+        element: <Project />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+    ],
+  },
+]);
