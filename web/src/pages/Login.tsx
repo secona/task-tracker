@@ -1,17 +1,22 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Mail, Key, LogIn } from 'react-feather';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import user, { ILogin } from '@/api/user';
 import { Button } from '@/components/Button';
 import { StepsPage, StepsPageForm } from '@/components/StepsPage';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
+import { keys } from '@/config/keys';
 
 import './LoginSlashRegister.scss';
 
 export const Login = () => {
+  if (localStorage.getItem(keys.isLoggedIn) === 'true') {
+    return <Navigate to='/' />;
+  }
+
   const navigate = useNavigate();
   const mutation = useMutation({
     mutationKey: ['login'],
@@ -21,6 +26,7 @@ export const Login = () => {
     onSuccess: ({ data }) => {
       if (data.msg === 'SUCCESS') {
         navigate('/');
+        localStorage.setItem(keys.isLoggedIn, 'true');
       } else {
         switch (data.msg) {
           case 'VALIDATION_FAILED':
@@ -30,6 +36,7 @@ export const Login = () => {
           case 'UNVERIFIED_EMAIL':
             return navigate(`/register/post?email=${getValues('email')}`);
           case 'ALREADY_LOGGED_IN':
+            localStorage.setItem(keys.isLoggedIn, 'true');
             return navigate('/');
           default:
             alert('An unexpected error has occurred.');
