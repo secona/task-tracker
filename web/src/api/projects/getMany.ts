@@ -11,7 +11,7 @@ export type ProjectGetManyResponse = ResponseBody<{
 export interface ProjectGetManyAPI
   extends BaseAPI<ProjectGetManyData, ProjectGetManyResponse> {}
 
-const getMany = () => {
+const getMany: ProjectGetManyAPI = () => {
   return axios.get<ProjectGetManyResponse>('/api/projects');
 };
 
