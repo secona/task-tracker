@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Dashboard } from '@/components/Dashboard';
 
-export const Index = () => {
+export const RootLayout = () => {
   return (
     <Dashboard>
       <Outlet />

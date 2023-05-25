@@ -3,12 +3,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from 'axios';
 
+import { RootLayout } from './pages/root/_layout/RootLayout';
+
+import { Home } from './pages/root/Home';
+import { Inbox } from './pages/root/Inbox';
+import { Project } from './pages/root/Project';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import { Index } from './pages/Index';
-import { Home } from './pages/Home';
-import { Inbox } from './pages/Inbox';
-import { Project } from './pages/Project';
 import { NotFound } from './pages/NotFound';
 import { Verify } from './pages/Verify';
 import { PostRegister } from './pages/PostRegister';
@@ -37,7 +38,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <Index />,
+    element: <RootLayout />,
     children: [
       {
         path: '/',
