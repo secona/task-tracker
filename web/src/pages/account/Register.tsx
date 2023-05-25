@@ -5,9 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, User, Key, LogIn } from 'react-feather';
 import user, { IRegister } from '@/api/user';
 import { Button } from '@/components/Button';
-import { StepsPage, StepsPageForm } from '@/components/StepsPage';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
+import { AccountForm } from './_layout';
 
 import './LoginSlashRegister.scss';
 
@@ -48,9 +48,9 @@ export const Register = () => {
   });
 
   return (
-    <StepsPage>
+    <>
       <Heading fontSize='6xl'>Greetings!</Heading>
-      <StepsPageForm
+      <AccountForm
         onSubmit={handleSubmit(data => {
           mutation.mutate(data);
         })}
@@ -80,10 +80,10 @@ export const Register = () => {
         <Button RightIcon={LogIn} type='submit' loading={mutation.isLoading}>
           Register
         </Button>
-      </StepsPageForm>
+      </AccountForm>
       <span className='login-slash-register-page__alt-action'>
         Already have an account? <Link to='/login'>Log in</Link> instead.
       </span>
-    </StepsPage>
+    </>
   );
 };

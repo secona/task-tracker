@@ -4,15 +4,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import axios from 'axios';
 
 import { RootLayout } from './pages/root/_layout/RootLayout';
+import { AccountLayout } from './pages/account/_layout';
 
 import { Home } from './pages/root/Home';
 import { Inbox } from './pages/root/Inbox';
 import { Project } from './pages/root/Project';
 import { NotFound } from './pages/root/NotFound';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
-import { Verify } from './pages/Verify';
-import { PostRegister } from './pages/PostRegister';
+import { Login } from './pages/account/Login';
+import { Register } from './pages/account/Register';
+import { Verify } from './pages/account/Verify';
+import { PostRegister } from './pages/account/PostRegister';
 
 import './styles/global.scss';
 
@@ -21,35 +22,41 @@ const queryClient = new QueryClient();
 
 export const router = createBrowserRouter([
   {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/register',
-    element: <Register />,
-  },
-  {
-    path: '/register/post',
-    element: <PostRegister />,
-  },
-  {
-    path: '/verify',
-    element: <Verify />,
+    path: '/account',
+    element: <AccountLayout />,
+    children: [
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'register',
+        element: <Register />,
+      },
+      {
+        path: 'register/post',
+        element: <PostRegister />,
+      },
+      {
+        path: 'verify',
+        element: <Verify />,
+      },
+    ],
   },
   {
     path: '/',
     element: <RootLayout />,
     children: [
       {
-        path: '/',
+        path: '',
         element: <Home />,
       },
       {
-        path: '/inbox',
+        path: 'inbox',
         element: <Inbox />,
       },
       {
-        path: '/p/:projectId',
+        path: 'p/:projectId',
         element: <Project />,
       },
       {

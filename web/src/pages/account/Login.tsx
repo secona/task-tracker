@@ -5,10 +5,10 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import user, { ILogin } from '@/api/user';
 import { Button } from '@/components/Button';
-import { StepsPage, StepsPageForm } from '@/components/StepsPage';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
+import { AccountForm } from './_layout';
 
 import './LoginSlashRegister.scss';
 
@@ -56,9 +56,9 @@ export const Login = () => {
   });
 
   return (
-    <StepsPage>
+    <>
       <Heading fontSize='6xl'>Welcome Back!</Heading>
-      <StepsPageForm
+      <AccountForm
         onSubmit={handleSubmit(async v => {
           mutation.mutate(v);
         })}
@@ -81,10 +81,10 @@ export const Login = () => {
         <Button RightIcon={LogIn} type='submit'>
           Log In
         </Button>
-      </StepsPageForm>
+      </AccountForm>
       <span className='login-slash-register-page__alt-action'>
         Don't have an account? <Link to='/register'>Register</Link> instead.
       </span>
-    </StepsPage>
+    </>
   );
 };
