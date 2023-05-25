@@ -32,7 +32,7 @@ export const Register = () => {
             return alert('An unexpected error has occurred.');
         }
       } else {
-        navigate(`/register/post?email=${getValues('email')}`);
+        navigate(`../register/post?email=${getValues('email')}`);
       }
     },
   });
@@ -82,7 +82,7 @@ export const Register = () => {
         </Button>
       </AccountForm>
       <span className='login-slash-register-page__alt-action'>
-        Already have an account? <Link to='/login'>Log in</Link> instead.
+        Already have an account? <Link to='../login'>Log in</Link> instead.
       </span>
     </>
   );

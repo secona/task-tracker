@@ -34,7 +34,7 @@ export const Login = () => {
               setError(k as keyof ILogin, { message: v.join('|') });
             });
           case 'UNVERIFIED_EMAIL':
-            return navigate(`/register/post?email=${getValues('email')}`);
+            return navigate(`../register/post?email=${getValues('email')}`);
           case 'ALREADY_LOGGED_IN':
             localStorage.setItem(keys.isLoggedIn, 'true');
             return navigate('/');
@@ -83,7 +83,7 @@ export const Login = () => {
         </Button>
       </AccountForm>
       <span className='login-slash-register-page__alt-action'>
-        Don't have an account? <Link to='/register'>Register</Link> instead.
+        Don't have an account? <Link to='../register'>Register</Link> instead.
       </span>
     </>
   );

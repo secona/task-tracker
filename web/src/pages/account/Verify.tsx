@@ -8,10 +8,10 @@ export const Verify = () => {
 
   if (token) {
     axios.post(`/api/auth/verify/${token}`).then(result => {
-      if (result.data.success) return navigate('/login?verified');
-      if (result.status === 500) return navigate('/login?error');
+      if (result.data.success) return navigate('../login?verified');
+      if (result.status === 500) return navigate('../login?error');
     });
   }
 
-  return <Navigate to='/login' />;
+  return <Navigate to='../login' />;
 };

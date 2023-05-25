@@ -62,7 +62,7 @@ router.post(
         to: user.email,
         props: {
           name: user.name,
-          url: `${process.env.FRONTEND_ROOT_URL}/forgot-password?token=${token}`,
+          url: `${process.env.FRONTEND_ROOT_URL}/account/forgot-password?token=${token}`,
         },
       });
 
