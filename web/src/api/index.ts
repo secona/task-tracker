@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 export type ResponseBody<Data extends {} = {}> =
   | {
       msg: 'VALIDATION_FAILED';
@@ -11,3 +13,7 @@ export type ResponseBody<Data extends {} = {}> =
   | { msg: 'UNKNOWN' }
   | ({ msg: 'SUCCESS' } & Data)
   | ({ msg: 'NOT_FOUND' } & Record<keyof Data, {}>);
+
+export interface BaseAPI<Data extends object, Response extends ResponseBody> {
+  (data: Data): Promise<AxiosResponse<Response, any>>;
+}

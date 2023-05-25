@@ -3,7 +3,7 @@ import { Mail, Key, LogIn } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import user, { ILogin } from '@/api/user';
+import user, { LoginData } from '@/api/user';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
@@ -20,8 +20,8 @@ export const Login = () => {
   const navigate = useNavigate();
   const mutation = useMutation({
     mutationKey: ['login'],
-    mutationFn: (data: ILogin) => {
-      return user.login.login(data!);
+    mutationFn: (data: LoginData) => {
+      return user.login(data!);
     },
     onSuccess: ({ data }) => {
       if (data.msg === 'SUCCESS') {
@@ -31,7 +31,7 @@ export const Login = () => {
         switch (data.msg) {
           case 'VALIDATION_FAILED':
             return Object.entries(data.details).forEach(([k, v]) => {
-              setError(k as keyof ILogin, { message: v.join('|') });
+              setError(k as keyof LoginData, { message: v.join('|') });
             });
           case 'UNVERIFIED_EMAIL':
             return navigate(`../register/post?email=${getValues('email')}`);
@@ -51,7 +51,7 @@ export const Login = () => {
     handleSubmit,
     setError,
     getValues,
-  } = useForm<ILogin>({
+  } = useForm<LoginData>({
     resolver: yupResolver(user.login.validation),
   });
 
