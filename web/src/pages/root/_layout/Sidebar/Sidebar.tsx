@@ -1,10 +1,16 @@
+import { UseQueryResult } from '@tanstack/react-query';
 import { Folder, Home, Inbox } from 'react-feather';
+import projects from '@/api/projects';
 import { SidebarItem } from './SidebarItem';
 import { SidebarItemGroup } from './SidebarItemGroup';
 
 import './Sidebar.scss';
 
-export const Sidebar = () => {
+export interface SidebarProps {
+  query: UseQueryResult<Awaited<ReturnType<typeof projects.getMany>>>;
+}
+
+export const Sidebar = ({ query }: SidebarProps) => {
   return (
     <div className='dashboard__sidebar'>
       <SidebarItemGroup>
@@ -13,10 +19,15 @@ export const Sidebar = () => {
       </SidebarItemGroup>
 
       <SidebarItemGroup title='projects'>
-        <SidebarItem to='/p/a' label='School' Icon={Folder} color={0} />
-        <SidebarItem to='/p/b' label='School' Icon={Folder} color={0} />
-        <SidebarItem to='/p/c' label='School' Icon={Folder} color={0} />
-        <SidebarItem to='/p/d' label='School' Icon={Folder} color={0} />
+        {query.data?.data.msg === 'SUCCESS' &&
+          query.data.data.projects.map(project => (
+            <SidebarItem
+              to={`/p/${project.project_id}`}
+              label={project.name}
+              Icon={Folder}
+              color={project.color}
+            />
+          ))}
       </SidebarItemGroup>
     </div>
   );
