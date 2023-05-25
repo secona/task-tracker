@@ -8,9 +8,9 @@ import { RootLayout } from './pages/root/_layout/RootLayout';
 import { Home } from './pages/root/Home';
 import { Inbox } from './pages/root/Inbox';
 import { Project } from './pages/root/Project';
+import { NotFound } from './pages/root/NotFound';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
-import { NotFound } from './pages/NotFound';
 import { Verify } from './pages/Verify';
 import { PostRegister } from './pages/PostRegister';
 
