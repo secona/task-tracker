@@ -9,7 +9,7 @@ import './RootLayout.scss';
 export const projectsListQuery = {
   queryKey: ['projects', 'all'],
   queryFn: async () => {
-    return projects.getMany();
+    return projects.getMany({});
   },
 } satisfies QueryOptions;
 
