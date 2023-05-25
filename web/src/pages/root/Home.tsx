@@ -15,6 +15,7 @@ export const Home = () => {
         {query.data?.data.msg === 'SUCCESS' &&
           query.data.data.projects.map(project => (
             <ProjectCard
+              projectId={project.project_id}
               name={project.name}
               description={project.description}
               colorCode={project.color}
