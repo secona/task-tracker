@@ -2,7 +2,8 @@ import { useParams } from 'react-router-dom';
 import { QueryOptions, useQuery } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
 import { Task, TaskGroup } from '@/components/Task';
-import tasks, { Task as TaskType } from '@/api/tasks';
+import tasks from '@/api/tasks';
+import { separateTasks } from '@/utils/separateTasks';
 
 import './Project.scss';
 
@@ -15,19 +16,8 @@ export const tasksQuery = (projectId?: string) =>
 export const Project = () => {
   const { projectId } = useParams();
   const query = useQuery(tasksQuery(projectId));
-  const tasks = (() => {
-    const result = {
-      unfinished: [] as TaskType[],
-      finished: [] as TaskType[],
-    };
-    if (query.data?.data.msg === 'SUCCESS') {
-      query.data.data.tasks.forEach(task => {
-        if (task.done) result.finished.push(task);
-        else result.unfinished.push(task);
-      });
-    }
-    return result;
-  })();
+  // @ts-ignore
+  const tasks = separateTasks(query.data?.data.tasks);
 
   return (
     <div className='project'>
