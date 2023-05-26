@@ -6,14 +6,12 @@ import './AccountLayout.scss';
 export interface AccountLayoutProps
   extends React.ComponentPropsWithRef<'div'> {}
 
-export const AccountLayout = forwardRef<HTMLDivElement, AccountLayoutProps>(
-  props => {
-    return (
-      <div className='steps-page'>
-        <div className='steps-page__panel'>
-          <Outlet />
-        </div>
+export const AccountLayout = () => {
+  return (
+    <div className='steps-page'>
+      <div className='steps-page__panel'>
+        <Outlet />
       </div>
-    );
-  }
-);
+    </div>
+  );
+};
