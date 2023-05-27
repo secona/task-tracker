@@ -27,7 +27,6 @@ const ProjectGrid = () => {
   return (
     <div className='home__grid'>
       {query.data?.data.msg === 'SUCCESS' &&
-        // @ts-ignore
         query.data.data.projects.map(project => (
           <ProjectCard
             key={project.project_id}

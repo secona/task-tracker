@@ -1,10 +1,10 @@
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
 import { Task, TaskGroup } from '@/components/Task';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
-import { separateTasks } from '@/utils/separateTasks';
 
 import './Project.scss';
 
@@ -26,21 +26,29 @@ export const Project = () => {
 const TasksList = () => {
   const { projectId } = useParams();
   const query = useQuery(queries.tasks(projectId));
-  // @ts-ignore
-  const tasks = separateTasks(query.data?.data.tasks);
 
-  return (
-    <>
-      <TaskGroup title='Unfinished'>
-        {tasks.unfinished.map(task => (
-          <Task key={task.task_id} {...task} />
-        ))}
-      </TaskGroup>
-      <TaskGroup title='Finished'>
-        {tasks.finished.map(task => (
-          <Task key={task.task_id} {...task} />
-        ))}
-      </TaskGroup>
-    </>
-  );
+  if (query.data?.data.msg === 'SUCCESS') {
+    const tasks = {
+      unfinished: [] as React.ReactNode[],
+      finished: [] as React.ReactNode[],
+    };
+
+    query.data.data.tasks.forEach(task => {
+      const component = <Task key={task.task_id} {...task} />;
+      if (task.done) {
+        tasks.finished.push(component);
+      } else {
+        tasks.unfinished.push(component);
+      }
+    });
+
+    return (
+      <>
+        <TaskGroup title='Unfinished'>{tasks.unfinished}</TaskGroup>
+        <TaskGroup title='Finished'>{tasks.finished}</TaskGroup>
+      </>
+    );
+  }
+
+  return <></>;
 };
