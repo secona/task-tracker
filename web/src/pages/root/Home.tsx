@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
 import { ProjectCard } from '@/components/ProjectCard';
 import { QueryState } from '@/components/QueryState';
-import { projectsListQuery } from './_layout';
+import { queries } from '@/queries';
 
 import './Home.scss';
 
@@ -22,7 +22,7 @@ export const Home = () => {
 };
 
 const ProjectGrid = () => {
-  const query = useQuery(projectsListQuery);
+  const query = useQuery(queries.projects());
 
   return (
     <div className='home__grid'>

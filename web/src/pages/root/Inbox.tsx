@@ -3,10 +3,9 @@ import { Task, TaskGroup } from '@/components/Task';
 
 import './Project.scss';
 import { useQueries } from '@tanstack/react-query';
-import { projectsListQuery } from './_layout';
-import { tasksQuery } from './Project';
 import { separateTasks } from '@/utils/separateTasks';
 import { QueryState } from '@/components/QueryState';
+import { queries } from '@/queries';
 
 export const Inbox = () => {
   return (
@@ -25,7 +24,7 @@ export const Inbox = () => {
 
 const TasksList = () => {
   const [projectsQ, tasksQ] = useQueries({
-    queries: [projectsListQuery, tasksQuery()],
+    queries: [queries.projects(), queries.tasks()],
   });
 
   // @ts-ignore

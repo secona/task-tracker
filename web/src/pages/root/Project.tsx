@@ -1,18 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { QueryClient, QueryOptions, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
 import { Task, TaskGroup } from '@/components/Task';
 import { QueryState } from '@/components/QueryState';
-import tasks from '@/api/tasks';
+import { queries } from '@/queries';
 import { separateTasks } from '@/utils/separateTasks';
 
 import './Project.scss';
-
-export const tasksQuery = (projectId?: string) =>
-  ({
-    queryKey: ['projects', projectId, 'tasks'],
-    queryFn: () => tasks.getMany({ projectId }),
-  } satisfies QueryOptions);
 
 export const Project = () => {
   return (
@@ -31,7 +25,7 @@ export const Project = () => {
 
 const TasksList = () => {
   const { projectId } = useParams();
-  const query = useQuery(tasksQuery(projectId));
+  const query = useQuery(queries.tasks(projectId));
   // @ts-ignore
   const tasks = separateTasks(query.data?.data.tasks);
 

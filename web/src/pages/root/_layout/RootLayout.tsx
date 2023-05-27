@@ -1,27 +1,22 @@
 import { AxiosResponse } from 'axios';
 import { LoaderFunction, Outlet, redirect } from 'react-router-dom';
-import { QueryClient, QueryOptions, useQuery } from '@tanstack/react-query';
+import { QueryClient, useQuery } from '@tanstack/react-query';
 import { ProjectGetManyResponse } from '@/api/projects/getMany';
-import projects from '@/api/projects';
+import { queries } from '@/queries';
 import { keys } from '@/config/keys';
 import { Topbar } from './Topbar';
 import { Sidebar } from './Sidebar';
 
 import './RootLayout.scss';
 
-export const projectsListQuery = {
-  queryKey: ['projects', 'all'],
-  queryFn: async () => {
-    return projects.getMany({});
-  },
-} satisfies QueryOptions;
-
 export const rootLoader =
   (queryClient: QueryClient): LoaderFunction =>
   async () => {
+    const query = queries.projects();
+
     const queryData: AxiosResponse<ProjectGetManyResponse> =
-      queryClient.getQueryData(projectsListQuery.queryKey) ||
-      (await queryClient.fetchQuery(projectsListQuery));
+      queryClient.getQueryData(query.queryKey) ||
+      (await queryClient.fetchQuery(query));
 
     if (queryData.data.msg === 'NOT_LOGGED_IN') {
       localStorage.removeItem(keys.isLoggedIn);
@@ -33,7 +28,7 @@ export const rootLoader =
   };
 
 export const RootLayout = () => {
-  const query = useQuery(projectsListQuery);
+  const query = useQuery(queries.projects());
 
   return (
     <div className='dashboard'>
