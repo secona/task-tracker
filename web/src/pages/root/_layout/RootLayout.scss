@@ -1,3 +1,5 @@
+@import '../../../styles/project-colors';
+
 .dashboard {
   width: 100vw;
   height: 100vh;
@@ -19,5 +21,10 @@
   padding: 3rem 4rem;
   width: 100%;
   overflow: auto;
-}
 
+  @each $color in $colors {
+    &--color-#{index($colors, $color) - 1} {
+      background: linear-gradient(#{$color}, transparent 15rem);
+    }
+  }
+}

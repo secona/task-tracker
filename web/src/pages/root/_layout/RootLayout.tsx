@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { LoaderFunction, Outlet, redirect } from 'react-router-dom';
+import { LoaderFunction, Outlet, redirect, useParams } from 'react-router-dom';
 import { QueryClient, useQuery } from '@tanstack/react-query';
 import { ProjectGetManyResponse } from '@/api/projects/getMany';
 import { queries } from '@/queries';
@@ -28,14 +28,22 @@ export const rootLoader =
   };
 
 export const RootLayout = () => {
+  const { projectId } = useParams();
   const query = useQuery(queries.projects());
+  const colorCode =
+    // @ts-ignore
+    query.data?.data.projects.find(p => p.project_id === projectId)?.color || 0;
 
   return (
     <div className='dashboard'>
       <Topbar />
       <div className='dashboard__main'>
         <Sidebar query={query} />
-        <div className='dashboard__content'>
+        <div
+          className={
+            'dashboard__content ' + `dashboard__content--color-${colorCode}`
+          }
+        >
           <Outlet />
         </div>
       </div>
