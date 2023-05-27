@@ -6,8 +6,24 @@ import { useQueries } from '@tanstack/react-query';
 import { projectsListQuery } from './_layout';
 import { tasksQuery } from './Project';
 import { separateTasks } from '@/utils/separateTasks';
+import { QueryState } from '@/components/QueryState';
 
 export const Inbox = () => {
+  return (
+    <div className='project'>
+      <Heading fontSize='6xl'>Good Morning!</Heading>
+      <QueryState
+        Error={({ resetErrorBoundary }) => (
+          <button onClick={resetErrorBoundary}>retry</button>
+        )}
+      >
+        <TasksList />
+      </QueryState>
+    </div>
+  );
+};
+
+const TasksList = () => {
   const [projectsQ, tasksQ] = useQueries({
     queries: [projectsListQuery, tasksQuery()],
   });
@@ -16,14 +32,14 @@ export const Inbox = () => {
   const tasks = separateTasks(tasksQ.data?.data.tasks);
 
   return (
-    <div className='project'>
-      <Heading fontSize='6xl'>Good Morning!</Heading>
+    <>
       <TaskGroup title='Unfinished'>
         {(() => {
           if (projectsQ.data?.data.msg === 'SUCCESS') {
             const projects = projectsQ.data.data.projects;
             return tasks.unfinished.map(task => (
               <Task
+                key={task.task_id}
                 task={task.task}
                 description={task.description}
                 colorCode={
@@ -42,6 +58,7 @@ export const Inbox = () => {
             const projects = projectsQ.data.data.projects;
             return tasks.finished.map(task => (
               <Task
+                key={task.task_id}
                 task={task.task}
                 description={task.description}
                 colorCode={
@@ -54,6 +71,6 @@ export const Inbox = () => {
           }
         })()}
       </TaskGroup>
-    </div>
+    </>
   );
 };

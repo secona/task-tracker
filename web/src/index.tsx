@@ -17,8 +17,14 @@ import { PostRegister } from './pages/account/PostRegister';
 
 import './styles/global.scss';
 
-axios.defaults.validateStatus = () => true;
-const queryClient = new QueryClient();
+axios.defaults.validateStatus = s => s < 500;
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      useErrorBoundary: true,
+    },
+  },
+});
 
 export const router = createBrowserRouter([
   {

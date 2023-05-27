@@ -22,6 +22,7 @@ export const Sidebar = ({ query }: SidebarProps) => {
         {query.data?.data.msg === 'SUCCESS' &&
           query.data.data.projects.map(project => (
             <SidebarItem
+              key={project.project_id}
               to={`/p/${project.project_id}`}
               label={project.name}
               Icon={Folder}

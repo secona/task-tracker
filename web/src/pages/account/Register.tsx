@@ -19,7 +19,6 @@ export const Register = () => {
     mutationFn: (data: RegisterData) => {
       return user.register(data);
     },
-    // whatever the status code, onSuccess will trigger
     onSuccess: ({ data }) => {
       console.log(data);
       if (data.msg !== 'SUCCESS') {
@@ -34,6 +33,9 @@ export const Register = () => {
       } else {
         navigate(`../register/post?email=${getValues('email')}`);
       }
+    },
+    onError: () => {
+      return alert('An unexpected error has occurred.');
     },
   });
 

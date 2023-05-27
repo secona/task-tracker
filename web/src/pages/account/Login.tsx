@@ -43,6 +43,9 @@ export const Login = () => {
         }
       }
     },
+    onError: () => {
+      return alert('An unexpected error has occurred.');
+    },
   });
 
   const {
