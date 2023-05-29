@@ -1,5 +1,5 @@
 import { Heading } from '@/components/Heading';
-import { Task, TaskGroup } from '@/components/Task';
+import { Task } from '@/components/Task';
 
 import './Project.scss';
 import { useQueries } from '@tanstack/react-query';
@@ -59,8 +59,12 @@ const TasksList = () => {
 
     return (
       <>
-        <TaskGroup title='Unfinished'>{tasks.unfinished}</TaskGroup>
-        <TaskGroup title='Finished'>{tasks.finished}</TaskGroup>
+        <Section className='task-list' title='Unfinished'>
+          {tasks.unfinished}
+        </Section>
+        <Section className='task-list' title='Finished'>
+          {tasks.finished}
+        </Section>
       </>
     );
   }

@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
 import { ProjectCard } from '@/components/ProjectCard';
 import { QueryState } from '@/components/QueryState';
-import { TaskGroup } from '@/components/Task';
 import { Section } from '@/components/Section';
 import { queries } from '@/queries';
 

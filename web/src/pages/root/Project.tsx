@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
-import { Task, TaskGroup } from '@/components/Task';
+import { Task } from '@/components/Task';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
 
@@ -59,8 +59,12 @@ const TasksList = () => {
           </Heading>
           <p className='project__description'>{thisProject?.description}</p>
         </Section>
-        <TaskGroup title='Unfinished'>{tasks.unfinished}</TaskGroup>
-        <TaskGroup title='Finished'>{tasks.finished}</TaskGroup>
+        <Section className='task-list' title='Unfinished'>
+          {tasks.unfinished}
+        </Section>
+        <Section className='task-list' title='Finished'>
+          {tasks.finished}
+        </Section>
       </>
     );
   }
