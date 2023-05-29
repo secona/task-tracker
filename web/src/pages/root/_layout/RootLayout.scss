@@ -21,10 +21,15 @@
   padding: 3rem 4rem;
   width: 100%;
   overflow: auto;
+  border-top-left-radius: 0.3rem;
 
   @each $color in $colors {
     &--color-#{index($colors, $color) - 1} {
-      background: linear-gradient(#{$color}, transparent 110%);
+      background: linear-gradient(
+        150deg,
+        var($color),
+        var($color + '-accent') 100%
+      );
     }
   }
 }

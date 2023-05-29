@@ -1,14 +1,13 @@
-$colors: var(--color-teal-400), var(--color-cyan-400), var(--color-blue-400),
-  var(--color-purple-400), var(--color-pink-400), var(--color-red-400),
-  var(--color-orange-400), var(--color-green-400), var(--color-yellow-400),
-  var(--color-brown-400);
+$colors: --color-teal-200, --color-cyan-200, --color-blue-200,
+  --color-purple-200, --color-pink-200, --color-red-200, --color-orange-200,
+  --color-green-200, --color-yellow-200, --color-brown-200;
 
 @mixin project-colors($property) {
   @each $color in $colors {
     $i: index($colors, $color) - 1;
 
     &--color-#{$i} {
-      #{$property}: $color;
+      #{$property}: var($color);
     }
   }
 }
