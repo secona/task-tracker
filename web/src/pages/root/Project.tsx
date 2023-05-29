@@ -7,6 +7,7 @@ import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
 
 import './Project.scss';
+import { Section } from '@/components/Section';
 
 export const Project = () => {
   return (
@@ -46,15 +47,18 @@ const TasksList = () => {
       }
     });
 
+    const thisProject = projectsQuery.data.data.projects.find(
+      p => p.project_id === projectId
+    );
+
     return (
       <>
-        <Heading fontSize='6xl'>
-          {
-            projectsQuery.data.data.projects.find(
-              p => p.project_id === projectId
-            )?.name
-          }
-        </Heading>
+        <Section>
+          <Heading fontSize='6xl' className='project__name'>
+            {thisProject?.name}
+          </Heading>
+          <p className='project__description'>{thisProject?.description}</p>
+        </Section>
         <TaskGroup title='Unfinished'>{tasks.unfinished}</TaskGroup>
         <TaskGroup title='Finished'>{tasks.finished}</TaskGroup>
       </>

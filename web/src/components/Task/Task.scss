@@ -3,13 +3,17 @@
 .task {
   display: flex;
   gap: 0.8rem;
-  background-color: var(--elevation-2);
+  background-color: var(--elevation-4);
   border-radius: 0.3rem;
   padding: 0.8rem;
   border-width: 0 0 0 0.3rem;
   border-style: solid;
   border-color: transparent;
   @include project-colors(border-color);
+
+  &:hover {
+    background-color: var(--elevation-6);
+  }
 }
 
 .task__task {

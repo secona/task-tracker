@@ -24,7 +24,7 @@
 
   @each $color in $colors {
     &--color-#{index($colors, $color) - 1} {
-      background: linear-gradient(#{$color}, transparent 15rem);
+      background: linear-gradient(#{$color}, transparent 110%);
     }
   }
 }

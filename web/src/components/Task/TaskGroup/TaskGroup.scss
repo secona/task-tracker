@@ -2,9 +2,11 @@
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
+  padding-top: 1.25rem;
 }
 
 .task-group__title {
   text-transform: capitalize;
-  opacity: 0.3;
+  border-bottom: 1px var(--elevation-9) solid;
+  padding-bottom: 0.5rem;
 }

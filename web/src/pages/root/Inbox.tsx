@@ -6,11 +6,14 @@ import { useQueries } from '@tanstack/react-query';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
 import React from 'react';
+import { Section } from '@/components/Section';
 
 export const Inbox = () => {
   return (
     <div className='project'>
-      <Heading fontSize='6xl'>Good Morning!</Heading>
+      <Section>
+        <Heading fontSize='6xl'>Good Morning!</Heading>
+      </Section>
       <QueryState
         Error={({ resetErrorBoundary }) => (
           <button onClick={resetErrorBoundary}>retry</button>

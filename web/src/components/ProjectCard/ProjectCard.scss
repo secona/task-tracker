@@ -2,7 +2,7 @@
 
 .project-card {
   border-radius: 0.3rem;
-  background-color: var(--elevation-2);
+  background-color: var(--elevation-4);
   display: inline-flex;
   flex-direction: row;
   justify-content: space-between;
@@ -12,6 +12,10 @@
   border-width: 0 0 0 0.3rem;
   border-style: solid;
   @include project-colors(border-color);
+
+  &:hover {
+    background-color: var(--elevation-6);
+  }
 }
 
 .project-card > * {

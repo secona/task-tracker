@@ -1,5 +1,6 @@
-import { mc } from '@/utils/mergeClassnames';
 import { ComponentPropsWithoutRef } from 'react';
+import { mc } from '@/utils/mergeClassnames';
+import { Section } from '@/components/Section';
 
 import './TaskGroup.scss';
 
@@ -9,9 +10,9 @@ export interface TaskGroupProps extends ComponentPropsWithoutRef<'div'> {
 
 export const TaskGroup = ({ title, children, ...props }: TaskGroupProps) => {
   return (
-    <div {...mc(props, 'task-group')}>
+    <Section {...mc(props, 'task-group')}>
       <p className='task-group__title'>{title}</p>
       {children}
-    </div>
+    </Section>
   );
 };
