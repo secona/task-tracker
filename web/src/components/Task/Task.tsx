@@ -1,7 +1,8 @@
 import { ComponentPropsWithoutRef } from 'react';
-import './Task.scss';
-import { mc } from '@/utils/mergeClassnames';
 import { CheckCircle, Circle } from 'react-feather';
+import { mc } from '@/utils/mergeClassnames';
+
+import taskCN from './Task.module.scss';
 
 export interface TaskProps extends ComponentPropsWithoutRef<'div'> {
   task: string;
@@ -21,11 +22,11 @@ export const Task = ({
     <div
       {...mc(
         props,
-        'task',
-        colorCode === undefined ? undefined : `task--color-${colorCode}`
+        taskCN.taskCard,
+        colorCode !== undefined && taskCN[`taskCard_color${colorCode}`]
       )}
     >
-      <button className='task__finish'>
+      <button className={taskCN.finishButton}>
         {done ? (
           <CheckCircle color='gray' size={16} />
         ) : (
@@ -33,10 +34,8 @@ export const Task = ({
         )}
       </button>
       <div>
-        <p {...mc({}, 'task__task', done ? 'task__task--done' : undefined)}>
-          {task}
-        </p>
-        <p className='task__description'>{description}</p>
+        <p {...mc({}, taskCN.task, done && taskCN.task_done)}>{task}</p>
+        <p className={taskCN.description}>{description}</p>
       </div>
     </div>
   );

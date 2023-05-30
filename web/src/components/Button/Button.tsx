@@ -1,8 +1,8 @@
-import { mc } from '../../utils/mergeClassnames';
 import { ComponentPropsWithRef } from 'react';
 import { Icon } from 'react-feather';
+import { mc } from '../../utils/mergeClassnames';
 
-import './Button.scss';
+import buttonCN from './Button.module.scss';
 
 export interface ButtonProps extends ComponentPropsWithRef<'button'> {
   LeftIcon?: Icon;
@@ -16,12 +16,12 @@ export const Button = (props: ButtonProps) => {
 
   return (
     <button
-      {...mc(otherProps, 'button', loading && 'button--loading')}
+      {...mc(otherProps, buttonCN.button, loading && buttonCN.button_loading)}
       disabled={loading || disabled}
     >
-      {LeftIcon && <LeftIcon className='button__icon button__icon--left' size={16} />}
-      <span className='button__text'>{children}</span>
-      {RightIcon && <RightIcon className='button__icon button__icon--right' size={16} />}
+      {LeftIcon && <LeftIcon className={buttonCN.icon} size={16} />}
+      <span className={buttonCN.text}>{children}</span>
+      {RightIcon && <RightIcon className={buttonCN.icon} size={16} />}
     </button>
   );
 };

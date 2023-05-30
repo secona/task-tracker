@@ -1,53 +1,53 @@
 @mixin font-size {
-  &--font-xs {
+  &_fontxs {
     font-size: var(--font-size-xs);
   }
 
-  &--font-sm {
+  &_fontsm {
     font-size: var(--font-size-sm);
   }
 
-  &--font-md {
+  &_fontmd {
     font-size: var(--font-size-md);
   }
 
-  &--font-lg {
+  &_fontlg {
     font-size: var(--font-size-lg);
   }
 
-  &--font-xl {
+  &_fontxl {
     font-size: var(--font-size-xl);
   }
 
-  &--font-2xl {
+  &_font2xl {
     font-size: var(--font-size-2xl);
   }
 
-  &--font-3xl {
+  &_font3xl {
     font-size: var(--font-size-3xl);
   }
 
-  &--font-4xl {
+  &_font4xl {
     font-size: var(--font-size-4xl);
   }
 
-  &--font-5xl {
+  &_font5xl {
     font-size: var(--font-size-5xl);
   }
 
-  &--font-6xl {
+  &_font6xl {
     font-size: var(--font-size-6xl);
   }
 
-  &--font-7xl {
+  &_font7xl {
     font-size: var(--font-size-7xl);
   }
 
-  &--font-8xl {
+  &_font8xl {
     font-size: var(--font-size-8xl);
   }
 
-  &--font-9xl {
+  &_font9xl {
     font-size: var(--font-size-9xl);
   }
 }

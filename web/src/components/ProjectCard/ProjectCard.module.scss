@@ -1,6 +1,6 @@
 @import '../../styles/project-colors';
 
-.project-card {
+.projectCard {
   border-radius: 0.3rem;
   background-color: var(--elevation-4);
   display: inline-flex;
@@ -16,13 +16,13 @@
   &:hover {
     background-color: var(--elevation-6);
   }
+
+  & > * {
+    margin: 0.3rem 0;
+  }
 }
 
-.project-card > * {
-  margin: 0.3rem 0;
-}
-
-.project-card__name {
+.name {
   font-weight: bold;
   color: white;
   text-decoration: none;
@@ -33,12 +33,12 @@
   }
 }
 
-.project-card__description {
+.description {
   font-size: var(--font-size-xs);
   color: var(--color-grey-700);
 }
 
-.project-card__more {
+.moreButton {
   $radius: 2.25rem;
   background-color: transparent;
   border-radius: 50%;

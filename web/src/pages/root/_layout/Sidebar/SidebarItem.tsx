@@ -28,7 +28,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
           'dashboard__sidebar__item__icon' +
           (props.color === undefined
             ? ''
-            : ` dashboard__sidebar__item__icon--color-${props.color}`)
+            : ` dashboard__sidebar__item__icon_color${props.color}`)
         }
         size={16}
       />

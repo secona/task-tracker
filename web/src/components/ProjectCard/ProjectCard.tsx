@@ -1,8 +1,9 @@
-import { mc } from '@/utils/mergeClassnames';
 import { ComponentPropsWithRef, forwardRef } from 'react';
-import './ProjectCard.scss';
 import { Link } from 'react-router-dom';
 import { MoreVertical } from 'react-feather';
+import { mc } from '@/utils/mergeClassnames';
+
+import projectCardCN from './ProjectCard.module.scss';
 
 export interface ProjectCardProps extends ComponentPropsWithRef<'div'> {
   projectId: string;
@@ -15,17 +16,21 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
   ({ projectId, name, description, colorCode, ...props }, ref) => {
     return (
       <div
-        {...mc(props, 'project-card', `project-card--color-${colorCode}`)}
+        {...mc(
+          props,
+          projectCardCN.projectCard,
+          projectCardCN[`projectCard_color${colorCode}`]
+        )}
         ref={ref}
       >
         <div>
-          <Link to={`/p/${projectId}`} className='project-card__name'>
+          <Link to={`/p/${projectId}`} className={projectCardCN.name}>
             {name}
           </Link>
-          <p className='project-card__description'>{description}</p>
+          <p className={projectCardCN.description}>{description}</p>
         </div>
         <div>
-          <button className='project-card__more'>
+          <button className={projectCardCN.moreButton}>
             <MoreVertical color='white' size={16} />
           </button>
         </div>

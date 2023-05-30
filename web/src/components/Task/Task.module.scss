@@ -1,6 +1,6 @@
 @import '../../styles/project-colors';
 
-.task {
+.taskCard {
   display: flex;
   gap: 0.8rem;
   background-color: var(--elevation-4);
@@ -16,7 +16,7 @@
   }
 }
 
-.task__task {
+.task {
   cursor: pointer;
   text-decoration: none;
 
@@ -24,7 +24,7 @@
     text-decoration: underline;
   }
 
-  &--done {
+  &_done {
     text-decoration: line-through;
     color: var(--color-grey-700);
 
@@ -34,12 +34,12 @@
   }
 }
 
-.task__description {
+.description {
   font-size: var(--font-size-xs);
   color: var(--color-grey-700);
 }
 
-.task__finish {
+.finishButton {
   border: none;
   background-color: transparent;
   cursor: pointer;

@@ -4,12 +4,12 @@ $placeholderColor: var(--color-grey-600);
 $error: var(--color-red-500);
 $placeholderError: var(--color-red-900);
 
-.textinput__outer {
+.outer {
   display: inline-flex;
   flex-direction: column;
 }
 
-.textinput__error-list {
+.errorList {
   padding: 0.5rem 0.8rem;
   border-radius: 0 0 0.3rem 0.3rem;
   background-color: rgba(255, 0, 0, 0.25);
@@ -26,28 +26,28 @@ $placeholderError: var(--color-red-900);
   }
 }
 
-.textinput {
+.textInput {
   display: inline-flex;
   position: relative;
   align-items: center;
   gap: 0.5rem;
 
-  &--icon--right {
+  &_iconRight {
     padding-right: 0.8rem;
-    .textinput__input {
+    .input {
       padding-right: 0;
     }
   }
 
-  &--icon--left {
+  &_iconLeft {
     padding-left: 1.1rem;
-    .textinput__input {
+    .input {
       padding-left: 0;
     }
   }
 }
 
-.textinput__fieldset {
+.fieldset {
   position: absolute;
   inset: calc(var(--font-size-xs) / -2) 0 0 0;
   margin: 0;
@@ -74,7 +74,7 @@ $placeholderError: var(--color-red-900);
   }
 }
 
-.textinput__input {
+.input {
   background: transparent;
   display: block;
   border: none;
@@ -85,14 +85,14 @@ $placeholderError: var(--color-red-900);
   outline: none;
 
   &:focus {
-    ~ .textinput__fieldset {
+    ~ .fieldset {
       border-color: var(--color-white);
       color: var(--color-white);
     }
   }
 
   &:hover {
-    ~ .textinput__fieldset {
+    ~ .fieldset {
       border-color: var(--color-white);
       color: var(--color-white);
     }
@@ -103,18 +103,18 @@ $placeholderError: var(--color-red-900);
       color: var(--color-grey-700);
     }
 
-    ~ .textinput__fieldset {
+    ~ .fieldset {
       border-color: var(--color-grey-700);
       color: var(--color-grey-700);
     }
   }
 
-  &--error {
+  &_error {
     &::placeholder {
       color: var(--color-red-700);
     }
 
-    ~ .textinput__fieldset {
+    ~ .fieldset {
       border-color: var(--color-red-500) !important;
       color: var(--color-red-500) !important;
       border-bottom-left-radius: 0;

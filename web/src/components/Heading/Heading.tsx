@@ -2,7 +2,7 @@ import { GlobalVariables } from '../../styles/global';
 import { mc } from '../../utils/mergeClassnames';
 import { ComponentPropsWithRef } from 'react';
 
-import './Heading.scss';
+import headingCN from './Heading.module.scss';
 
 export interface HeadingProps extends ComponentPropsWithRef<'h1'> {
   fontSize?: keyof GlobalVariables['fontSizes'];
@@ -10,5 +10,9 @@ export interface HeadingProps extends ComponentPropsWithRef<'h1'> {
 
 export const Heading = (props: HeadingProps) => {
   const { fontSize = 'md', ...rest } = props;
-  return <h1 {...mc(rest, 'heading', `heading--font-${fontSize}`)} />;
+  return (
+    <h1
+      {...mc(rest, headingCN.heading, headingCN[`heading_font${fontSize}`])}
+    />
+  );
 };

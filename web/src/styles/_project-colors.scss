@@ -6,7 +6,7 @@ $colors: --color-teal-200, --color-cyan-200, --color-blue-200,
   @each $color in $colors {
     $i: index($colors, $color) - 1;
 
-    &--color-#{$i} {
+    &_color#{$i} {
       #{$property}: var($color);
     }
   }
