@@ -4,14 +4,14 @@ import { useQueries } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
 import { Task } from '@/components/Task';
 import { QueryState } from '@/components/QueryState';
+import { Section } from '@/components/Section';
 import { queries } from '@/queries';
 
-import './Project.scss';
-import { Section } from '@/components/Section';
+import taskListCN from './TaskList.module.scss';
 
 export const Project = () => {
   return (
-    <div className='project'>
+    <div className={taskListCN.container}>
       <QueryState
         Error={({ resetErrorBoundary }) => (
           <button onClick={resetErrorBoundary}>retry</button>
@@ -54,15 +54,15 @@ const TasksList = () => {
     return (
       <>
         <Section>
-          <Heading fontSize='6xl' className='project__name'>
+          <Heading fontSize='6xl' className={taskListCN.name}>
             {thisProject?.name}
           </Heading>
-          <p className='project__description'>{thisProject?.description}</p>
+          <p className={taskListCN.description}>{thisProject?.description}</p>
         </Section>
-        <Section className='task-list' title='Unfinished'>
+        <Section className={taskListCN.taskList} title='Unfinished'>
           {tasks.unfinished}
         </Section>
-        <Section className='task-list' title='Finished'>
+        <Section className={taskListCN.taskList} title='Finished'>
           {tasks.finished}
         </Section>
       </>

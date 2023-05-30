@@ -1,6 +1,6 @@
 @import '../../../../styles/project-colors';
 
-.dashboard__sidebar__item {
+.sidebarItem {
   text-decoration: none;
   height: 2.75rem;
   display: flex;
@@ -18,13 +18,13 @@
   border-style: solid;
   border-color: transparent;
   font-size: var(--font-size-sm);
+
+  &_active {
+    background-color: #262626;
+    border-color: white;
+  }
 }
 
-.dashboard__sidebar__item--active {
-  background-color: #262626;
-  border-color: white;
-}
-
-.dashboard__sidebar__item__icon {
+.icon {
   @include project-colors(stroke);
 }

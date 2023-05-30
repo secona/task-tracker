@@ -1,7 +1,6 @@
-import { mc } from '@/utils/mergeClassnames';
 import { ComponentPropsWithoutRef } from 'react';
 
-import './SidebarItemGroup.scss';
+import sidebarItemGroupCN from './SidebarItemGroup.module.scss';
 
 export interface SidebarItemGroupProps extends ComponentPropsWithoutRef<'div'> {
   title?: string;
@@ -13,8 +12,8 @@ export const SidebarItemGroup = ({
   ...props
 }: SidebarItemGroupProps) => {
   return (
-    <div {...mc(props, 'dashboard__sidebar__item-group')}>
-      <p className='dashboard__sidebar__item-group__title'>{title}</p>
+    <div {...props}>
+      <p className={sidebarItemGroupCN.title}>{title}</p>
       {children}
     </div>
   );

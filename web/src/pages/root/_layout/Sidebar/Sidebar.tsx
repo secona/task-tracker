@@ -4,7 +4,7 @@ import projects from '@/api/projects';
 import { SidebarItem } from './SidebarItem';
 import { SidebarItemGroup } from './SidebarItemGroup';
 
-import './Sidebar.scss';
+import sidebarCN from './Sidebar.module.scss';
 
 export interface SidebarProps {
   query: UseQueryResult<Awaited<ReturnType<typeof projects.getMany>>>;
@@ -12,7 +12,7 @@ export interface SidebarProps {
 
 export const Sidebar = ({ query }: SidebarProps) => {
   return (
-    <div className='dashboard__sidebar'>
+    <div className={sidebarCN.sidebar}>
       <SidebarItemGroup>
         <SidebarItem to='/' label='Home' Icon={Home} />
         <SidebarItem to='/inbox' label='Inbox' Icon={Inbox} />

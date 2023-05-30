@@ -1,16 +1,16 @@
-import { Heading } from '@/components/Heading';
-import { Task } from '@/components/Task';
-
-import './Project.scss';
+import React from 'react';
 import { useQueries } from '@tanstack/react-query';
 import { QueryState } from '@/components/QueryState';
-import { queries } from '@/queries';
-import React from 'react';
 import { Section } from '@/components/Section';
+import { Heading } from '@/components/Heading';
+import { Task } from '@/components/Task';
+import { queries } from '@/queries';
+
+import taskListCN from './TaskList.module.scss';
 
 export const Inbox = () => {
   return (
-    <div className='project'>
+    <div className={taskListCN.container}>
       <Section>
         <Heading fontSize='6xl'>Good Morning!</Heading>
       </Section>
@@ -59,10 +59,10 @@ const TasksList = () => {
 
     return (
       <>
-        <Section className='task-list' title='Unfinished'>
+        <Section className={taskListCN.taskList} title='Unfinished'>
           {tasks.unfinished}
         </Section>
-        <Section className='task-list' title='Finished'>
+        <Section className={taskListCN.taskList} title='Finished'>
           {tasks.finished}
         </Section>
       </>

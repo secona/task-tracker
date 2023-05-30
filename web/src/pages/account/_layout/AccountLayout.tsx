@@ -1,15 +1,15 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import './AccountLayout.scss';
+import accountLayoutCN from './AccountLayout.module.scss';
 
 export interface AccountLayoutProps
   extends React.ComponentPropsWithRef<'div'> {}
 
 export const AccountLayout = () => {
   return (
-    <div className='steps-page'>
-      <div className='steps-page__panel'>
+    <div className={accountLayoutCN.container}>
+      <div className={accountLayoutCN.panel}>
         <Outlet />
       </div>
     </div>

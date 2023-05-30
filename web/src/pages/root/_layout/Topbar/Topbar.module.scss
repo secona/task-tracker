@@ -1,4 +1,4 @@
-.dashboard__topbar {
+.topbar {
   height: 3rem;
   background-color: var(--elevation-2);
   display: flex;
@@ -10,6 +10,6 @@
   flex-shrink: 0;
 }
 
-.dashboard__topbar__spacer {
+.spacer {
   flex-grow: 1;
 }

@@ -7,7 +7,8 @@ import { keys } from '@/config/keys';
 import { Topbar } from './Topbar';
 import { Sidebar } from './Sidebar';
 
-import './RootLayout.scss';
+import rootLayoutCN from './RootLayout.module.scss';
+import { mc } from '@/utils/mergeClassnames';
 
 export const rootLoader =
   (queryClient: QueryClient): LoaderFunction =>
@@ -35,14 +36,16 @@ export const RootLayout = () => {
     query.data?.data.projects.find(p => p.project_id === projectId)?.color || 0;
 
   return (
-    <div className='dashboard'>
+    <div className={rootLayoutCN.dashboard}>
       <Topbar />
-      <div className='dashboard__main'>
+      <div className={rootLayoutCN.main}>
         <Sidebar query={query} />
         <div
-          className={
-            'dashboard__content ' + `dashboard__content--color-${colorCode}`
-          }
+          {...mc(
+            {},
+            rootLayoutCN.content,
+            colorCode !== undefined && rootLayoutCN[`content_color${colorCode}`]
+          )}
         >
           <Outlet />
         </div>

@@ -5,11 +5,11 @@ import { QueryState } from '@/components/QueryState';
 import { Section } from '@/components/Section';
 import { queries } from '@/queries';
 
-import './Home.scss';
+import homeCN from './Home.module.scss';
 
 export const Home = () => {
   return (
-    <div className='home'>
+    <div className={homeCN.home}>
       <Section>
         <Heading fontSize='6xl'>Good Morning!</Heading>
       </Section>
@@ -29,7 +29,7 @@ const ProjectGrid = () => {
 
   return (
     <Section>
-      <div className='home__grid'>
+      <div className={homeCN.grid}>
         {query.data?.data.msg === 'SUCCESS' &&
           query.data.data.projects.map(project => (
             <ProjectCard

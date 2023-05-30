@@ -10,7 +10,7 @@ import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
 import { AccountForm } from './_layout';
 
-import './LoginSlashRegister.scss';
+import authCN from './Auth.module.scss';
 
 export const Login = () => {
   if (localStorage.getItem(keys.isLoggedIn) === 'true') {
@@ -85,7 +85,7 @@ export const Login = () => {
           Log In
         </Button>
       </AccountForm>
-      <span className='login-slash-register-page__alt-action'>
+      <span className={authCN.altAction}>
         Don't have an account? <Link to='../register'>Register</Link> instead.
       </span>
     </>

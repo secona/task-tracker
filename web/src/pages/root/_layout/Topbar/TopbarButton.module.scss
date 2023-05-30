@@ -1,0 +1,18 @@
+$radius: 2.5rem;
+
+.topbarButton {
+  background-color: transparent;
+  border-radius: 50%;
+  height: $radius;
+  width: $radius;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--color-grey-900);
+  }
+}

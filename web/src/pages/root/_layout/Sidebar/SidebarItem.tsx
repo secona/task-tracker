@@ -1,7 +1,8 @@
 import { Icon } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 
-import './SidebarItem.scss';
+import sidebarItemCN from './SidebarItem.module.scss';
+import { mc } from '@/utils/mergeClassnames';
 
 export interface SidebarItemProps {
   to: string;
@@ -18,18 +19,17 @@ export const SidebarItem = (props: SidebarItemProps) => {
       draggable={false}
       className={({ isActive }) =>
         [
-          'dashboard__sidebar__item',
-          isActive ? 'dashboard__sidebar__item--active' : '',
+          sidebarItemCN.sidebarItem,
+          isActive ? sidebarItemCN.sidebarItem_active : '',
         ].join(' ')
       }
     >
       <props.Icon
-        className={
-          'dashboard__sidebar__item__icon' +
-          (props.color === undefined
-            ? ''
-            : ` dashboard__sidebar__item__icon_color${props.color}`)
-        }
+        {...mc(
+          {},
+          sidebarItemCN.icon,
+          props.color !== undefined && sidebarItemCN[`icon_color${props.color}`]
+        )}
         size={16}
       />
       {props.label}

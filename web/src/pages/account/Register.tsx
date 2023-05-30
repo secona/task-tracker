@@ -9,7 +9,7 @@ import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { AccountForm } from './_layout';
 
-import './LoginSlashRegister.scss';
+import authCN from './Auth.module.scss';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ export const Register = () => {
           Register
         </Button>
       </AccountForm>
-      <span className='login-slash-register-page__alt-action'>
+      <span className={authCN.altAction}>
         Already have an account? <Link to='../login'>Log in</Link> instead.
       </span>
     </>
