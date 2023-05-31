@@ -28,6 +28,12 @@ export const MenuDropdown = (props: MenuDropdownProps) => {
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, [menuEl]);
 
+  React.useLayoutEffect(() => {
+    const onResizeWindow = () => setMenuEl(undefined);
+    window.addEventListener('resize', onResizeWindow);
+    return () => window.removeEventListener('resize', onResizeWindow);
+  }, [setMenuEl]);
+
   return createPortal(
     <div
       className={menuDropdownCN.menuDropdown}
