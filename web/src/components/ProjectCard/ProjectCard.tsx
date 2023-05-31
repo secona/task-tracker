@@ -1,7 +1,7 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MoreVertical } from 'react-feather';
-import { mc } from '@/utils/mergeClassnames';
+import { cnProps } from '@/utils/mergeClassnames';
 
 import projectCardCN from './ProjectCard.module.scss';
 
@@ -16,7 +16,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
   ({ projectId, name, description, colorCode, ...props }, ref) => {
     return (
       <div
-        {...mc(
+        {...cnProps(
           props,
           projectCardCN.projectCard,
           projectCardCN[`projectCard_color${colorCode}`]

@@ -1,7 +1,7 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 import { Icon } from 'react-feather';
 import { FieldError } from 'react-hook-form';
-import { mc } from '../../utils/mergeClassnames';
+import { cn, cnProps } from '../../utils/mergeClassnames';
 
 import textInputCN from './TextInput.module.scss';
 
@@ -19,8 +19,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     return (
       <div className={textInputCN.outer}>
         <div
-          {...mc(
-            {},
+          className={cn(
             textInputCN.textInput,
             LeftIcon ? textInputCN.textInput_iconLeft : '',
             RightIcon ? textInputCN.textInput_iconRight : ''
@@ -28,7 +27,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         >
           {LeftIcon && <LeftIcon size={16} color='var(--color-grey-300)' />}
           <input
-            {...mc(
+            {...cnProps(
               otherProps,
               textInputCN.input,
               error && textInputCN.input_error

@@ -1,5 +1,5 @@
 import { GlobalVariables } from '../../styles/global';
-import { mc } from '../../utils/mergeClassnames';
+import { cnProps } from '../../utils/mergeClassnames';
 import { ComponentPropsWithRef } from 'react';
 
 import headingCN from './Heading.module.scss';
@@ -12,7 +12,11 @@ export const Heading = (props: HeadingProps) => {
   const { fontSize = 'md', ...rest } = props;
   return (
     <h1
-      {...mc(rest, headingCN.heading, headingCN[`heading_font${fontSize}`])}
+      {...cnProps(
+        rest,
+        headingCN.heading,
+        headingCN[`heading_font${fontSize}`]
+      )}
     />
   );
 };

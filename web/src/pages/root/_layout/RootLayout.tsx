@@ -4,11 +4,11 @@ import { QueryClient, useQuery } from '@tanstack/react-query';
 import { ProjectGetManyResponse } from '@/api/projects/getMany';
 import { queries } from '@/queries';
 import { keys } from '@/config/keys';
+import { cn } from '@/utils/mergeClassnames';
 import { Topbar } from './Topbar';
 import { Sidebar } from './Sidebar';
 
 import rootLayoutCN from './RootLayout.module.scss';
-import { mc } from '@/utils/mergeClassnames';
 
 export const rootLoader =
   (queryClient: QueryClient): LoaderFunction =>
@@ -41,8 +41,7 @@ export const RootLayout = () => {
       <div className={rootLayoutCN.main}>
         <Sidebar query={query} />
         <div
-          {...mc(
-            {},
+          className={cn(
             rootLayoutCN.content,
             colorCode !== undefined && rootLayoutCN[`content_color${colorCode}`]
           )}

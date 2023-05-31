@@ -1,8 +1,8 @@
 import { Icon } from 'react-feather';
 import { NavLink } from 'react-router-dom';
+import { cn } from '@/utils/mergeClassnames';
 
 import sidebarItemCN from './SidebarItem.module.scss';
-import { mc } from '@/utils/mergeClassnames';
 
 export interface SidebarItemProps {
   to: string;
@@ -18,15 +18,14 @@ export const SidebarItem = (props: SidebarItemProps) => {
       to={props.to}
       draggable={false}
       className={({ isActive }) =>
-        [
+        cn(
           sidebarItemCN.sidebarItem,
-          isActive ? sidebarItemCN.sidebarItem_active : '',
-        ].join(' ')
+          isActive && sidebarItemCN.sidebarItem_active
+        )
       }
     >
       <props.Icon
-        {...mc(
-          {},
+        className={cn(
           sidebarItemCN.icon,
           props.color !== undefined && sidebarItemCN[`icon_color${props.color}`]
         )}

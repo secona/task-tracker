@@ -1,9 +1,15 @@
-export const mc = (
+type Falsy = null | undefined | false | 0 | -0 | 0n | '';
+
+export const cn = (...classNames: (string | Falsy)[]) => {
+  return classNames.filter(Boolean).join(' ');
+};
+
+export const cnProps = (
   props: Record<string, any>,
-  ...className: (string | undefined | false)[]
+  ...className: (string | Falsy)[]
 ) => {
   return {
     ...props,
-    className: [props.className, ...className.filter(Boolean)].join(' '),
+    className: cn(props.className, ...className),
   };
 };

@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { CheckCircle, Circle } from 'react-feather';
-import { mc } from '@/utils/mergeClassnames';
+import { cn, cnProps } from '@/utils/mergeClassnames';
 
 import taskCN from './Task.module.scss';
 
@@ -20,7 +20,7 @@ export const Task = ({
 }: TaskProps) => {
   return (
     <div
-      {...mc(
+      {...cnProps(
         props,
         taskCN.taskCard,
         colorCode !== undefined && taskCN[`taskCard_color${colorCode}`]
@@ -34,7 +34,7 @@ export const Task = ({
         )}
       </button>
       <div>
-        <p {...mc({}, taskCN.task, done && taskCN.task_done)}>{task}</p>
+        <p className={cn(taskCN.task, done && taskCN.task_done)}>{task}</p>
         <p className={taskCN.description}>{description}</p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef } from 'react';
 import { Icon } from 'react-feather';
-import { mc } from '../../utils/mergeClassnames';
+import { cnProps } from '../../utils/mergeClassnames';
 
 import buttonCN from './Button.module.scss';
 
@@ -16,7 +16,11 @@ export const Button = (props: ButtonProps) => {
 
   return (
     <button
-      {...mc(otherProps, buttonCN.button, loading && buttonCN.button_loading)}
+      {...cnProps(
+        otherProps,
+        buttonCN.button,
+        loading && buttonCN.button_loading
+      )}
       disabled={loading || disabled}
     >
       {LeftIcon && <LeftIcon className={buttonCN.icon} size={16} />}
