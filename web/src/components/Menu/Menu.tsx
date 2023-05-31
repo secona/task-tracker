@@ -1,5 +1,6 @@
 import React from 'react';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
+import { MenuItem } from './MenuItem/MenuItem';
 
 export interface MenuProps {
   children?: React.ReactNode;
@@ -24,3 +25,5 @@ export const Menu = (props: MenuProps) => {
     </>
   );
 };
+
+Menu.Item = MenuItem;

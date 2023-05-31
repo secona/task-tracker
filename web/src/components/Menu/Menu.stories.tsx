@@ -1,7 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react';
 import { Menu } from './Menu';
 import { Button } from '../Button';
-import { MenuItem } from './MenuItem/MenuItem';
 import { LogOut, Settings, User } from 'react-feather';
 
 export default {
@@ -12,9 +11,9 @@ export default {
 const Template: StoryFn<typeof Menu> = args => {
   return (
     <Menu activator={<Button>Hello</Button>}>
-      <MenuItem LeftIcon={User}>Profile</MenuItem>
-      <MenuItem LeftIcon={Settings}>Settings</MenuItem>
-      <MenuItem LeftIcon={LogOut}>Logout</MenuItem>
+      <Menu.Item LeftIcon={User}>Profile</Menu.Item>
+      <Menu.Item LeftIcon={Settings}>Settings</Menu.Item>
+      <Menu.Item LeftIcon={LogOut}>Logout</Menu.Item>
     </Menu>
   );
 };
