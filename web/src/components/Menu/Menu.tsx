@@ -17,7 +17,7 @@ export const Menu = (props: MenuProps) => {
         ref: activatorRef,
       })}
       {isOpen && (
-        <MenuDropdown activatorRef={activatorRef}>
+        <MenuDropdown activatorRef={activatorRef} setOpen={setOpen}>
           {props.children}
         </MenuDropdown>
       )}
