@@ -31,7 +31,7 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         </div>
         <div>
           <button className={projectCardCN.moreButton}>
-            <MoreVertical color='white' size={16} />
+            <MoreVertical color='white' size='1rem' />
           </button>
         </div>
       </div>

@@ -12,7 +12,7 @@ export const TopbarButton = forwardRef<HTMLButtonElement, TopbarButtonProps>(
   ({ Icon, ...props }, ref) => {
     return (
       <button {...cnProps(props, topbarButtonCN.topbarButton)} ref={ref}>
-        <Icon size={16} color='white' />
+        <Icon size='1rem' color='white' />
       </button>
     );
   }

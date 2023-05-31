@@ -25,9 +25,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={loading || disabled}
       >
-        {LeftIcon && <LeftIcon className={buttonCN.icon} size={16} />}
+        {LeftIcon && <LeftIcon className={buttonCN.icon} size='1rem' />}
         <span className={buttonCN.text}>{children}</span>
-        {RightIcon && <RightIcon className={buttonCN.icon} size={16} />}
+        {RightIcon && <RightIcon className={buttonCN.icon} size='1rem' />}
       </button>
     );
   }

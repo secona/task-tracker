@@ -29,7 +29,7 @@ export const SidebarItem = (props: SidebarItemProps) => {
           sidebarItemCN.icon,
           props.color !== undefined && sidebarItemCN[`icon_color${props.color}`]
         )}
-        size={16}
+        size='1rem'
       />
       {props.label}
     </NavLink>

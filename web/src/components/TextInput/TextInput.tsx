@@ -25,7 +25,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             RightIcon ? textInputCN.textInput_iconRight : ''
           )}
         >
-          {LeftIcon && <LeftIcon size={16} color='var(--color-grey-300)' />}
+          {LeftIcon && <LeftIcon size='1rem' color='var(--color-grey-300)' />}
           <input
             {...cnProps(
               otherProps,
@@ -34,7 +34,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             )}
             ref={ref}
           />
-          {RightIcon && <RightIcon size={16} color='var(--color-grey-300)' />}
+          {RightIcon && <RightIcon size='1rem' color='var(--color-grey-300)' />}
           <fieldset className={textInputCN.fieldset}>
             {fieldName ? <legend>{fieldName}</legend> : ''}
           </fieldset>

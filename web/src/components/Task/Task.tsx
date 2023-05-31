@@ -28,9 +28,9 @@ export const Task = ({
     >
       <button className={taskCN.finishButton}>
         {done ? (
-          <CheckCircle color='gray' size={16} />
+          <CheckCircle color='gray' size='1rem' />
         ) : (
-          <Circle color='white' size={16} />
+          <Circle color='white' size='1rem' />
         )}
       </button>
       <div>
