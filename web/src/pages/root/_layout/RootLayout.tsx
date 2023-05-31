@@ -33,7 +33,7 @@ export const RootLayout = () => {
   const query = useQuery(queries.projects());
   const colorCode =
     // @ts-ignore
-    query.data?.data.projects.find(p => p.project_id === projectId)?.color || 0;
+    query.data?.data.projects.find(p => p.project_id === projectId)?.color || 8;
 
   return (
     <div className={rootLayoutCN.dashboard}>
