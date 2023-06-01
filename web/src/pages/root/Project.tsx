@@ -39,7 +39,7 @@ const TasksList = () => {
     };
 
     tasksQuery.data.data.tasks.forEach(task => {
-      const component = <Task key={task.task_id} {...task} />;
+      const component = <Task key={task.task_id} task={task} />;
       if (task.done) {
         tasks.finished.push(component);
       } else {

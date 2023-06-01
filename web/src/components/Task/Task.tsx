@@ -1,41 +1,38 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { CheckCircle, Circle } from 'react-feather';
+import { Task as TaskType } from '@/api/tasks';
+import { Project } from '@/api/projects';
 import { cn, cnProps } from '@/utils/mergeClassnames';
 
 import taskCN from './Task.module.scss';
 
 export interface TaskProps extends ComponentPropsWithoutRef<'div'> {
-  task: string;
-  description: string;
-  colorCode?: number;
-  done?: boolean;
+  task: TaskType;
+  project?: Project;
 }
 
-export const Task = ({
-  task,
-  description,
-  colorCode,
-  done = false,
-  ...props
-}: TaskProps) => {
+export const Task = ({ task, project, ...props }: TaskProps) => {
   return (
     <div
       {...cnProps(
         props,
         taskCN.taskCard,
-        colorCode !== undefined && taskCN[`taskCard_color${colorCode}`]
+        project?.color !== undefined &&
+          taskCN[`taskCard_color${project.color || 0}`]
       )}
     >
       <button className={taskCN.finishButton}>
-        {done ? (
+        {task.done ? (
           <CheckCircle color='gray' size='1rem' />
         ) : (
           <Circle color='white' size='1rem' />
         )}
       </button>
       <div>
-        <p className={cn(taskCN.task, done && taskCN.task_done)}>{task}</p>
-        <p className={taskCN.description}>{description}</p>
+        <p className={cn(taskCN.task, task.done && taskCN.task_done)}>
+          {task.task}
+        </p>
+        <p className={taskCN.description}>{task.description}</p>
       </div>
     </div>
   );

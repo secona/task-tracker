@@ -44,12 +44,10 @@ const TasksList = () => {
       const component = (
         <Task
           key={task.task_id}
-          task={task.task}
-          description={task.description}
-          colorCode={
-            projects.find(project => project.project_id === task.project_id)
-              ?.color || 0
-          }
+          task={task}
+          project={projects.find(
+            project => project.project_id === task.project_id
+          )}
         />
       );
 
