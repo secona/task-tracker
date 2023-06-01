@@ -32,13 +32,7 @@ const ProjectGrid = () => {
       <div className={homeCN.grid}>
         {query.data?.data.msg === 'SUCCESS' &&
           query.data.data.projects.map(project => (
-            <ProjectCard
-              key={project.project_id}
-              projectId={project.project_id}
-              name={project.name}
-              description={project.description}
-              colorCode={project.color}
-            />
+            <ProjectCard key={project.project_id} project={project} />
           ))}
       </div>
     </Section>
