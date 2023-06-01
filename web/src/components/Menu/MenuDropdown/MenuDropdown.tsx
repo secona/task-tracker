@@ -1,6 +1,6 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
 import { getDropdownPosition } from '../Menu.utils';
+import { Portal } from '@/components/Portal';
 
 import menuDropdownCN from './MenuDropdown.module.scss';
 
@@ -34,17 +34,18 @@ export const MenuDropdown = (props: MenuDropdownProps) => {
     return () => window.removeEventListener('resize', onResizeWindow);
   }, [setMenuEl]);
 
-  return createPortal(
-    <div
-      className={menuDropdownCN.menuDropdown}
-      ref={el => setMenuEl(el || undefined)}
-      style={{
-        top: position[0],
-        left: position[1],
-      }}
-    >
-      {props.children}
-    </div>,
-    document.querySelector('body')!
+  return (
+    <Portal>
+      <div
+        className={menuDropdownCN.menuDropdown}
+        ref={el => setMenuEl(el || undefined)}
+        style={{
+          top: position[0],
+          left: position[1],
+        }}
+      >
+        {props.children}
+      </div>
+    </Portal>
   );
 };

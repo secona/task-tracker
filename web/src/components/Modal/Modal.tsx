@@ -1,7 +1,7 @@
 import React from 'react';
+import { Portal } from '../Portal';
 
 import modalCN from './Modal.module.scss';
-import { createPortal } from 'react-dom';
 
 export interface ModalProps {
   children: React.FC<{ closeModal(): void }>;
@@ -28,8 +28,8 @@ export const Modal = (props: ModalProps) => {
       {React.cloneElement(props.activator as any, {
         onClick: () => setOpen(v => !v),
       })}
-      {isOpen &&
-        createPortal(
+      {isOpen && (
+        <Portal>
           <div className={modalCN.backdrop}>
             <div
               ref={el => setContentEl(el || undefined)}
@@ -37,9 +37,9 @@ export const Modal = (props: ModalProps) => {
             >
               <props.children closeModal={() => setOpen(false)} />
             </div>
-          </div>,
-          document.querySelector('body')!
-        )}
+          </div>
+        </Portal>
+      )}
     </>
   );
 };
