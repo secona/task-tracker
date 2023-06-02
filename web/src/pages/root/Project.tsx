@@ -1,28 +1,25 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
-import { Heading } from '@/components/Heading';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
 import { Content } from './_layout';
 
-import taskListCN from './TaskList.module.scss';
-
 export const Project = () => {
   return (
-    <div className={taskListCN.container}>
+    <Content.Container>
       <QueryState
         Error={({ resetErrorBoundary }) => (
           <button onClick={resetErrorBoundary}>retry</button>
         )}
       >
-        <TasksList />
+        <QueriedTasksList />
       </QueryState>
-    </div>
+    </Content.Container>
   );
 };
 
-const TasksList = () => {
+const QueriedTasksList = () => {
   const { projectId } = useParams();
   const [tasksQuery, projectsQuery] = useQueries({
     queries: [queries.tasks(projectId), queries.projects()],
@@ -53,17 +50,11 @@ const TasksList = () => {
     return (
       <>
         <Content.Card>
-          <Heading fontSize='6xl' className={taskListCN.name}>
-            {thisProject?.name}
-          </Heading>
-          <p className={taskListCN.description}>{thisProject?.description}</p>
+          <Content.ProjectName children={thisProject?.name} />
+          <Content.ProjectDescription children={thisProject?.description} />
         </Content.Card>
-        <Content.Card className={taskListCN.taskList} title='Unfinished'>
-          {tasks.unfinished}
-        </Content.Card>
-        <Content.Card className={taskListCN.taskList} title='Finished'>
-          {tasks.finished}
-        </Content.Card>
+        <Content.TaskList title='Unfinished' children={tasks.unfinished} />
+        <Content.TaskList title='Finished' children={tasks.finished} />
       </>
     );
   }

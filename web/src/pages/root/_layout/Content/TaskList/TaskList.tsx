@@ -1,0 +1,9 @@
+import { Card, CardProps } from '../Card';
+
+import taskListCN from './TaskList.module.scss';
+
+export interface TaskListProps extends CardProps {}
+
+export const TaskList = (props: TaskListProps) => {
+  return <Card {...props} className={taskListCN.taskList} />;
+};

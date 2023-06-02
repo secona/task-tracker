@@ -1,30 +1,27 @@
 import React from 'react';
 import { useQueries } from '@tanstack/react-query';
 import { QueryState } from '@/components/QueryState';
-import { Heading } from '@/components/Heading';
 import { queries } from '@/queries';
 import { Content } from './_layout';
 
-import taskListCN from './TaskList.module.scss';
-
 export const Inbox = () => {
   return (
-    <div className={taskListCN.container}>
+    <Content.Container>
       <Content.Card>
-        <Heading fontSize='6xl'>Good Morning!</Heading>
+        <Content.ProjectName>Good Morning!</Content.ProjectName>
       </Content.Card>
       <QueryState
         Error={({ resetErrorBoundary }) => (
           <button onClick={resetErrorBoundary}>retry</button>
         )}
       >
-        <TasksList />
+        <QueriedTasksList />
       </QueryState>
-    </div>
+    </Content.Container>
   );
 };
 
-const TasksList = () => {
+const QueriedTasksList = () => {
   const [projectsQuery, tasksQuery] = useQueries({
     queries: [queries.projects(), queries.tasks()],
   });
@@ -56,12 +53,8 @@ const TasksList = () => {
 
     return (
       <>
-        <Content.Card className={taskListCN.taskList} title='Unfinished'>
-          {tasks.unfinished}
-        </Content.Card>
-        <Content.Card className={taskListCN.taskList} title='Finished'>
-          {tasks.finished}
-        </Content.Card>
+        <Content.TaskList title='Unfinished' children={tasks.unfinished} />
+        <Content.TaskList title='Finished' children={tasks.finished} />
       </>
     );
   }
