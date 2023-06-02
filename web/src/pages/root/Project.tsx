@@ -4,8 +4,8 @@ import { useQueries } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
 import { Task } from '@/components/Task';
 import { QueryState } from '@/components/QueryState';
-import { Section } from '@/components/Section';
 import { queries } from '@/queries';
+import { ContentCard } from './_layout';
 
 import taskListCN from './TaskList.module.scss';
 
@@ -53,18 +53,18 @@ const TasksList = () => {
 
     return (
       <>
-        <Section>
+        <ContentCard>
           <Heading fontSize='6xl' className={taskListCN.name}>
             {thisProject?.name}
           </Heading>
           <p className={taskListCN.description}>{thisProject?.description}</p>
-        </Section>
-        <Section className={taskListCN.taskList} title='Unfinished'>
+        </ContentCard>
+        <ContentCard className={taskListCN.taskList} title='Unfinished'>
           {tasks.unfinished}
-        </Section>
-        <Section className={taskListCN.taskList} title='Finished'>
+        </ContentCard>
+        <ContentCard className={taskListCN.taskList} title='Finished'>
           {tasks.finished}
-        </Section>
+        </ContentCard>
       </>
     );
   }

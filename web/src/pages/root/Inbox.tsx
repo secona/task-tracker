@@ -1,19 +1,19 @@
 import React from 'react';
 import { useQueries } from '@tanstack/react-query';
 import { QueryState } from '@/components/QueryState';
-import { Section } from '@/components/Section';
 import { Heading } from '@/components/Heading';
 import { Task } from '@/components/Task';
 import { queries } from '@/queries';
+import { ContentCard } from './_layout';
 
 import taskListCN from './TaskList.module.scss';
 
 export const Inbox = () => {
   return (
     <div className={taskListCN.container}>
-      <Section>
+      <ContentCard>
         <Heading fontSize='6xl'>Good Morning!</Heading>
-      </Section>
+      </ContentCard>
       <QueryState
         Error={({ resetErrorBoundary }) => (
           <button onClick={resetErrorBoundary}>retry</button>
@@ -57,12 +57,12 @@ const TasksList = () => {
 
     return (
       <>
-        <Section className={taskListCN.taskList} title='Unfinished'>
+        <ContentCard className={taskListCN.taskList} title='Unfinished'>
           {tasks.unfinished}
-        </Section>
-        <Section className={taskListCN.taskList} title='Finished'>
+        </ContentCard>
+        <ContentCard className={taskListCN.taskList} title='Finished'>
           {tasks.finished}
-        </Section>
+        </ContentCard>
       </>
     );
   }
