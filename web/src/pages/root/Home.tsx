@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
-import { ProjectCard } from '@/components/ProjectCard';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
 import { Content } from './_layout';
@@ -32,7 +31,7 @@ const ProjectGrid = () => {
       <div className={homeCN.grid}>
         {query.data?.data.msg === 'SUCCESS' &&
           query.data.data.projects.map(project => (
-            <ProjectCard key={project.project_id} project={project} />
+            <Content.Project key={project.project_id} project={project} />
           ))}
       </div>
     </Content.Card>
