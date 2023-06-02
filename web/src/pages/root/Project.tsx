@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
@@ -15,6 +15,7 @@ export const Project = () => {
       >
         <QueriedTasksList />
       </QueryState>
+      <Outlet />
     </Content.Container>
   );
 };

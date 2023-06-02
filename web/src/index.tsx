@@ -16,6 +16,9 @@ import { Verify } from './pages/account/Verify';
 import { PostRegister } from './pages/account/PostRegister';
 
 import './styles/global.scss';
+import { NewTask } from './pages/root/NewTask';
+import { EditProject } from './pages/root/EditProject';
+import { EditTask } from './pages/root/EditTask';
 
 axios.defaults.validateStatus = s => s < 500;
 const queryClient = new QueryClient({
@@ -65,6 +68,20 @@ export const router = createBrowserRouter([
       {
         path: 'p/:projectId',
         element: <Project />,
+        children: [
+          {
+            path: 'edit',
+            element: <EditProject />,
+          },
+          {
+            path: 'new',
+            element: <NewTask />,
+          },
+          {
+            path: 'edit/:taskId',
+            element: <EditTask />,
+          },
+        ],
       },
       {
         path: '*',
