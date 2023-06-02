@@ -1,6 +1,6 @@
 import getMany from './getMany';
 
-export interface Project {
+export interface IProject {
   project_id: string;
   name: string;
   description: string;

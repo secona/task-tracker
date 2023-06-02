@@ -1,14 +1,14 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { CheckCircle, Circle } from 'react-feather';
-import { Task as TaskType } from '@/api/tasks';
-import { Project } from '@/api/projects';
+import { ITask } from '@/api/tasks';
+import { IProject } from '@/api/projects';
 import { cn, cnProps } from '@/utils/mergeClassnames';
 
 import taskCN from './Task.module.scss';
 
 export interface TaskProps extends ComponentPropsWithoutRef<'div'> {
-  task: TaskType;
-  project?: Project;
+  task: ITask;
+  project?: IProject;
 }
 
 export const Task = ({ task, project, ...props }: TaskProps) => {

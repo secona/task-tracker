@@ -1,6 +1,6 @@
 import getMany from './getMany';
 
-export interface Task {
+export interface ITask {
   task_id: string;
   project_id: string;
   task: string;

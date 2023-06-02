@@ -1,11 +1,11 @@
 import { BaseAPI, ResponseBody } from '..';
-import { Project } from '.';
+import { IProject } from '.';
 import axios from 'axios';
 
 export interface ProjectGetManyData {}
 
 export type ProjectGetManyResponse = ResponseBody<{
-  projects: Project[];
+  projects: IProject[];
 }>;
 
 export interface ProjectGetManyAPI

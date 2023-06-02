@@ -1,4 +1,4 @@
-import { Project } from '@/api/projects';
+import { IProject } from '@/api/projects';
 import { ProjectCard } from './ProjectCard';
 import { Meta, StoryFn } from '@storybook/react';
 
@@ -9,7 +9,7 @@ export default {
 
 const Template: StoryFn<typeof ProjectCard> = args => <ProjectCard {...args} />;
 
-const fakeProject: Project = {
+const fakeProject: IProject = {
   project_id: 'x',
   name: 'School',
   description: 'School things',

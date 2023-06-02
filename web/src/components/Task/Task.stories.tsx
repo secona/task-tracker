@@ -1,7 +1,7 @@
-import { Project } from '@/api/projects';
+import { IProject } from '@/api/projects';
 import { Task } from './Task';
 import { Meta, StoryFn } from '@storybook/react';
-import { Task as TaskType } from '@/api/tasks';
+import { ITask } from '@/api/tasks';
 
 export default {
   title: 'Task',
@@ -10,7 +10,7 @@ export default {
 
 const Template: StoryFn<typeof Task> = args => <Task {...args} />;
 
-const fakeTask: TaskType = {
+const fakeTask: ITask = {
   project_id: 'x',
   task_id: 'x',
   task: 'Math Homework',
@@ -20,7 +20,7 @@ const fakeTask: TaskType = {
   updated_at: new Date(),
 };
 
-const fakeProject: Project = {
+const fakeProject: IProject = {
   project_id: 'x',
   name: 'School',
   description: 'School things',

@@ -1,13 +1,13 @@
 import { ComponentPropsWithRef, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MoreVertical } from 'react-feather';
-import { Project } from '@/api/projects';
+import { IProject } from '@/api/projects';
 import { cnProps } from '@/utils/mergeClassnames';
 
 import projectCardCN from './ProjectCard.module.scss';
 
 export interface ProjectCardProps extends ComponentPropsWithRef<'div'> {
-  project: Project;
+  project: IProject;
 }
 
 export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(

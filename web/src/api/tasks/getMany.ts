@@ -1,5 +1,5 @@
 import { BaseAPI, ResponseBody } from '..';
-import { Task } from '.';
+import { ITask } from '.';
 import axios from 'axios';
 
 export interface TaskGetManyData {
@@ -7,7 +7,7 @@ export interface TaskGetManyData {
 }
 
 export type TaskGetManyResponse = ResponseBody<{
-  tasks: Task[];
+  tasks: ITask[];
 }>;
 
 export interface TaskGetManyAPI
