@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
 import { Heading } from '@/components/Heading';
-import { Task } from '@/components/Task';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
 import { Content } from './_layout';
@@ -39,7 +38,7 @@ const TasksList = () => {
     };
 
     tasksQuery.data.data.tasks.forEach(task => {
-      const component = <Task key={task.task_id} task={task} />;
+      const component = <Content.Task key={task.task_id} task={task} />;
       if (task.done) {
         tasks.finished.push(component);
       } else {

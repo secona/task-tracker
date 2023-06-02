@@ -2,7 +2,6 @@ import React from 'react';
 import { useQueries } from '@tanstack/react-query';
 import { QueryState } from '@/components/QueryState';
 import { Heading } from '@/components/Heading';
-import { Task } from '@/components/Task';
 import { queries } from '@/queries';
 import { Content } from './_layout';
 
@@ -42,7 +41,7 @@ const TasksList = () => {
 
     tasksQuery.data.data.tasks.forEach(task => {
       const component = (
-        <Task
+        <Content.Task
           key={task.task_id}
           task={task}
           project={projects.find(
