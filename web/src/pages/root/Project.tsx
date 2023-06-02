@@ -5,7 +5,7 @@ import { Heading } from '@/components/Heading';
 import { Task } from '@/components/Task';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
-import { ContentCard } from './_layout';
+import { Content } from './_layout';
 
 import taskListCN from './TaskList.module.scss';
 
@@ -53,18 +53,18 @@ const TasksList = () => {
 
     return (
       <>
-        <ContentCard>
+        <Content.Card>
           <Heading fontSize='6xl' className={taskListCN.name}>
             {thisProject?.name}
           </Heading>
           <p className={taskListCN.description}>{thisProject?.description}</p>
-        </ContentCard>
-        <ContentCard className={taskListCN.taskList} title='Unfinished'>
+        </Content.Card>
+        <Content.Card className={taskListCN.taskList} title='Unfinished'>
           {tasks.unfinished}
-        </ContentCard>
-        <ContentCard className={taskListCN.taskList} title='Finished'>
+        </Content.Card>
+        <Content.Card className={taskListCN.taskList} title='Finished'>
           {tasks.finished}
-        </ContentCard>
+        </Content.Card>
       </>
     );
   }

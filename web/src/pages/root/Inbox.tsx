@@ -4,16 +4,16 @@ import { QueryState } from '@/components/QueryState';
 import { Heading } from '@/components/Heading';
 import { Task } from '@/components/Task';
 import { queries } from '@/queries';
-import { ContentCard } from './_layout';
+import { Content } from './_layout';
 
 import taskListCN from './TaskList.module.scss';
 
 export const Inbox = () => {
   return (
     <div className={taskListCN.container}>
-      <ContentCard>
+      <Content.Card>
         <Heading fontSize='6xl'>Good Morning!</Heading>
-      </ContentCard>
+      </Content.Card>
       <QueryState
         Error={({ resetErrorBoundary }) => (
           <button onClick={resetErrorBoundary}>retry</button>
@@ -57,12 +57,12 @@ const TasksList = () => {
 
     return (
       <>
-        <ContentCard className={taskListCN.taskList} title='Unfinished'>
+        <Content.Card className={taskListCN.taskList} title='Unfinished'>
           {tasks.unfinished}
-        </ContentCard>
-        <ContentCard className={taskListCN.taskList} title='Finished'>
+        </Content.Card>
+        <Content.Card className={taskListCN.taskList} title='Finished'>
           {tasks.finished}
-        </ContentCard>
+        </Content.Card>
       </>
     );
   }
