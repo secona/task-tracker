@@ -24,8 +24,19 @@ export const MenuDropdown = (props: MenuDropdownProps) => {
       }
     };
 
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        props.setOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('keydown', handleEsc);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEsc);
+    };
   }, [menuEl]);
 
   React.useLayoutEffect(() => {
