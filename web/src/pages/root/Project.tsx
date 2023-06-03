@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
 import { QueryState } from '@/components/QueryState';
 import { queries } from '@/queries';
@@ -53,6 +53,7 @@ const QueriedTasksList = () => {
         <Content.Card>
           <Content.ProjectName children={thisProject?.name} />
           <Content.ProjectDescription children={thisProject?.description} />
+          {/* Temporary */} <Link to='new'>Add New Task</Link>
         </Content.Card>
         <Content.TaskList title='Unfinished' children={tasks.unfinished} />
         <Content.TaskList title='Finished' children={tasks.finished} />

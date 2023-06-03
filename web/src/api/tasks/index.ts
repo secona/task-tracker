@@ -12,6 +12,12 @@ export interface ITask {
   updated_at: Date;
 }
 
+export interface ITaskEditable {
+  task: string;
+  description?: string;
+  done?: boolean;
+}
+
 export const tasksAPI = {
   getMany,
 };
