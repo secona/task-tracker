@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, User, Key, LogIn } from 'react-feather';
-import user, { RegisterData } from '@/api/user';
+import { userAPI, UserRegisterData } from '@/api/user';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
@@ -16,8 +16,8 @@ export const Register = () => {
 
   const mutation = useMutation({
     mutationKey: ['registration'],
-    mutationFn: (data: RegisterData) => {
-      return user.register(data);
+    mutationFn: (data: UserRegisterData) => {
+      return userAPI.register(data);
     },
     onSuccess: ({ data }) => {
       console.log(data);
@@ -25,7 +25,7 @@ export const Register = () => {
         switch (data.msg) {
           case 'VALIDATION_FAILED':
             return Object.entries(data.details).forEach(([k, v]) => {
-              setError(k as keyof RegisterData, { message: v.join('|') });
+              setError(k as keyof UserRegisterData, { message: v.join('|') });
             });
           default:
             return alert('An unexpected error has occurred.');
@@ -45,8 +45,8 @@ export const Register = () => {
     setError,
     handleSubmit,
     getValues,
-  } = useForm<RegisterData>({
-    resolver: yupResolver(user.register.validation),
+  } = useForm<UserRegisterData>({
+    resolver: yupResolver(userAPI.register.validation),
   });
 
   return (

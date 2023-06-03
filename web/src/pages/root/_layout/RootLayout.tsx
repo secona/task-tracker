@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { LoaderFunction, Outlet, redirect, useParams } from 'react-router-dom';
 import { QueryClient, useQuery } from '@tanstack/react-query';
-import { ProjectGetManyResponse } from '@/api/projects/getMany';
+import { ProjectsGetManyResponse } from '@/api/projects/getMany';
 import { queries } from '@/queries';
 import { keys } from '@/config/keys';
 import { cn } from '@/utils/mergeClassnames';
@@ -15,7 +15,7 @@ export const rootLoader =
   async () => {
     const query = queries.projects();
 
-    const queryData: AxiosResponse<ProjectGetManyResponse> =
+    const queryData: AxiosResponse<ProjectsGetManyResponse> =
       queryClient.getQueryData(query.queryKey) ||
       (await queryClient.fetchQuery(query));
 

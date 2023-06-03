@@ -1,21 +1,22 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { SchemaOf, object, string } from 'yup';
-import { BaseAPI, ResponseBody } from '@/api';
+import { BaseAPI, ResponseBody } from '..';
 
-export interface RegisterData {
+export interface UserRegisterData {
   name: string;
   email: string;
   password: string;
 }
 
-export type RegisterResponse = ResponseBody;
+export type UserRegisterResponse = ResponseBody;
 
-export interface RegisterAPI extends BaseAPI<RegisterData, RegisterResponse> {
-  validation: SchemaOf<RegisterData>;
+export interface UserRegisterAPI
+  extends BaseAPI<UserRegisterData, UserRegisterResponse> {
+  validation: SchemaOf<UserRegisterData>;
 }
 
-const register: RegisterAPI = function (data: RegisterData) {
-  return axios.post<RegisterResponse>('/api/user', data);
+const register: UserRegisterAPI = data => {
+  return axios.post<UserRegisterResponse>('/api/user', data);
 };
 
 register.validation = object().shape({

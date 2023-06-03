@@ -1,5 +1,7 @@
 import getMany from './getMany';
 
+export * from './getMany';
+
 export interface IProject {
   project_id: string;
   name: string;
@@ -9,6 +11,6 @@ export interface IProject {
   updated_at: Date;
 }
 
-export default {
+export const projectsAPI = {
   getMany,
 };

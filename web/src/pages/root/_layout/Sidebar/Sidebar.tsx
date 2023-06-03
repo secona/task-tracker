@@ -1,13 +1,13 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { Folder, Home, Inbox } from 'react-feather';
-import projects from '@/api/projects';
+import { projectsAPI } from '@/api/projects';
 import { SidebarItem } from './SidebarItem';
 import { SidebarItemGroup } from './SidebarItemGroup';
 
 import sidebarCN from './Sidebar.module.scss';
 
 export interface SidebarProps {
-  query: UseQueryResult<Awaited<ReturnType<typeof projects.getMany>>>;
+  query: UseQueryResult<Awaited<ReturnType<typeof projectsAPI.getMany>>>;
 }
 
 export const Sidebar = ({ query }: SidebarProps) => {

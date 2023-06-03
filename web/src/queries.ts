@@ -1,18 +1,18 @@
 import { QueryOptions } from '@tanstack/react-query';
-import projects from './api/projects';
-import tasks from './api/tasks';
+import { projectsAPI } from './api/projects';
+import { tasksAPI } from './api/tasks';
 
 export const queries = {
   projects: () => ({
     queryKey: ['projects', 'all'],
     queryFn: async () => {
-      return projects.getMany({});
+      return projectsAPI.getMany({});
     },
   }),
   tasks: (projectId?: string) => ({
     queryKey: ['projects', projectId, 'tasks'],
     queryFn: async () => {
-      return tasks.getMany({ projectId });
+      return tasksAPI.getMany({ projectId });
     },
   }),
 } satisfies Record<string, () => QueryOptions>;

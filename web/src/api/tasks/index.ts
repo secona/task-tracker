@@ -1,5 +1,7 @@
 import getMany from './getMany';
 
+export * from './getMany';
+
 export interface ITask {
   task_id: string;
   project_id: string;
@@ -10,6 +12,6 @@ export interface ITask {
   updated_at: Date;
 }
 
-export default {
+export const tasksAPI = {
   getMany,
 };

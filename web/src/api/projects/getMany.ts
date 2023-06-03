@@ -1,18 +1,18 @@
+import axios from 'axios';
 import { BaseAPI, ResponseBody } from '..';
 import { IProject } from '.';
-import axios from 'axios';
 
-export interface ProjectGetManyData {}
+export interface ProjectsGetManyData {}
 
-export type ProjectGetManyResponse = ResponseBody<{
+export type ProjectsGetManyResponse = ResponseBody<{
   projects: IProject[];
 }>;
 
-export interface ProjectGetManyAPI
-  extends BaseAPI<ProjectGetManyData, ProjectGetManyResponse> {}
+export interface ProjectsGetManyAPI
+  extends BaseAPI<ProjectsGetManyData, ProjectsGetManyResponse> {}
 
-const getMany: ProjectGetManyAPI = () => {
-  return axios.get<ProjectGetManyResponse>('/api/projects');
+const getMany: ProjectsGetManyAPI = () => {
+  return axios.get<ProjectsGetManyResponse>('/api/projects');
 };
 
 export default getMany;

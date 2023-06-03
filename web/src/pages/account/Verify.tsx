@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { authAPI } from '@/api/auth';
 import { useNavigate, useSearchParams, Navigate } from 'react-router-dom';
 
 export const Verify = () => {
@@ -7,9 +7,13 @@ export const Verify = () => {
   const navigate = useNavigate();
 
   if (token) {
-    axios.post(`/api/auth/verify/${token}`).then(result => {
-      if (result.data.success) return navigate('../login?verified');
-      if (result.status === 500) return navigate('../login?error');
+    authAPI.verify({ token }).then(result => {
+      switch (result.data.msg) {
+        case 'SUCCESS':
+          return navigate('../login?verified');
+        case 'UNKNOWN':
+          return navigate('../login?error');
+      }
     });
   }
 

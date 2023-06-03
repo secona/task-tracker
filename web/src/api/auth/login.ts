@@ -2,19 +2,20 @@ import axios from 'axios';
 import { object, SchemaOf, string } from 'yup';
 import { BaseAPI, ResponseBody } from '..';
 
-export interface LoginData {
+export interface AuthLoginData {
   email: string;
   password: string;
 }
 
-export type LoginResponse = ResponseBody;
+export type AuthLoginResponse = ResponseBody;
 
-export interface LoginAPI extends BaseAPI<LoginData, LoginResponse> {
-  validation: SchemaOf<LoginData>;
+export interface AuthLoginAPI
+  extends BaseAPI<AuthLoginData, AuthLoginResponse> {
+  validation: SchemaOf<AuthLoginData>;
 }
 
-const login: LoginAPI = async (data: LoginData) => {
-  return axios.post<LoginResponse>('/api/auth/login', data);
+const login: AuthLoginAPI = data => {
+  return axios.post<AuthLoginResponse>('/api/auth/login', data);
 };
 
 login.validation = object().shape({

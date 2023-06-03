@@ -1,20 +1,20 @@
+import axios from 'axios';
 import { BaseAPI, ResponseBody } from '..';
 import { ITask } from '.';
-import axios from 'axios';
 
-export interface TaskGetManyData {
+export interface TasksGetManyData {
   projectId?: string;
 }
 
-export type TaskGetManyResponse = ResponseBody<{
+export type TasksGetManyResponse = ResponseBody<{
   tasks: ITask[];
 }>;
 
-export interface TaskGetManyAPI
-  extends BaseAPI<TaskGetManyData, TaskGetManyResponse> {}
+export interface TasksGetManyAPI
+  extends BaseAPI<TasksGetManyData, TasksGetManyResponse> {}
 
-const getMany: TaskGetManyAPI = data => {
-  return axios.get<TaskGetManyResponse>('/api/tasks', {
+const getMany: TasksGetManyAPI = data => {
+  return axios.get<TasksGetManyResponse>('/api/tasks', {
     params: {
       projectId: data.projectId,
     },
