@@ -7,7 +7,7 @@ export const Verify = () => {
   const navigate = useNavigate();
 
   if (token) {
-    authAPI.verify({ token }).then(result => {
+    authAPI.verify({ context: { token } }).then(result => {
       switch (result.data.msg) {
         case 'SUCCESS':
           return navigate('../login?verified');

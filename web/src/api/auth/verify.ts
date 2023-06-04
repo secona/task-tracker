@@ -1,17 +1,19 @@
 import axios from 'axios';
 import { BaseAPI, ResponseBody } from '..';
 
-export interface AuthVerifyData {
+export interface AuthVerifyContext {
   token: string;
 }
+
+export interface AuthVerifyBody {}
 
 export type AuthVerifyResponse = ResponseBody;
 
 export interface AuthVerifyAPI
-  extends BaseAPI<AuthVerifyData, AuthVerifyResponse> {}
+  extends BaseAPI<AuthVerifyContext, AuthVerifyBody, AuthVerifyResponse> {}
 
-const login: AuthVerifyAPI = ({ token }) => {
-  return axios.post<AuthVerifyResponse>(`/api/auth/verify/${token}`);
+const login: AuthVerifyAPI = ({ context }) => {
+  return axios.post<AuthVerifyResponse>(`/api/auth/verify/${context.token}`);
 };
 
 export default login;

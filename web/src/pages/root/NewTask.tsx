@@ -1,4 +1,4 @@
-import { projectsAPI, ProjectsNewTaskData } from '@/api/projects';
+import { projectsAPI, ProjectsNewTaskBody } from '@/api/projects';
 import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
 import { TextInput } from '@/components/TextInput';
@@ -9,13 +9,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 export const NewTask = () => {
   const navigate = useNavigate();
-  const { projectId } = useParams();
+  const { projectId } = useParams() as { projectId: string };
   const closeModal = () => navigate('..');
 
   const mutation = useMutation({
     mutationKey: ['new', 'task'],
-    mutationFn: (data: ProjectsNewTaskData) => {
-      return projectsAPI.newTask(data);
+    mutationFn: (body: ProjectsNewTaskBody) => {
+      return projectsAPI.newTask({
+        context: { projectId },
+        body,
+      });
     },
     onSuccess: () => {
       closeModal();
@@ -26,11 +29,8 @@ export const NewTask = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<ProjectsNewTaskData>({
+  } = useForm<ProjectsNewTaskBody>({
     resolver: yupResolver(projectsAPI.newTask.validation),
-    defaultValues: {
-      projectId,
-    },
   });
 
   return (

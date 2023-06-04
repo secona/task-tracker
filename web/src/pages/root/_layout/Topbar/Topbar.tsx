@@ -14,7 +14,7 @@ export const Topbar = () => {
   const mutation = useMutation({
     mutationKey: ['logout'],
     mutationFn: () => {
-      return authAPI.logout({});
+      return authAPI.logout();
     },
     onSuccess: () => {
       localStorage.removeItem(keys.isLoggedIn);

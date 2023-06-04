@@ -6,13 +6,13 @@ export const queries = {
   projects: () => ({
     queryKey: ['projects', 'all'],
     queryFn: async () => {
-      return projectsAPI.getMany({});
+      return projectsAPI.getMany();
     },
   }),
   tasks: (projectId?: string) => ({
     queryKey: ['projects', projectId, 'tasks'],
     queryFn: async () => {
-      return tasksAPI.getMany({ projectId });
+      return tasksAPI.getMany({ context: { projectId } });
     },
   }),
 } satisfies Record<string, () => QueryOptions>;

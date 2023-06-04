@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { SchemaOf } from 'yup';
 
 export type ResponseBody<Data extends {} = {}> =
   | {
@@ -14,6 +15,16 @@ export type ResponseBody<Data extends {} = {}> =
   | ({ msg: 'SUCCESS' } & Data)
   | ({ msg: 'NOT_FOUND' } & Record<keyof Data, {}>);
 
-export interface BaseAPI<Data extends object, Response extends ResponseBody> {
-  (data: Data): Promise<AxiosResponse<Response, any>>;
-}
+// prettier-ignore
+export type BaseAPI<
+  Context extends object,
+  Body extends object,
+  Response extends ResponseBody,
+  Args = (keyof Context extends never ? {} : { context: Context }) &
+    (keyof Body extends never ? {} : { body: Body })
+> = (keyof Args extends never
+  ? { (): Promise<AxiosResponse<Response, any>> }
+  : { (data: Args): Promise<AxiosResponse<Response, any>> }) 
+  & (keyof Body extends never
+  ? {}
+  : { validation: SchemaOf<Body> });

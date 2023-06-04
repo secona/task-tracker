@@ -1,28 +1,31 @@
 import axios from 'axios';
-import { SchemaOf, boolean, object, string } from 'yup';
+import { boolean, object, string } from 'yup';
 import { BaseAPI, ResponseBody } from '..';
 import { ITaskEditable } from '../tasks';
 
-export interface ProjectsNewTaskData extends ITaskEditable {
+export interface ProjectsNewTaskContext {
   projectId: string;
 }
+
+export interface ProjectsNewTaskBody extends ITaskEditable {}
 
 export type ProjectsNewTaskResponse = ResponseBody;
 
 export interface ProjectsNewTaskAPI
-  extends BaseAPI<ProjectsNewTaskData, ProjectsNewTaskResponse> {
-  validation: SchemaOf<ProjectsNewTaskData>;
-}
+  extends BaseAPI<
+    ProjectsNewTaskContext,
+    ProjectsNewTaskBody,
+    ProjectsNewTaskResponse
+  > {}
 
-const newTask: ProjectsNewTaskAPI = ({ projectId, ...data }) => {
+const newTask: ProjectsNewTaskAPI = ({ context, body }) => {
   return axios.post<ProjectsNewTaskResponse>(
-    `/api/projects/${projectId}/tasks`,
-    data
+    `/api/projects/${context.projectId}/tasks`,
+    body
   );
 };
 
 newTask.validation = object().shape({
-  projectId: string().required(),
   task: string().required(),
   description: string(),
   done: boolean(),

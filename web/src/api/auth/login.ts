@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { object, SchemaOf, string } from 'yup';
+import { object, string } from 'yup';
 import { BaseAPI, ResponseBody } from '..';
 
-export interface AuthLoginData {
+export interface AuthLoginContext {}
+
+export interface AuthLoginBody {
   email: string;
   password: string;
 }
@@ -10,12 +12,10 @@ export interface AuthLoginData {
 export type AuthLoginResponse = ResponseBody;
 
 export interface AuthLoginAPI
-  extends BaseAPI<AuthLoginData, AuthLoginResponse> {
-  validation: SchemaOf<AuthLoginData>;
-}
+  extends BaseAPI<AuthLoginContext, AuthLoginBody, AuthLoginResponse> {}
 
-const login: AuthLoginAPI = data => {
-  return axios.post<AuthLoginResponse>('/api/auth/login', data);
+const login: AuthLoginAPI = ({ body }) => {
+  return axios.post<AuthLoginResponse>('/api/auth/login', body);
 };
 
 login.validation = object().shape({

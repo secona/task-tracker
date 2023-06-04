@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { SchemaOf, object, string } from 'yup';
+import { object, string } from 'yup';
 import { BaseAPI, ResponseBody } from '..';
 
-export interface UserRegisterData {
+export interface UserRegisterContext {}
+
+export interface UserRegisterBody {
   name: string;
   email: string;
   password: string;
@@ -11,12 +13,14 @@ export interface UserRegisterData {
 export type UserRegisterResponse = ResponseBody;
 
 export interface UserRegisterAPI
-  extends BaseAPI<UserRegisterData, UserRegisterResponse> {
-  validation: SchemaOf<UserRegisterData>;
-}
+  extends BaseAPI<
+    UserRegisterContext,
+    UserRegisterBody,
+    UserRegisterResponse
+  > {}
 
-const register: UserRegisterAPI = data => {
-  return axios.post<UserRegisterResponse>('/api/user', data);
+const register: UserRegisterAPI = ({ body }) => {
+  return axios.post<UserRegisterResponse>('/api/user', body);
 };
 
 register.validation = object().shape({

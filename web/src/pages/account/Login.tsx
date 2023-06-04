@@ -3,7 +3,7 @@ import { Mail, Key, LogIn } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { authAPI, AuthLoginData } from '@/api/auth';
+import { authAPI, AuthLoginBody } from '@/api/auth';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
@@ -20,8 +20,8 @@ export const Login = () => {
   const navigate = useNavigate();
   const mutation = useMutation({
     mutationKey: ['login'],
-    mutationFn: (data: AuthLoginData) => {
-      return authAPI.login(data!);
+    mutationFn: (body: AuthLoginBody) => {
+      return authAPI.login({ body });
     },
     onSuccess: ({ data }) => {
       if (data.msg === 'SUCCESS') {
@@ -31,7 +31,7 @@ export const Login = () => {
         switch (data.msg) {
           case 'VALIDATION_FAILED':
             return Object.entries(data.details).forEach(([k, v]) => {
-              setError(k as keyof AuthLoginData, { message: v.join('|') });
+              setError(k as keyof AuthLoginBody, { message: v.join('|') });
             });
           case 'UNVERIFIED_EMAIL':
             return navigate(`../register/post?email=${getValues('email')}`);
@@ -54,7 +54,7 @@ export const Login = () => {
     handleSubmit,
     setError,
     getValues,
-  } = useForm<AuthLoginData>({
+  } = useForm<AuthLoginBody>({
     resolver: yupResolver(authAPI.login.validation),
   });
 
