@@ -20,7 +20,6 @@ import { NewTask } from './pages/root/NewTask';
 import { EditProject } from './pages/root/EditProject';
 import { EditTask } from './pages/root/EditTask';
 
-axios.defaults.validateStatus = s => s < 500;
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

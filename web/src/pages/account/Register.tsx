@@ -4,13 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, User, Key, LogIn } from 'react-feather';
 import { userAPI, UserRegisterBody } from '@/api/user';
+import { ErrorResponse, isErrorResponse } from '@/api';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { AccountForm } from './_layout';
 
 import authCN from './Auth.module.scss';
-import { NEW_ErrorResponse, NEW_isErrorResponse } from '@/api';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export const Register = () => {
     onSuccess: () => {
       navigate(`../register/post?email=${getValues('email')}`);
     },
-    onError: (error: NEW_ErrorResponse) => {
+    onError: (error: ErrorResponse) => {
       switch (error.response?.data.msg) {
         case 'VALIDATION_FAILED':
           return Object.entries(error.response?.data.details).forEach(
@@ -33,8 +33,7 @@ export const Register = () => {
           );
       }
     },
-    useErrorBoundary: error =>
-      !NEW_isErrorResponse(error, ['VALIDATION_FAILED']),
+    useErrorBoundary: error => !isErrorResponse(error, ['VALIDATION_FAILED']),
   });
 
   const {

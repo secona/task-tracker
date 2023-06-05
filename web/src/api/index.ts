@@ -1,23 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { SchemaOf } from 'yup';
 
-export type ResponseBody<Data extends {} = {}> =
-  | {
-      msg: 'VALIDATION_FAILED';
-      details: Record<string, string[]>;
-    }
-  | { msg: 'NOT_LOGGED_IN' }
-  | { msg: 'ALREADY_LOGGED_IN' }
-  | { msg: 'UNVERIFIED_EMAIL' }
-  | { msg: 'TOKEN_EXPIRED' }
-  | { msg: 'TOKEN_MALFORMED' }
-  | { msg: 'UNKNOWN' }
-  | ({ msg: 'SUCCESS' } & Data)
-  | ({ msg: 'NOT_FOUND' } & Record<keyof Data, {}>);
+export type ResponseBody<Data extends {} = {}> = { msg: 'SUCCESS' } & Data;
 
-export type NEW_ResponseBody<Data extends {} = {}> = { msg: 'SUCCESS' } & Data;
-
-export type NEW_ErrorResponseBody<Data extends {} = {}> =
+export type ErrorResponseBody<Data extends {} = {}> =
   | {
       msg: 'VALIDATION_FAILED';
       details: Record<string, string[]>;
@@ -30,7 +16,7 @@ export type NEW_ErrorResponseBody<Data extends {} = {}> =
   | { msg: 'UNKNOWN' }
   | ({ msg: 'NOT_FOUND' } & Record<keyof Data, {}>);
 
-export type NEW_ErrorResponse = AxiosError<NEW_ErrorResponseBody>;
+export type ErrorResponse = AxiosError<ErrorResponseBody>;
 
 // prettier-ignore
 export type BaseAPI<
@@ -46,15 +32,11 @@ export type BaseAPI<
   ? {}
   : { validation: SchemaOf<Body> });
 
-export const NEW_axios = axios.create({
-  validateStatus: s => s < 400,
-});
-
-export const NEW_isErrorResponse = (
+export const isErrorResponse = (
   error: unknown,
-  msgs?: NEW_ErrorResponseBody['msg'][]
-): error is NEW_ErrorResponse => {
-  if (axios.isAxiosError<NEW_ErrorResponseBody>(error)) {
+  msgs?: ErrorResponseBody['msg'][]
+): error is ErrorResponse => {
+  if (axios.isAxiosError<ErrorResponseBody>(error)) {
     if (Array.isArray(msgs)) {
       return msgs.includes(error.response!.data.msg);
     } else {

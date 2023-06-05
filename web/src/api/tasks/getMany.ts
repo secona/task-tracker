@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BaseAPI, NEW_ResponseBody, NEW_axios } from '..';
+import { BaseAPI, ResponseBody } from '..';
 import { ITask } from '.';
 
 export interface TasksGetManyContext {
@@ -8,7 +8,7 @@ export interface TasksGetManyContext {
 
 export interface TasksGetManyBody {}
 
-export type TasksGetManyResponse = NEW_ResponseBody<{
+export type TasksGetManyResponse = ResponseBody<{
   tasks: ITask[];
 }>;
 
@@ -20,7 +20,7 @@ export interface TasksGetManyAPI
   > {}
 
 const getMany: TasksGetManyAPI = ({ context }) => {
-  return NEW_axios.get<TasksGetManyResponse>('/api/tasks', {
+  return axios.get<TasksGetManyResponse>('/api/tasks', {
     params: {
       projectId: context.projectId,
     },

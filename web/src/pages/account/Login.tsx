@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { authAPI, AuthLoginBody } from '@/api/auth';
-import { NEW_ErrorResponse, NEW_isErrorResponse } from '@/api';
+import { ErrorResponse, isErrorResponse } from '@/api';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
@@ -24,11 +24,11 @@ export const Login = () => {
     mutationFn: (body: AuthLoginBody) => {
       return authAPI.login({ body });
     },
-    onSuccess: ({ data }) => {
+    onSuccess: () => {
       navigate('/');
       localStorage.setItem(keys.isLoggedIn, 'true');
     },
-    onError: (error: NEW_ErrorResponse) => {
+    onError: (error: ErrorResponse) => {
       switch (error.response?.data.msg) {
         case 'VALIDATION_FAILED':
           return Object.entries(error.response.data.details).forEach(
@@ -41,7 +41,7 @@ export const Login = () => {
       }
     },
     useErrorBoundary: error =>
-      !NEW_isErrorResponse(error, ['VALIDATION_FAILED', 'UNVERIFIED_EMAIL']),
+      !isErrorResponse(error, ['VALIDATION_FAILED', 'UNVERIFIED_EMAIL']),
   });
 
   const {

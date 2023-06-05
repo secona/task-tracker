@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { boolean, object, string } from 'yup';
-import { BaseAPI, NEW_ResponseBody, NEW_axios } from '..';
+import { BaseAPI, ResponseBody } from '..';
 import { ITaskEditable } from '../tasks';
 
 export interface ProjectsNewTaskContext {
@@ -9,7 +9,7 @@ export interface ProjectsNewTaskContext {
 
 export interface ProjectsNewTaskBody extends ITaskEditable {}
 
-export type ProjectsNewTaskResponse = NEW_ResponseBody;
+export type ProjectsNewTaskResponse = ResponseBody;
 
 export interface ProjectsNewTaskAPI
   extends BaseAPI<
@@ -19,7 +19,7 @@ export interface ProjectsNewTaskAPI
   > {}
 
 const newTask: ProjectsNewTaskAPI = ({ context, body }) => {
-  return NEW_axios.post<ProjectsNewTaskResponse>(
+  return axios.post<ProjectsNewTaskResponse>(
     `/api/projects/${context.projectId}/tasks`,
     body
   );
