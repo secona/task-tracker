@@ -52,10 +52,14 @@ export const NEW_axios = axios.create({
 
 export const NEW_isErrorResponse = (
   error: unknown,
-  ...msgs: NEW_ErrorResponseBody['msg'][]
+  msgs?: NEW_ErrorResponseBody['msg'][]
 ): error is NEW_ErrorResponse => {
   if (axios.isAxiosError<NEW_ErrorResponseBody>(error)) {
-    return msgs.includes(error.response!.data.msg);
+    if (Array.isArray(msgs)) {
+      return msgs.includes(error.response!.data.msg);
+    } else {
+      return true;
+    }
   }
   return false;
 };

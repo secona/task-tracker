@@ -33,7 +33,8 @@ export const Register = () => {
           );
       }
     },
-    useErrorBoundary: error => !NEW_isErrorResponse(error, 'VALIDATION_FAILED'),
+    useErrorBoundary: error =>
+      !NEW_isErrorResponse(error, ['VALIDATION_FAILED']),
   });
 
   const {

@@ -41,7 +41,7 @@ export const Login = () => {
       }
     },
     useErrorBoundary: error =>
-      !NEW_isErrorResponse(error, 'VALIDATION_FAILED', 'UNVERIFIED_EMAIL'),
+      !NEW_isErrorResponse(error, ['VALIDATION_FAILED', 'UNVERIFIED_EMAIL']),
   });
 
   const {
