@@ -30,6 +30,8 @@ export type NEW_ErrorResponseBody<Data extends {} = {}> =
   | { msg: 'UNKNOWN' }
   | ({ msg: 'NOT_FOUND' } & Record<keyof Data, {}>);
 
+export type NEW_ErrorResponse = AxiosError<NEW_ErrorResponseBody>;
+
 // prettier-ignore
 export type BaseAPI<
   Context extends object,
@@ -51,7 +53,7 @@ export const NEW_axios = axios.create({
 export const NEW_isErrorResponse = (
   error: unknown,
   ...msgs: NEW_ErrorResponseBody['msg'][]
-): error is AxiosError<NEW_ErrorResponseBody> => {
+): error is NEW_ErrorResponse => {
   if (axios.isAxiosError<NEW_ErrorResponseBody>(error)) {
     return msgs.includes(error.response!.data.msg);
   }

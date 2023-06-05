@@ -1,11 +1,10 @@
-import { AxiosError } from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Mail, Key, LogIn } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { authAPI, AuthLoginBody } from '@/api/auth';
-import { NEW_ErrorResponseBody, NEW_isErrorResponse } from '@/api';
+import { NEW_ErrorResponse, NEW_isErrorResponse } from '@/api';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
@@ -29,7 +28,7 @@ export const Login = () => {
       navigate('/');
       localStorage.setItem(keys.isLoggedIn, 'true');
     },
-    onError: (error: AxiosError<NEW_ErrorResponseBody>) => {
+    onError: (error: NEW_ErrorResponse) => {
       switch (error.response?.data.msg) {
         case 'VALIDATION_FAILED':
           return Object.entries(error.response.data.details).forEach(
