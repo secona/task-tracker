@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { object, string } from 'yup';
-import { BaseAPI, ResponseBody } from '..';
+import { BaseAPI, NEW_ResponseBody, NEW_axios } from '..';
 
 export interface UserRegisterContext {}
 
@@ -10,7 +10,7 @@ export interface UserRegisterBody {
   password: string;
 }
 
-export type UserRegisterResponse = ResponseBody;
+export type UserRegisterResponse = NEW_ResponseBody;
 
 export interface UserRegisterAPI
   extends BaseAPI<
@@ -20,7 +20,7 @@ export interface UserRegisterAPI
   > {}
 
 const register: UserRegisterAPI = ({ body }) => {
-  return axios.post<UserRegisterResponse>('/api/user', body);
+  return NEW_axios.post<UserRegisterResponse>('/api/user', body);
 };
 
 register.validation = object().shape({

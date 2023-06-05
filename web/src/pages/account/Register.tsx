@@ -10,6 +10,7 @@ import { TextInput } from '@/components/TextInput';
 import { AccountForm } from './_layout';
 
 import authCN from './Auth.module.scss';
+import { NEW_ErrorResponse, NEW_isErrorResponse } from '@/api';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -19,24 +20,20 @@ export const Register = () => {
     mutationFn: (body: UserRegisterBody) => {
       return userAPI.register({ body });
     },
-    onSuccess: ({ data }) => {
-      console.log(data);
-      if (data.msg !== 'SUCCESS') {
-        switch (data.msg) {
-          case 'VALIDATION_FAILED':
-            return Object.entries(data.details).forEach(([k, v]) => {
+    onSuccess: () => {
+      navigate(`../register/post?email=${getValues('email')}`);
+    },
+    onError: (error: NEW_ErrorResponse) => {
+      switch (error.response?.data.msg) {
+        case 'VALIDATION_FAILED':
+          return Object.entries(error.response?.data.details).forEach(
+            ([k, v]) => {
               setError(k as keyof UserRegisterBody, { message: v.join('|') });
-            });
-          default:
-            return alert('An unexpected error has occurred.');
-        }
-      } else {
-        navigate(`../register/post?email=${getValues('email')}`);
+            }
+          );
       }
     },
-    onError: () => {
-      return alert('An unexpected error has occurred.');
-    },
+    useErrorBoundary: error => !NEW_isErrorResponse(error, 'VALIDATION_FAILED'),
   });
 
   const {
