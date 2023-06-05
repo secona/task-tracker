@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { SchemaOf } from 'yup';
 
 export type ResponseBody<Data extends {} = {}> =
@@ -47,3 +47,13 @@ export type BaseAPI<
 export const NEW_axios = axios.create({
   validateStatus: s => s < 400,
 });
+
+export const NEW_isErrorResponse = (
+  error: unknown,
+  ...msgs: NEW_ErrorResponseBody['msg'][]
+): error is AxiosError<NEW_ErrorResponseBody> => {
+  if (axios.isAxiosError<NEW_ErrorResponseBody>(error)) {
+    return msgs.includes(error.response!.data.msg);
+  }
+  return false;
+};

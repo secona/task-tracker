@@ -4,16 +4,16 @@ import { NEW_isErrorResponse } from '@/api';
 import { keys } from '@/config/keys';
 import React from 'react';
 
-export const RootLayoutError = () => {
+export const AccountLayoutError = () => {
   const error = useRouteError();
   const navigate = useNavigate();
 
   React.useEffect(() => {
     if (NEW_isErrorResponse(error)) {
       switch (error.response?.data.msg) {
-        case 'NOT_LOGGED_IN':
-          localStorage.removeItem(keys.isLoggedIn);
-          return navigate('/account/login');
+        case 'ALREADY_LOGGED_IN':
+          localStorage.setItem(keys.isLoggedIn, 'true');
+          return navigate('/');
       }
     }
   }, []);

@@ -1,9 +1,11 @@
+import { AxiosError } from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Mail, Key, LogIn } from 'react-feather';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { authAPI, AuthLoginBody } from '@/api/auth';
+import { NEW_ErrorResponseBody, NEW_isErrorResponse } from '@/api';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
@@ -24,28 +26,23 @@ export const Login = () => {
       return authAPI.login({ body });
     },
     onSuccess: ({ data }) => {
-      if (data.msg === 'SUCCESS') {
-        navigate('/');
-        localStorage.setItem(keys.isLoggedIn, 'true');
-      } else {
-        switch (data.msg) {
-          case 'VALIDATION_FAILED':
-            return Object.entries(data.details).forEach(([k, v]) => {
+      navigate('/');
+      localStorage.setItem(keys.isLoggedIn, 'true');
+    },
+    onError: (error: AxiosError<NEW_ErrorResponseBody>) => {
+      switch (error.response?.data.msg) {
+        case 'VALIDATION_FAILED':
+          return Object.entries(error.response.data.details).forEach(
+            ([k, v]) => {
               setError(k as keyof AuthLoginBody, { message: v.join('|') });
-            });
-          case 'UNVERIFIED_EMAIL':
-            return navigate(`../register/post?email=${getValues('email')}`);
-          case 'ALREADY_LOGGED_IN':
-            localStorage.setItem(keys.isLoggedIn, 'true');
-            return navigate('/');
-          default:
-            alert('An unexpected error has occurred.');
-        }
+            }
+          );
+        case 'UNVERIFIED_EMAIL':
+          return navigate(`../register/post?email=${getValues('email')}`);
       }
     },
-    onError: () => {
-      return alert('An unexpected error has occurred.');
-    },
+    useErrorBoundary: error =>
+      !NEW_isErrorResponse(error, 'VALIDATION_FAILED', 'UNVERIFIED_EMAIL'),
   });
 
   const {

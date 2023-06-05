@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { object, string } from 'yup';
-import { BaseAPI, ResponseBody } from '..';
+import { BaseAPI, NEW_ResponseBody, NEW_axios } from '..';
 
 export interface AuthLoginContext {}
 
@@ -9,13 +9,13 @@ export interface AuthLoginBody {
   password: string;
 }
 
-export type AuthLoginResponse = ResponseBody;
+export type AuthLoginResponse = NEW_ResponseBody;
 
 export interface AuthLoginAPI
   extends BaseAPI<AuthLoginContext, AuthLoginBody, AuthLoginResponse> {}
 
 const login: AuthLoginAPI = ({ body }) => {
-  return axios.post<AuthLoginResponse>('/api/auth/login', body);
+  return NEW_axios.post<AuthLoginResponse>('/api/auth/login', body);
 };
 
 login.validation = object().shape({

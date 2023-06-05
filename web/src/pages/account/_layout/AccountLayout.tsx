@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import { AccountLayoutError } from './AccountLayoutError';
 
 import accountLayoutCN from './AccountLayout.module.scss';
 
@@ -15,3 +16,5 @@ export const AccountLayout = () => {
     </div>
   );
 };
+
+AccountLayout.Error = AccountLayoutError;
