@@ -7,6 +7,7 @@ import { keys } from '@/config/keys';
 import { cn } from '@/utils/mergeClassnames';
 import { Topbar } from './Topbar';
 import { Sidebar } from './Sidebar';
+import { RootLayoutError } from './RootLayoutError';
 
 import rootLayoutCN from './RootLayout.module.scss';
 
@@ -19,13 +20,8 @@ export const rootLoader =
       queryClient.getQueryData(query.queryKey) ||
       (await queryClient.fetchQuery(query));
 
-    if (queryData.data.msg === 'NOT_LOGGED_IN') {
-      localStorage.removeItem(keys.isLoggedIn);
-      return redirect('/account/login');
-    } else {
-      localStorage.setItem(keys.isLoggedIn, 'true');
-      return queryData;
-    }
+    localStorage.setItem(keys.isLoggedIn, 'true');
+    return queryData;
   };
 
 export const RootLayout = () => {
@@ -52,3 +48,5 @@ export const RootLayout = () => {
     </div>
   );
 };
+
+RootLayout.Error = RootLayoutError;

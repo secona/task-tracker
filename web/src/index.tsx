@@ -56,6 +56,7 @@ export const router = createBrowserRouter([
     path: '/',
     loader: rootLoader(queryClient),
     element: <RootLayout />,
+    errorElement: <RootLayout.Error />,
     children: [
       {
         path: '',
