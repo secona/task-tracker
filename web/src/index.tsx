@@ -15,8 +15,8 @@ import { EditProject } from './pages/root/EditProject';
 import { EditTask } from './pages/root/EditTask';
 import { Login } from './pages/account/Login';
 import { Register } from './pages/account/Register';
-import { Verify } from './pages/account/Verify';
-import { PostRegister } from './pages/account/PostRegister';
+import { Verify } from './pages/account/verify/Verify';
+import { VerifyNotice } from './pages/account/verify/VerifyNotice';
 
 import './styles/global.scss';
 
@@ -46,12 +46,17 @@ export const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: 'register/post',
-        element: <PostRegister />,
-      },
-      {
         path: 'verify',
-        element: <Verify />,
+        children: [
+          {
+            path: 'notice',
+            element: <VerifyNotice />,
+          },
+          {
+            path: ':token',
+            element: <Verify />,
+          },
+        ],
       },
     ],
   },

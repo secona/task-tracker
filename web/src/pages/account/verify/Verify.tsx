@@ -1,11 +1,10 @@
 import React from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate, useSearchParams, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, useParams } from 'react-router-dom';
 import { authAPI } from '@/api/auth';
 
 export const Verify = () => {
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
+  const { token } = useParams();
   const navigate = useNavigate();
 
   if (!token) return <Navigate to='../login' />;
@@ -16,10 +15,10 @@ export const Verify = () => {
       return authAPI.verify({ context: { token } });
     },
     onSuccess: () => {
-      return navigate('../login?verified');
+      return navigate('../../login?verified');
     },
     onError: () => {
-      return navigate('../login?error');
+      return navigate('../../login?error');
     },
     useErrorBoundary: false,
   });
@@ -28,5 +27,5 @@ export const Verify = () => {
     mutation.mutate();
   }, []);
 
-  return <Navigate to='../login' />;
+  return <Navigate to='../../login' />;
 };

@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { Heading } from '@/components/Heading';
 
-export const PostRegister = () => {
+export const VerifyNotice = () => {
   const location = useLocation();
   const email = location.state?.email;
 
