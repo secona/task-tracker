@@ -1,9 +1,9 @@
-import { useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Heading } from '@/components/Heading';
 
 export const PostRegister = () => {
-  const [searchParams] = useSearchParams();
-  const email = searchParams.get('email');
+  const location = useLocation();
+  const email = location.state?.email;
 
   return (
     <>

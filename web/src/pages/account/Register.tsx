@@ -21,7 +21,7 @@ export const Register = () => {
       return userAPI.register({ body });
     },
     onSuccess: () => {
-      navigate(`../register/post?email=${getValues('email')}`);
+      navigate(`../register/post`, { state: { email: getValues('email') } });
     },
     onError: (error: ErrorResponse) => {
       switch (error.response?.data.msg) {

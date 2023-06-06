@@ -25,8 +25,8 @@ export const Login = () => {
       return authAPI.login({ body });
     },
     onSuccess: () => {
-      navigate('/');
       localStorage.setItem(keys.isLoggedIn, 'true');
+      navigate('/');
     },
     onError: (error: ErrorResponse) => {
       switch (error.response?.data.msg) {
@@ -37,7 +37,9 @@ export const Login = () => {
             }
           );
         case 'UNVERIFIED_EMAIL':
-          return navigate(`../register/post?email=${getValues('email')}`);
+          return navigate(`../register/post`, {
+            state: { email: getValues('email') },
+          });
       }
     },
     useErrorBoundary: error =>
