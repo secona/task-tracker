@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import axios from 'axios';
 
 import { RootLayout, rootLoader } from './pages/root/_layout';
 import { AccountLayout } from './pages/account/_layout';
@@ -10,15 +10,15 @@ import { Home } from './pages/root/Home';
 import { Inbox } from './pages/root/Inbox';
 import { Project } from './pages/root/Project';
 import { NotFound } from './pages/root/NotFound';
+import { NewTask } from './pages/root/NewTask';
+import { EditProject } from './pages/root/EditProject';
+import { EditTask } from './pages/root/EditTask';
 import { Login } from './pages/account/Login';
 import { Register } from './pages/account/Register';
 import { Verify } from './pages/account/Verify';
 import { PostRegister } from './pages/account/PostRegister';
 
 import './styles/global.scss';
-import { NewTask } from './pages/root/NewTask';
-import { EditProject } from './pages/root/EditProject';
-import { EditTask } from './pages/root/EditTask';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -100,5 +100,6 @@ const root = createRoot(el!);
 root.render(
   <QueryClientProvider client={queryClient}>
     <RouterProvider router={router} />
+    <ReactQueryDevtools position='bottom-right' />
   </QueryClientProvider>
 );
