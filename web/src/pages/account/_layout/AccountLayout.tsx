@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { AccountLayoutError } from './AccountLayoutError';
+import { AltAction } from './AltAction/AltAction';
 
 import accountLayoutCN from './AccountLayout.module.scss';
 
@@ -18,3 +19,4 @@ export const AccountLayout = () => {
 };
 
 AccountLayout.Error = AccountLayoutError;
+AccountLayout.AltAction = AltAction;

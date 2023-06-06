@@ -8,9 +8,7 @@ import { ErrorResponse, isErrorResponse } from '@/api';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
-import { AccountForm } from './_layout';
-
-import authCN from './Auth.module.scss';
+import { AccountForm, AccountLayout } from './_layout';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -80,9 +78,9 @@ export const Register = () => {
           Register
         </Button>
       </AccountForm>
-      <span className={authCN.altAction}>
+      <AccountLayout.AltAction>
         Already have an account? <Link to='../login'>Log in</Link> instead.
-      </span>
+      </AccountLayout.AltAction>
     </>
   );
 };

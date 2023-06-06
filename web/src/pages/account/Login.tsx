@@ -9,9 +9,7 @@ import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
-import { AccountForm } from './_layout';
-
-import authCN from './Auth.module.scss';
+import { AccountForm, AccountLayout } from './_layout';
 
 export const Login = () => {
   if (localStorage.getItem(keys.isLoggedIn) === 'true') {
@@ -83,9 +81,9 @@ export const Login = () => {
           Log In
         </Button>
       </AccountForm>
-      <span className={authCN.altAction}>
+      <AccountLayout.AltAction>
         Don't have an account? <Link to='../register'>Register</Link> instead.
-      </span>
+      </AccountLayout.AltAction>
     </>
   );
 };
