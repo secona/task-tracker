@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { boolean, object, string } from 'yup';
 import { BaseAPI, ResponseBody } from '..';
-import { ITaskEditable } from '../tasks';
+import { ITask, ITaskEditable } from '../tasks';
 
 export interface ProjectsNewTaskContext {
   projectId: string;
@@ -9,7 +9,7 @@ export interface ProjectsNewTaskContext {
 
 export interface ProjectsNewTaskBody extends ITaskEditable {}
 
-export type ProjectsNewTaskResponse = ResponseBody;
+export type ProjectsNewTaskResponse = ResponseBody<{ task: ITask }>;
 
 export interface ProjectsNewTaskAPI
   extends BaseAPI<
