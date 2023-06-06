@@ -1,13 +1,11 @@
-import { AxiosResponse } from 'axios';
-import { ProjectsGetManyResponse } from '@/api/projects';
-import { TasksGetManyResponse } from '@/api/tasks';
 import { UseQueryResult } from '@tanstack/react-query';
+import { ProjectsQuery, TasksQuery } from '@/queries';
 import { Task } from '../Task';
 import { TaskList } from '../TaskList';
 
 export interface SortedTaskListProps {
-  projectsQuery: UseQueryResult<AxiosResponse<ProjectsGetManyResponse>>;
-  tasksQuery: UseQueryResult<AxiosResponse<TasksGetManyResponse>>;
+  projectsQuery: UseQueryResult<ProjectsQuery>;
+  tasksQuery: UseQueryResult<TasksQuery>;
   colors?: boolean;
 }
 
@@ -28,14 +26,14 @@ export const SortedTaskList = ({
     };
 
     if (projectsQuery.data && tasksQuery.data) {
-      tasksQuery.data.data.tasks.forEach(task => {
+      tasksQuery.data.forEach(task => {
         const component = (
           <Task
             key={task.task_id}
             task={task}
             project={
               colors
-                ? projectsQuery.data.data.projects.find(
+                ? projectsQuery.data.find(
                     project => project.project_id === task.project_id
                   )
                 : undefined

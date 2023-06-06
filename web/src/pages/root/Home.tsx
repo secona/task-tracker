@@ -11,7 +11,7 @@ export const Home = () => {
         <Content.ProjectName>Good Morning!</Content.ProjectName>
       </Content.Card>
       <Content.ProjectGrid>
-        {query.data?.data.projects.map(project => (
+        {query.data?.map(project => (
           <Content.Project key={project.project_id} project={project} />
         ))}
       </Content.ProjectGrid>

@@ -10,9 +10,7 @@ export const Project = () => {
     queries: [queries.projects(), queries.tasks(projectId)],
   });
 
-  const thisProject = projectsQuery.data?.data.projects.find(
-    p => p.project_id === projectId
-  );
+  const thisProject = projectsQuery.data?.find(p => p.project_id === projectId);
 
   return (
     <Content.Container>
