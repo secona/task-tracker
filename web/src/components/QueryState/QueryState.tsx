@@ -1,20 +1,26 @@
 import React from 'react';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import { QueryErrorResetBoundary } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 
 export interface QueryStateProps {
+  query: UseQueryResult;
   children: React.ReactNode;
-  Error: React.FC<FallbackProps>;
+  loading?: React.ReactNode;
+  error?: React.ReactNode;
 }
 
-export const QueryState = (props: QueryStateProps) => {
-  return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <ErrorBoundary onReset={reset} fallbackRender={props.Error}>
-          {props.children}
-        </ErrorBoundary>
-      )}
-    </QueryErrorResetBoundary>
-  );
+export const QueryState = ({
+  query,
+  loading,
+  children,
+  error,
+}: QueryStateProps) => {
+  if (query.isLoading) {
+    if (loading) return loading as JSX.Element;
+  }
+
+  if (query.isError) {
+    if (error) return error as JSX.Element;
+  }
+
+  return children as JSX.Element;
 };
