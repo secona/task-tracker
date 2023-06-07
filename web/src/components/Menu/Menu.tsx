@@ -1,6 +1,6 @@
 import React from 'react';
-import { MenuDropdown } from './MenuDropdown/MenuDropdown';
-import { MenuItem } from './MenuItem/MenuItem';
+import { MenuDropdown } from './MenuDropdown';
+import { MenuItem } from './MenuItem';
 
 export interface MenuProps {
   children?: React.ReactNode;

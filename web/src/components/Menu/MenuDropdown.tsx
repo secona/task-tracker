@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDropdownPosition } from '../Menu.utils';
+import { getDropdownPosition } from './Menu.utils';
 import { Portal } from '@/components/Portal';
 
 import menuDropdownCN from './MenuDropdown.module.scss';

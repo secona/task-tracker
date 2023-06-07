@@ -1,5 +1,5 @@
 import { Card, CardProps } from '../Card';
-import { TaskListLoading } from './TaskListLoading/TaskListLoading';
+import { TaskListLoading } from './TaskListLoading';
 
 import taskListCN from './TaskList.module.scss';
 

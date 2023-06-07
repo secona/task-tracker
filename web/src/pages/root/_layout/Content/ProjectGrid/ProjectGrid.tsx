@@ -1,5 +1,5 @@
 import { Card, CardProps } from '../Card';
-import { ProjectGridLoading } from './ProjectGridLoading/ProjectGridLoading';
+import { ProjectGridLoading } from './ProjectGridLoading';
 
 import projectGridCN from './ProjectGrid.module.scss';
 

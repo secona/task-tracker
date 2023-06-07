@@ -1,5 +1,5 @@
-import { Card } from '../../Card';
-import { Task } from '../../Task/Task';
+import { Card } from '../Card';
+import { Task } from '../Task/Task';
 
 export const TaskListLoading = () => (
   <Card>
