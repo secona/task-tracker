@@ -1,5 +1,6 @@
 import { Card } from './Card';
 import { Container } from './Container';
+import { Greeting } from './Greeting';
 import { Project } from './Project';
 import { ProjectDescription } from './ProjectDescription';
 import { ProjectGrid } from './ProjectGrid';
@@ -11,6 +12,7 @@ import { TaskList } from './TaskList';
 export const Content = {
   Card,
   Container,
+  Greeting,
   Project,
   ProjectDescription,
   ProjectGrid,

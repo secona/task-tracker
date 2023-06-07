@@ -10,7 +10,7 @@ export const Inbox = () => {
   return (
     <Content.Container>
       <Content.Card>
-        <Content.ProjectName>Good Morning!</Content.ProjectName>
+        <Content.Greeting />
       </Content.Card>
       <Content.SortedTaskList
         projectsQuery={projectsQuery}

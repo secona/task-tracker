@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <Content.Container>
       <Content.Card>
-        <Content.ProjectName>Good Morning!</Content.ProjectName>
+        <Content.Greeting />
       </Content.Card>
       <Content.ProjectGrid>
         <QueryState
