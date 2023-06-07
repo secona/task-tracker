@@ -3,6 +3,7 @@ import { Container } from './Container';
 import { Project } from './Project';
 import { ProjectDescription } from './ProjectDescription';
 import { ProjectGrid } from './ProjectGrid';
+import { ProjectLoading } from './ProjectLoading';
 import { ProjectName } from './ProjectName';
 import { SortedTaskList } from './SortedTaskList';
 import { Task } from './Task';
@@ -14,6 +15,7 @@ export const Content = {
   Project,
   ProjectDescription,
   ProjectGrid,
+  ProjectLoading,
   ProjectName,
   SortedTaskList,
   Task,
