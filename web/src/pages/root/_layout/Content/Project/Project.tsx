@@ -1,8 +1,9 @@
-import { ComponentPropsWithRef, forwardRef } from 'react';
+import React, { ComponentPropsWithRef, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MoreVertical } from 'react-feather';
 import { IProject } from '@/api/projects';
 import { cnProps } from '@/utils/mergeClassnames';
+import { ProjectLoading } from './ProjectLoading';
 
 import projectCN from './Project.module.scss';
 
@@ -35,4 +36,10 @@ export const Project = forwardRef<HTMLDivElement, ProjectProps>(
       </div>
     );
   }
-);
+) as React.ForwardRefExoticComponent<
+  ProjectProps & React.RefAttributes<HTMLDivElement>
+> & {
+  Loading: React.FC;
+};
+
+Project.Loading = ProjectLoading;

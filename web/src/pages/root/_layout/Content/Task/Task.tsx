@@ -3,6 +3,7 @@ import { CheckCircle, Circle } from 'react-feather';
 import { ITask } from '@/api/tasks';
 import { IProject } from '@/api/projects';
 import { cn, cnProps } from '@/utils/mergeClassnames';
+import { TaskLoading } from './TaskLoading';
 
 import taskCN from './Task.module.scss';
 
@@ -37,3 +38,5 @@ export const Task = ({ task, project, ...props }: TaskProps) => {
     </div>
   );
 };
+
+Task.Loading = TaskLoading;
