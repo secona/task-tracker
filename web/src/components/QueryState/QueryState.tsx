@@ -2,7 +2,7 @@ import React from 'react';
 import { UseQueryResult } from '@tanstack/react-query';
 
 export interface QueryStateProps {
-  query: UseQueryResult;
+  query: UseQueryResult | UseQueryResult[];
   children: React.ReactNode;
   loading?: React.ReactNode;
   error?: React.ReactNode;
@@ -14,11 +14,15 @@ export const QueryState = ({
   children,
   error,
 }: QueryStateProps) => {
-  if (query.isLoading) {
+  const isQueries = Array.isArray(query);
+  const isLoading = isQueries ? query.some(q => q.isLoading) : query.isLoading;
+  const isError = isQueries ? query.some(q => q.isError) : query.isError;
+
+  if (isLoading) {
     if (loading) return loading as JSX.Element;
   }
 
-  if (query.isError) {
+  if (isError) {
     if (error) return error as JSX.Element;
   }
 

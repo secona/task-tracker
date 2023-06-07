@@ -1,5 +1,6 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { ProjectsQuery, TasksQuery } from '@/queries';
+import { QueryState } from '@/components/QueryState';
 import { Task } from '../Task';
 import { TaskList } from '../TaskList';
 
@@ -50,9 +51,12 @@ export const SortedTaskList = ({
   })();
 
   return (
-    <>
+    <QueryState
+      query={[projectsQuery, tasksQuery]}
+      loading={<TaskList.Loading />}
+    >
       <TaskList title='Unfinished' children={tasks.unfinished} />
       <TaskList title='Finished' children={tasks.finished} />
-    </>
+    </QueryState>
   );
 };
