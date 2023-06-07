@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { RootLayout, rootLoader } from './pages/root/_layout';
+import { RootLayout } from './pages/root/_layout';
 import { AccountLayout } from './pages/account/_layout';
 
 import { Home } from './pages/root/Home';
@@ -62,7 +62,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/',
-    loader: rootLoader(queryClient),
     element: <RootLayout />,
     errorElement: <RootLayout.Error />,
     children: [
