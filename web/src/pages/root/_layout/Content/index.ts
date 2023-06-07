@@ -8,6 +8,7 @@ import { ProjectName } from './ProjectName';
 import { SortedTaskList } from './SortedTaskList';
 import { Task } from './Task';
 import { TaskList } from './TaskList';
+import { TaskLoading } from './TaskLoading';
 
 export const Content = {
   Card,
@@ -20,4 +21,5 @@ export const Content = {
   SortedTaskList,
   Task,
   TaskList,
+  TaskLoading,
 };

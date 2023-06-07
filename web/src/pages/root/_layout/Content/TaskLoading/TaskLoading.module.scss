@@ -1,0 +1,39 @@
+@import '../../../../../styles/shimmer-animation';
+
+.taskLoading {
+  background-color: var(--elevation-4);
+  border-radius: 0.3rem;
+  padding-left: 1.1rem;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+  align-items: center;
+
+  & > section {
+    flex-grow: 1;
+  }
+
+  div {
+    height: 1rem;
+    border-radius: 0.3rem;
+    @include shimmer-animation;
+  }
+
+  &Done {
+    width: 1rem;
+    border-radius: 100% !important;
+    background-color: var(--elevation-9);
+  }
+
+  &Task {
+    width: 30%;
+    background-color: var(--elevation-9);
+    margin-bottom: 0.3rem;
+  }
+
+  &Description {
+    width: 95%;
+    background-color: var(--elevation-9);
+  }
+}
