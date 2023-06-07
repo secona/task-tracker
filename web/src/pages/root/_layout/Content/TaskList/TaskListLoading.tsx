@@ -1,8 +1,8 @@
-import { Card } from '../Card';
 import { Task } from '../Task/Task';
+import { TaskList } from './TaskList';
 
 export const TaskListLoading = () => (
-  <Card>
+  <TaskList>
     <Task.Loading />
     <Task.Loading />
     <Task.Loading />
@@ -13,5 +13,5 @@ export const TaskListLoading = () => (
     <Task.Loading />
     <Task.Loading />
     <Task.Loading />
-  </Card>
+  </TaskList>
 );
