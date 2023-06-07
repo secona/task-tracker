@@ -1,3 +1,4 @@
+import { Link, Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { queries } from '@/queries';
 import { Content } from './_layout';
@@ -10,6 +11,7 @@ export const Home = () => {
     <Content.Container>
       <Content.Card>
         <Content.Greeting />
+        {/* Temporary */} <Link to='new'>Add New Project</Link>
       </Content.Card>
       <Content.ProjectGrid>
         <QueryState
@@ -20,6 +22,7 @@ export const Home = () => {
           ))}
         />
       </Content.ProjectGrid>
+      <Outlet />
     </Content.Container>
   );
 };

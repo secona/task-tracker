@@ -7,6 +7,7 @@ import { RootLayout } from './pages/root/_layout';
 import { AccountLayout } from './pages/account/_layout';
 
 import { Home } from './pages/root/Home';
+import { NewProject } from './pages/root/NewProject';
 import { Inbox } from './pages/root/Inbox';
 import { Project } from './pages/root/Project';
 import { NotFound } from './pages/root/NotFound';
@@ -68,6 +69,12 @@ export const router = createBrowserRouter([
       {
         path: '',
         element: <Home />,
+        children: [
+          {
+            path: 'new',
+            element: <NewProject />,
+          },
+        ],
       },
       {
         path: 'inbox',
