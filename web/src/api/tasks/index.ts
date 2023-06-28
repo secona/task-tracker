@@ -15,7 +15,7 @@ export interface ITask {
 }
 
 export interface ITaskEditable {
-  task: string;
+  task?: string;
   description?: string;
   done?: boolean;
 }

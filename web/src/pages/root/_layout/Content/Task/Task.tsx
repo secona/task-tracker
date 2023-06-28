@@ -5,6 +5,7 @@ import { ITask } from '@/api/tasks';
 import { IProject } from '@/api/projects';
 import { cn, cnProps } from '@/utils/mergeClassnames';
 import { TaskLoading } from './TaskLoading';
+import { useFinishMutation } from './useFinishMutation';
 
 import taskCN from './Task.module.scss';
 
@@ -15,6 +16,7 @@ export interface TaskProps extends ComponentPropsWithoutRef<'div'> {
 
 export const Task = ({ task, project, ...props }: TaskProps) => {
   const navigate = useNavigate();
+  const finishMutation = useFinishMutation(task);
 
   return (
     <div
@@ -25,7 +27,10 @@ export const Task = ({ task, project, ...props }: TaskProps) => {
           taskCN[`taskCard_color${project.color || 0}`]
       )}
     >
-      <button className={taskCN.finishButton}>
+      <button
+        className={taskCN.finishButton}
+        onClick={() => finishMutation.mutate()}
+      >
         {task.done ? (
           <CheckCircle color='gray' size='1rem' />
         ) : (
