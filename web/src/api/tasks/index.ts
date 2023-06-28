@@ -1,6 +1,8 @@
 import getMany from './getMany';
+import edit from './edit';
 
 export * from './getMany';
+export * from './edit';
 
 export interface ITask {
   task_id: string;
@@ -20,4 +22,5 @@ export interface ITaskEditable {
 
 export const tasksAPI = {
   getMany,
+  edit,
 };

@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { CheckCircle, Circle } from 'react-feather';
+import { useNavigate } from 'react-router-dom';
 import { ITask } from '@/api/tasks';
 import { IProject } from '@/api/projects';
 import { cn, cnProps } from '@/utils/mergeClassnames';
@@ -13,6 +14,8 @@ export interface TaskProps extends ComponentPropsWithoutRef<'div'> {
 }
 
 export const Task = ({ task, project, ...props }: TaskProps) => {
+  const navigate = useNavigate();
+
   return (
     <div
       {...cnProps(
@@ -30,7 +33,10 @@ export const Task = ({ task, project, ...props }: TaskProps) => {
         )}
       </button>
       <div>
-        <p className={cn(taskCN.task, task.done && taskCN.task_done)}>
+        <p
+          className={cn(taskCN.task, task.done && taskCN.task_done)}
+          onClick={() => navigate(`edit/${task.task_id}`)}
+        >
           {task.task}
         </p>
         <p className={taskCN.description}>{task.description}</p>
