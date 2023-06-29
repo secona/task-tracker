@@ -17,6 +17,7 @@ export const Project = () => {
       <Content.Card>
         <Content.ProjectName children={thisProject?.name} />
         <Content.ProjectDescription children={thisProject?.description} />
+        {/* Temporary */} <Link to='edit'>Edit Project</Link>
         {/* Temporary */} <Link to='new'>Add New Task</Link>
       </Content.Card>
       <Content.SortedTaskList

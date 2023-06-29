@@ -19,7 +19,7 @@ export const EditTask = () => {
     ...queries.tasks(),
     onSuccess: data => {
       Object.entries(
-        data.find(data => data.project_id === params.projectId)!
+        data.find(data => data.task_id === params.taskId)!
       ).forEach(([key, value]) => {
         setValue(key as keyof ITaskEditable, value);
       });
@@ -70,6 +70,7 @@ export const EditTask = () => {
     formState: { errors },
   } = useForm<ITaskEditable>({
     resolver: yupResolver(tasksAPI.edit.validation),
+    defaultValues: query.data?.find(data => data.task_id === params.taskId),
   });
 
   return (
