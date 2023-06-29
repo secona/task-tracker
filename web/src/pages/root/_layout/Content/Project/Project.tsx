@@ -19,7 +19,7 @@ export const Project = forwardRef<HTMLDivElement, ProjectProps>(
     const deleteMutation = useMutation({
       mutationKey: ['delete', 'project'],
       mutationFn: async () => {
-        projectsAPI.del({ context: { projectId: project.project_id } });
+        return projectsAPI.del({ context: { projectId: project.project_id } });
       },
       onMutate: async () => {
         await queryClient.cancelQueries(['projects', 'all']);
