@@ -2,11 +2,13 @@ import getMany from './getMany';
 import newTask from './newTask';
 import newProject from './newProject';
 import edit from './edit';
+import del from './del';
 
 export * from './getMany';
 export * from './newTask';
 export * from './newProject';
 export * from './edit';
+export * from './del';
 
 export interface IProject {
   project_id: string;
@@ -28,4 +30,5 @@ export const projectsAPI = {
   newTask,
   newProject,
   edit,
+  del,
 };
