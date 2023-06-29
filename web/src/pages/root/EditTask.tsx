@@ -8,6 +8,7 @@ import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
 import { TextInput } from '@/components/TextInput';
 import { queries } from '@/queries';
+import { QueryState } from '@/components/QueryState';
 
 export const EditTask = () => {
   const queryClient = useQueryClient();
@@ -64,9 +65,7 @@ export const EditTask = () => {
 
   return (
     <ModalContent closeModal={closeModal}>
-      {query.isLoading ? (
-        'Loading...'
-      ) : (
+      <QueryState query={query} loading={'Loading...'}>
         <form onSubmit={handleSubmit(data => mutation.mutate(data))}>
           <TextInput
             {...register('task')}
@@ -82,7 +81,7 @@ export const EditTask = () => {
             Save
           </Button>
         </form>
-      )}
+      </QueryState>
     </ModalContent>
   );
 };

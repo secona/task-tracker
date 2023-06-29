@@ -2,6 +2,7 @@ import { ErrorResponse, isErrorResponse } from '@/api';
 import { IProject, ProjectsEditBody, projectsAPI } from '@/api/projects';
 import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
+import { QueryState } from '@/components/QueryState';
 import { TextInput } from '@/components/TextInput';
 import { queries } from '@/queries';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -68,9 +69,7 @@ export const EditProject = () => {
 
   return (
     <ModalContent closeModal={closeModal}>
-      {query.isLoading ? (
-        'Loading...'
-      ) : (
+      <QueryState query={query} loading={'Loading...'}>
         <form onSubmit={handleSubmit(data => mutation.mutate(data))}>
           <TextInput
             {...register('name')}
@@ -86,7 +85,7 @@ export const EditProject = () => {
             Save
           </Button>
         </form>
-      )}
+      </QueryState>
     </ModalContent>
   );
 };
