@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
 import { queries } from '@/queries';
 import { Content } from './_layout';
@@ -10,16 +9,11 @@ export const Project = () => {
     queries: [queries.projects(), queries.tasks(projectId)],
   });
 
-  const thisProject = projectsQuery.data?.find(p => p.project_id === projectId);
+  const project = projectsQuery.data?.find(p => p.project_id === projectId)!;
 
   return (
     <Content.Container>
-      <Content.Card>
-        <Content.ProjectName children={thisProject?.name} />
-        <Content.ProjectDescription children={thisProject?.description} />
-        {/* Temporary */} <Link to='edit'>Edit Project</Link>
-        {/* Temporary */} <Link to='new'>Add New Task</Link>
-      </Content.Card>
+      <Content.ProjectDetails project={project} />
       <Content.SortedTaskList
         projectsQuery={projectsQuery}
         tasksQuery={tasksQuery}

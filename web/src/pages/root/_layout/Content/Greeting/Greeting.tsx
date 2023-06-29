@@ -1,4 +1,4 @@
-import { ProjectName } from '../ProjectName';
+import { Heading } from '@/components/Heading';
 
 export const Greeting = () => {
   const greetingToUse = (() => {
@@ -8,5 +8,5 @@ export const Greeting = () => {
     return 'Evening';
   })();
 
-  return <ProjectName>Good {greetingToUse}!</ProjectName>;
+  return <Heading fontSize='6xl'>Good {greetingToUse}!</Heading>;
 };
