@@ -9,7 +9,7 @@ export interface ProjectsEditContext {
 
 export interface ProjectsEditBody extends IProjectEditable {}
 
-export type ProjectsEditResponse = ResponseBody<{ projects: IProject }>;
+export type ProjectsEditResponse = ResponseBody<{ project: IProject }>;
 
 export interface ProjectsEditAPI
   extends BaseAPI<

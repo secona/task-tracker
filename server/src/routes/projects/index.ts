@@ -85,9 +85,9 @@ router
       )
       .then(project => {
         if (project) {
-          res.status(200).json(<Body<'projects'>>{
+          res.status(200).json(<Body<'project'>>{
             msg: 'SUCCESS',
-            projects: projectUtil.omitSensitive(project),
+            project: projectUtil.omitSensitive(project),
           });
         } else {
           res.status(404).json(<Body>{

@@ -34,7 +34,7 @@ export const EditProject = () => {
           context: { projectId: params.projectId! },
           body,
         })
-        .then(result => result.data.projects);
+        .then(result => result.data.project);
     },
     onMutate: async () => {
       await queryClient.cancelQueries(['projects', 'all']);
