@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ErrorResponse, isErrorResponse } from '@/api';
-import { ITask, ITaskEditable, TasksEditBody, tasksAPI } from '@/api/tasks';
+import { ITask, TasksEditBody, tasksAPI } from '@/api/tasks';
 import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
 import { TextInput } from '@/components/TextInput';
@@ -57,7 +57,7 @@ export const EditTask = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ITaskEditable>({
+  } = useForm<TasksEditBody>({
     resolver: yupResolver(tasksAPI.edit.validation),
     defaultValues: query.data?.find(data => data.task_id === params.taskId),
   });

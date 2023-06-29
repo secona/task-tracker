@@ -14,6 +14,12 @@ export interface ITask {
   updated_at: Date;
 }
 
+export interface ITaskInsert {
+  task: string;
+  description?: string;
+  done?: boolean;
+}
+
 export interface ITaskEditable {
   task?: string;
   description?: string;

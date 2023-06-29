@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { boolean, number, object, string } from 'yup';
+import { number, object, string } from 'yup';
 import { BaseAPI, ResponseBody } from '..';
-import { IProject, IProjectEditable } from '.';
+import { IProject, IProjectInsert } from '.';
 
 export interface ProjectsNewProjectContext {}
 
-export interface ProjectsNewProjectBody extends IProjectEditable {}
+export interface ProjectsNewProjectBody extends IProjectInsert {}
 
 export type ProjectsNewProjectResponse = ResponseBody<{ project: IProject }>;
 

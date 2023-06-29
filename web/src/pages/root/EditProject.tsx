@@ -1,5 +1,5 @@
 import { ErrorResponse, isErrorResponse } from '@/api';
-import { IProject, IProjectEditable, projectsAPI } from '@/api/projects';
+import { IProject, ProjectsEditBody, projectsAPI } from '@/api/projects';
 import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
 import { TextInput } from '@/components/TextInput';
@@ -19,7 +19,7 @@ export const EditProject = () => {
 
   const mutation = useMutation({
     mutationKey: ['edit', 'project'],
-    mutationFn: async (body: IProjectEditable) => {
+    mutationFn: async (body: ProjectsEditBody) => {
       return projectsAPI
         .edit({
           context: { projectId: params.projectId! },
@@ -59,7 +59,7 @@ export const EditProject = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<IProjectEditable>({
+  } = useForm<ProjectsEditBody>({
     resolver: yupResolver(projectsAPI.edit.validation),
     defaultValues: query.data?.find(
       data => data.project_id === params.projectId

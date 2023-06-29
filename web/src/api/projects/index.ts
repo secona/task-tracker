@@ -19,6 +19,12 @@ export interface IProject {
   updated_at: Date;
 }
 
+export interface IProjectInsert {
+  name: string;
+  description?: string;
+  color?: number;
+}
+
 export interface IProjectEditable {
   name?: string;
   description?: string;
