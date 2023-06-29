@@ -15,21 +15,11 @@ export const EditTask = () => {
   const navigate = useNavigate();
   const closeModal = () => navigate('..');
 
-  const query = useQuery({
-    ...queries.tasks(),
-    onSuccess: data => {
-      Object.entries(
-        data.find(data => data.task_id === params.taskId)!
-      ).forEach(([key, value]) => {
-        setValue(key as keyof ITaskEditable, value);
-      });
-    },
-  });
+  const query = useQuery(queries.tasks(params.projectId));
 
   const mutation = useMutation({
     mutationKey: ['edit', 'task'],
     mutationFn: async (body: TasksEditBody) => {
-      console.log(body);
       return tasksAPI
         .edit({ body, context: { taskId: params.taskId! } })
         .then(result => result.data.task);
@@ -66,7 +56,6 @@ export const EditTask = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<ITaskEditable>({
     resolver: yupResolver(tasksAPI.edit.validation),

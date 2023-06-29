@@ -13,7 +13,6 @@ export const queries = {
   projects: () => ({
     queryKey: ['projects', 'all'],
     queryFn: async () => {
-      await new Promise(r => setTimeout(r, 5000));
       return projectsAPI.getMany().then(result => result.data.projects);
     },
   }),

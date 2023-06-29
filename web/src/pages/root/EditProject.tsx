@@ -15,16 +15,7 @@ export const EditProject = () => {
   const navigate = useNavigate();
   const closeModal = () => navigate('..');
 
-  const query = useQuery({
-    ...queries.projects(),
-    onSuccess: data => {
-      Object.entries(
-        data.find(data => data.project_id === params.projectId)!
-      ).forEach(([key, value]) => {
-        setValue(key as keyof IProjectEditable, value);
-      });
-    },
-  });
+  const query = useQuery(queries.projects());
 
   const mutation = useMutation({
     mutationKey: ['edit', 'project'],
@@ -67,7 +58,6 @@ export const EditProject = () => {
   const {
     handleSubmit,
     register,
-    setValue,
     formState: { errors },
   } = useForm<IProjectEditable>({
     resolver: yupResolver(projectsAPI.edit.validation),
