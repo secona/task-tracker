@@ -1,3 +1,11 @@
+@import '@/styles/project-colors';
+
+.card {
+  border-left-width: 0.3rem;
+  border-left-style: solid;
+  @include project-colors(border-color);
+}
+
 .name {
   border-bottom: 1px var(--elevation-9) solid;
 }

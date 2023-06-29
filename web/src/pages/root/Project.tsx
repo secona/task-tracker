@@ -9,11 +9,9 @@ export const Project = () => {
     queries: [queries.projects(), queries.tasks(projectId)],
   });
 
-  const project = projectsQuery.data?.find(p => p.project_id === projectId)!;
-
   return (
     <Content.Container>
-      <Content.ProjectDetails project={project} />
+      <Content.ProjectDetails projectsQuery={projectsQuery} />
       <Content.SortedTaskList
         projectsQuery={projectsQuery}
         tasksQuery={tasksQuery}
