@@ -5,6 +5,7 @@ import { QueryState } from '@/components/QueryState';
 import { IProject } from '@/api/projects';
 import { cn } from '@/utils/mergeClassnames';
 import { Card } from '../Card';
+import { ProjectDetailsLoading } from './ProjectDetailsLoading';
 
 import projectDetailsCN from './ProjectDetails.module.scss';
 
@@ -19,7 +20,7 @@ export const ProjectDetails = ({ projectsQuery }: ProjectDetailsProps) => {
   );
 
   return (
-    <QueryState query={projectsQuery} loading='Loading...'>
+    <QueryState query={projectsQuery} loading={<ProjectDetailsLoading />}>
       <Card
         className={cn(
           projectDetailsCN.card,
@@ -36,3 +37,5 @@ export const ProjectDetails = ({ projectsQuery }: ProjectDetailsProps) => {
     </QueryState>
   );
 };
+
+ProjectDetails.Loading = ProjectDetailsLoading;
