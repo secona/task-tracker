@@ -8,7 +8,8 @@ import { ErrorResponse, isErrorResponse } from '@/api';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
-import { AccountForm, AccountLayout } from './_layout';
+import { AccountForm } from './_layout/AccountForm/AccountForm';
+import { AltAction } from './_layout/AltAction/AltAction';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -78,9 +79,9 @@ export const Register = () => {
           Register
         </Button>
       </AccountForm>
-      <AccountLayout.AltAction>
+      <AltAction>
         Already have an account? <Link to='../login'>Log in</Link> instead.
-      </AccountLayout.AltAction>
+      </AltAction>
     </>
   );
 };

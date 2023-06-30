@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import { RootLayout } from './pages/root/_layout';
-import { AccountLayout } from './pages/account/_layout';
+import { AccountLayout } from './pages/account/_layout/AccountLayout';
 import { SettingsLayout } from './pages/settings/_layout/SettingsLayout';
 
 import { Home } from './pages/root/Home';

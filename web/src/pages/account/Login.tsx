@@ -9,7 +9,8 @@ import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
-import { AccountForm, AccountLayout } from './_layout';
+import { AccountForm } from './_layout/AccountForm/AccountForm';
+import { AltAction } from './_layout/AltAction/AltAction';
 
 export const Login = () => {
   if (localStorage.getItem(keys.isLoggedIn) === 'true') {
@@ -81,9 +82,9 @@ export const Login = () => {
           Log In
         </Button>
       </AccountForm>
-      <AccountLayout.AltAction>
+      <AltAction>
         Don't have an account? <Link to='../register'>Register</Link> instead.
-      </AccountLayout.AltAction>
+      </AltAction>
     </>
   );
 };
