@@ -16,11 +16,8 @@
 }
 
 .loading {
-  & > span {
-    display: block;
-    border-radius: 0.3rem;
-    background-color: var(--elevation-9);
-    @include shimmer-animation;
+  span {
+    @include shimmer-element;
   }
 
   &Name {

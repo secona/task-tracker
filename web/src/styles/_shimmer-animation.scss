@@ -22,3 +22,10 @@
     transform: translateX(100%);
   }
 }
+
+@mixin shimmer-element {
+  display: block;
+  border-radius: 0.3rem;
+  background-color: var(--elevation-9);
+  @include shimmer-animation;
+}
