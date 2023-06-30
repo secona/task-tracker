@@ -23,7 +23,9 @@ export const ProjectDetails = ({ projectsQuery }: ProjectDetailsProps) => {
       <Card
         className={cn(
           projectDetailsCN.card,
-          project?.color ? projectDetailsCN[`card_color${project?.color}`] : ''
+          project?.color !== undefined
+            ? projectDetailsCN[`card_color${project?.color}`]
+            : ''
         )}
       >
         <Heading className={projectDetailsCN.name} fontSize='6xl'>
