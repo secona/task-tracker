@@ -38,7 +38,7 @@ export const RootLayout = () => {
       <Topbar>
         <Topbar.Button Icon={HamburgerMenu} />
         <span style={{ flexGrow: 1 }} />
-        <Topbar.Button Icon={Settings} />
+        <Topbar.Button onClick={() => navigate('/settings')} Icon={Settings} />
         <Menu activator={<Topbar.Button Icon={User} />}>
           <Menu.Item onClick={() => logoutMutation.mutate()} LeftIcon={LogOut}>
             Log Out

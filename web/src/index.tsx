@@ -1,10 +1,15 @@
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 
 import { RootLayout } from './pages/root/_layout';
 import { AccountLayout } from './pages/account/_layout';
+import { SettingsLayout } from './pages/settings/_layout/SettingsLayout';
 
 import { Home } from './pages/root/Home';
 import { NewProject } from './pages/root/NewProject';
@@ -18,6 +23,7 @@ import { Login } from './pages/account/Login';
 import { Register } from './pages/account/Register';
 import { Verify } from './pages/account/verify/Verify';
 import { VerifyNotice } from './pages/account/verify/VerifyNotice';
+import { Account } from './pages/settings/Account';
 
 import './styles/global.scss';
 
@@ -58,6 +64,20 @@ export const router = createBrowserRouter([
             element: <Verify />,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: '/settings',
+    element: <SettingsLayout />,
+    children: [
+      {
+        path: '',
+        element: <Navigate to='account' />,
+      },
+      {
+        path: 'account',
+        element: <Account />,
       },
     ],
   },
