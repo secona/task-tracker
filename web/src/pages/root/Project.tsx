@@ -1,7 +1,7 @@
 import { Outlet, useParams } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
 import { queries } from '@/queries';
-import { Content } from './_layout';
+import { Content } from './_layout/Content';
 
 export const Project = () => {
   const { projectId } = useParams();

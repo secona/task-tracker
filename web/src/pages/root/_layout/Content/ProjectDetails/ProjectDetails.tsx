@@ -4,7 +4,7 @@ import { Heading } from '@/components/Heading';
 import { QueryState } from '@/components/QueryState';
 import { IProject } from '@/api/projects';
 import { cn } from '@/utils/mergeClassnames';
-import { Card } from '../Card';
+import { Card } from '../Card/Card';
 
 import projectDetailsCN from './ProjectDetails.module.scss';
 

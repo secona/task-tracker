@@ -7,7 +7,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
-import { RootLayout } from './pages/root/_layout';
+import { RootLayout } from './pages/root/_layout/RootLayout';
 import { AccountLayout } from './pages/account/_layout/AccountLayout';
 import { SettingsLayout } from './pages/settings/_layout/SettingsLayout';
 

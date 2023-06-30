@@ -1,8 +1,8 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { ProjectsQuery, TasksQuery } from '@/queries';
 import { QueryState } from '@/components/QueryState';
-import { Task } from '../Task';
-import { TaskList } from '../TaskList';
+import { Task } from '../Task/Task';
+import { TaskList } from '../TaskList/TaskList';
 
 export interface SortedTaskListProps {
   projectsQuery: UseQueryResult<ProjectsQuery>;

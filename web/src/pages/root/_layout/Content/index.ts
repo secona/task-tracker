@@ -1,12 +1,12 @@
-import { Card } from './Card';
-import { Container } from './Container';
-import { Greeting } from './Greeting';
-import { Project } from './Project';
-import { ProjectDetails } from './ProjectDetails';
-import { ProjectGrid } from './ProjectGrid';
-import { SortedTaskList } from './SortedTaskList';
-import { Task } from './Task';
-import { TaskList } from './TaskList';
+import { Card } from './Card/Card';
+import { Container } from './Container/Container';
+import { Greeting } from './Greeting/Greeting';
+import { Project } from './Project/Project';
+import { ProjectDetails } from './ProjectDetails/ProjectDetails';
+import { ProjectGrid } from './ProjectGrid/ProjectGrid';
+import { SortedTaskList } from './SortedTaskList/SortedTaskList';
+import { Task } from './Task/Task';
+import { TaskList } from './TaskList/TaskList';
 
 export const Content = {
   Card,

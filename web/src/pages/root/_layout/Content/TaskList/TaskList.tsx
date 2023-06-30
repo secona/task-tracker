@@ -1,5 +1,5 @@
-import { Card, CardProps } from '../Card';
-import { Task } from '../Task';
+import { Card, CardProps } from '../Card/Card';
+import { Task } from '../Task/Task';
 
 import taskListCN from './TaskList.module.scss';
 

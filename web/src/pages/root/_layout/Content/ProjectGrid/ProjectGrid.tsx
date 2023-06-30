@@ -1,5 +1,5 @@
-import { Card, CardProps } from '../Card';
-import { Project } from '../Project';
+import { Card, CardProps } from '../Card/Card';
+import { Project } from '../Project/Project';
 
 import projectGridCN from './ProjectGrid.module.scss';
 

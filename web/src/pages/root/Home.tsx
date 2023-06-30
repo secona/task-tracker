@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { queries } from '@/queries';
-import { Content } from './_layout';
+import { Content } from './_layout/Content';
 import { QueryState } from '@/components/QueryState';
 
 export const Home = () => {
