@@ -1,28 +1,32 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { queries } from '@/queries';
-import { Content } from './_layout/Content';
 import { QueryState } from '@/components/QueryState';
+import { Container } from './_components/Container/Container';
+import { Card } from './_components/Card/Card';
+import { Greeting } from './_components/Greeting/Greeting';
+import { ProjectGrid } from './_components/ProjectGrid/ProjectGrid';
+import { Project } from './_components/Project/Project';
 
 export const Home = () => {
   const query = useQuery(queries.projects());
 
   return (
-    <Content.Container>
-      <Content.Card>
-        <Content.Greeting />
+    <Container>
+      <Card>
+        <Greeting />
         {/* Temporary */} <Link to='new'>Add New Project</Link>
-      </Content.Card>
-      <Content.ProjectGrid>
+      </Card>
+      <ProjectGrid>
         <QueryState
           query={query}
-          loading={<Content.ProjectGrid.Loading />}
+          loading={<ProjectGrid.Loading />}
           children={query.data?.map(project => (
-            <Content.Project key={project.project_id} project={project} />
+            <Project key={project.project_id} project={project} />
           ))}
         />
-      </Content.ProjectGrid>
+      </ProjectGrid>
       <Outlet />
-    </Content.Container>
+    </Container>
   );
 };

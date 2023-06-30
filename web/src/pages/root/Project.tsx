@@ -1,7 +1,9 @@
 import { Outlet, useParams } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
 import { queries } from '@/queries';
-import { Content } from './_layout/Content';
+import { Container } from './_components/Container/Container';
+import { ProjectDetails } from './_components/ProjectDetails/ProjectDetails';
+import { SortedTaskList } from './_components/SortedTaskList/SortedTaskList';
 
 export const Project = () => {
   const { projectId } = useParams();
@@ -10,13 +12,10 @@ export const Project = () => {
   });
 
   return (
-    <Content.Container>
-      <Content.ProjectDetails projectsQuery={projectsQuery} />
-      <Content.SortedTaskList
-        projectsQuery={projectsQuery}
-        tasksQuery={tasksQuery}
-      />
+    <Container>
+      <ProjectDetails projectsQuery={projectsQuery} />
+      <SortedTaskList projectsQuery={projectsQuery} tasksQuery={tasksQuery} />
       <Outlet />
-    </Content.Container>
+    </Container>
   );
 };
