@@ -1,5 +1,4 @@
 import { RouteObject } from 'react-router-dom';
-import { Inbox } from 'react-feather';
 import { RootLayout } from './_layout/RootLayout';
 import { Home } from './Home';
 import { NewProject } from './NewProject';
@@ -8,6 +7,7 @@ import { EditProject } from './EditProject';
 import { NewTask } from './NewTask';
 import { EditTask } from './EditTask';
 import { NotFound } from './NotFound';
+import { Inbox } from './Inbox';
 
 export const rootRoute: RouteObject = {
   path: '/',
