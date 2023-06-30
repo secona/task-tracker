@@ -1,7 +1,6 @@
 import { Body, Router } from 'express';
-import { taskSchemas } from '~/core/tasks/task.model';
+import { TaskResponse, taskSchemas } from '~/core/tasks/task.model';
 import { taskRepository } from '~/core/tasks/task.repository';
-import { taskUtil } from '~/core/tasks/task.util';
 import { userRepository } from '~/core/users/user.repository';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
@@ -14,7 +13,7 @@ router.get('/', authenticate, (req, res, next) => {
     .then(tasks => {
       res.status(200).json(<Body<'tasks'>>{
         msg: 'SUCCESS',
-        tasks: taskUtil.omitSensitive(tasks),
+        tasks: TaskResponse.array(tasks),
       });
     })
     .catch(err => {
@@ -33,7 +32,7 @@ router
         if (task) {
           res.status(200).json(<Body<'task'>>{
             msg: 'SUCCESS',
-            task: taskUtil.omitSensitive(task),
+            task: new TaskResponse(task),
           });
         } else {
           res.status(404).json(<Body>{ msg: 'NOT_FOUND' });
@@ -51,7 +50,7 @@ router
         if (task) {
           res.status(200).json(<Body<'task'>>{
             msg: 'SUCCESS',
-            task: taskUtil.omitSensitive(task),
+            task: new TaskResponse(task),
           });
         } else {
           res.status(404).json(<Body>{ msg: 'NOT_FOUND' });

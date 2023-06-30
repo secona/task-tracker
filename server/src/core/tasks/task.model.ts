@@ -41,9 +41,13 @@ export class TaskResponse {
     this.created_at = task.created_at;
     this.updated_at = task.updated_at;
   }
+
+  static array(tasks: Task[] | undefined) {
+    if (tasks) return tasks.map(task => new TaskResponse(task));
+  }
 }
 
-export const taskSchemas = new class {
+export const taskSchemas = new (class {
   create = z.object({
     task: z.string().min(1),
     description: z.string().optional(),
@@ -51,4 +55,4 @@ export const taskSchemas = new class {
   });
 
   update = this.create.partial();
-}
+})();

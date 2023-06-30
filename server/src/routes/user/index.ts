@@ -2,12 +2,11 @@ import { Body, Router } from 'express';
 import bcrypt from 'bcrypt';
 import { DatabaseError } from 'pg';
 import { userRepository } from '~/core/users/user.repository';
-import { UserInsert, userSchemas } from '~/core/users/user.model';
+import { UserInsert, UserResponse, userSchemas } from '~/core/users/user.model';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
 import { cookieKeys } from '~/services/cookieService';
 import emailVerificationService from '~/services/emailVerificationService';
-import { userUtil } from '~/core/users/user.util';
 import sessionService from '~/services/sessionService';
 
 const router = Router();
@@ -47,7 +46,7 @@ router
         if (user) {
           res.status(200).json(<Body<'user'>>{
             msg: 'SUCCESS',
-            user: userUtil.omitSensitive(user),
+            user: new UserResponse(user),
           });
         } else {
           res.status(404).json(<Body>{
@@ -87,7 +86,7 @@ router.patch(
         if (user) {
           res.status(200).json(<Body<'user'>>{
             msg: 'SUCCESS',
-            user: userUtil.omitSensitive(user),
+            user: new UserResponse(user),
           });
         } else {
           res.status(404).json(<Body>{ msg: 'NOT_FOUND' });

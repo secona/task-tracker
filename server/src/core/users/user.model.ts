@@ -36,6 +36,10 @@ export class UserResponse {
     this.created_at = user.created_at;
     this.updated_at = user.updated_at;
   }
+
+  static array(users: User[] | undefined) {
+    if (users) return users.map(user => new UserResponse(user));
+  }
 }
 
 export const userSchemas = new (class {

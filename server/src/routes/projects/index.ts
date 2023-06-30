@@ -1,12 +1,14 @@
 import { Body, Router } from 'express';
 import { projectRepository } from '~/core/projects/project.repository';
-import { ProjectInsert, projectSchemas } from '~/core/projects/project.model';
+import {
+  ProjectInsert,
+  ProjectResponse,
+  projectSchemas,
+} from '~/core/projects/project.model';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
-import { TaskInsert, taskSchemas } from '~/core/tasks/task.model';
+import { TaskInsert, TaskResponse, taskSchemas } from '~/core/tasks/task.model';
 import { taskRepository } from '~/core/tasks/task.repository';
-import { projectUtil } from '~/core/projects/project.util';
-import { taskUtil } from '~/core/tasks/task.util';
 
 const router = Router();
 
@@ -16,7 +18,7 @@ router.get('/', authenticate, (req, res, next) => {
     .then(projects => {
       res.status(200).json(<Body<'projects'>>{
         msg: 'SUCCESS',
-        projects: projectUtil.omitSensitive(projects),
+        projects: ProjectResponse.array(projects),
       });
     })
     .catch(err => {
@@ -37,7 +39,7 @@ router.post(
       .then(project => {
         res.status(201).json(<Body<'project'>>{
           msg: 'SUCCESS',
-          project: projectUtil.omitSensitive(project),
+          project: new ProjectResponse(project),
         });
       })
       .catch(err => {
@@ -61,7 +63,7 @@ router
         if (project) {
           res.status(200).json(<Body<'project'>>{
             msg: 'SUCCESS',
-            project: projectUtil.omitSensitive(project),
+            project: new ProjectResponse(project),
           });
         } else {
           res.status(400).json(<Body>{
@@ -87,7 +89,7 @@ router
         if (project) {
           res.status(200).json(<Body<'project'>>{
             msg: 'SUCCESS',
-            project: projectUtil.omitSensitive(project),
+            project: new ProjectResponse(project),
           });
         } else {
           res.status(404).json(<Body>{
@@ -136,7 +138,7 @@ router.post(
         if (task) {
           res.status(201).json(<Body<'task'>>{
             msg: 'SUCCESS',
-            task: taskUtil.omitSensitive(task),
+            task: new TaskResponse(task),
           });
         } else {
           res.status(404).json(<Body>{

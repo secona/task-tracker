@@ -39,9 +39,13 @@ export class ProjectResponse {
     this.created_at = project.created_at;
     this.updated_at = project.updated_at;
   }
+
+  static array(projects: Project[] | undefined) {
+    if (projects) return projects.map(project => new ProjectResponse(project));
+  }
 }
 
-export const projectSchemas = new class {
+export const projectSchemas = new (class {
   create = z.object({
     name: z.string().min(1),
     description: z.string().optional(),
@@ -49,4 +53,4 @@ export const projectSchemas = new class {
   });
 
   update = this.create.partial();
-}
+})();
