@@ -9,8 +9,8 @@ import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
-import { AccountForm } from './_layout/AccountForm/AccountForm';
-import { AltAction } from './_layout/AltAction/AltAction';
+import { AccountForm } from './_components/AccountForm/AccountForm';
+import { AltAction } from './_components/AltAction/AltAction';
 
 export const Login = () => {
   if (localStorage.getItem(keys.isLoggedIn) === 'true') {

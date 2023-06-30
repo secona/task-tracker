@@ -8,8 +8,8 @@ import { ErrorResponse, isErrorResponse } from '@/api';
 import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
-import { AccountForm } from './_layout/AccountForm/AccountForm';
-import { AltAction } from './_layout/AltAction/AltAction';
+import { AccountForm } from './_components/AccountForm/AccountForm';
+import { AltAction } from './_components/AltAction/AltAction';
 
 export const Register = () => {
   const navigate = useNavigate();
