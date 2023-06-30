@@ -1,5 +1,5 @@
 import { Card, CardProps } from '../Card';
-import { TaskListLoading } from './TaskListLoading';
+import { Task } from '../Task';
 
 import taskListCN from './TaskList.module.scss';
 
@@ -9,4 +9,17 @@ export const TaskList = (props: TaskListProps) => {
   return <Card {...props} className={taskListCN.taskList} />;
 };
 
-TaskList.Loading = TaskListLoading;
+TaskList.Loading = () => (
+  <TaskList>
+    <Task.Loading />
+    <Task.Loading />
+    <Task.Loading />
+    <Task.Loading />
+    <Task.Loading />
+    <Task.Loading />
+    <Task.Loading />
+    <Task.Loading />
+    <Task.Loading />
+    <Task.Loading />
+  </TaskList>
+);

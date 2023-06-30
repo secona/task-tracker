@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Menu } from '@/components/Menu';
 import { IProject, projectsAPI } from '@/api/projects';
 import { cnProps } from '@/utils/mergeClassnames';
-import { ProjectLoading } from './ProjectLoading';
 
 import projectCN from './Project.module.scss';
 
@@ -80,4 +79,9 @@ export const Project = forwardRef<HTMLDivElement, ProjectProps>(
   Loading: React.FC;
 };
 
-Project.Loading = ProjectLoading;
+Project.Loading = () => (
+  <div className={projectCN.loading}>
+    <span className={projectCN.loadingName} />
+    <span className={projectCN.loadingDescription} />
+  </div>
+);

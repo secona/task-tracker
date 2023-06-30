@@ -22,3 +22,7 @@ export const Default = Template.bind({});
 Default.args = {
   project: fakeProject,
 };
+
+export const Loading: StoryFn<typeof Project.Loading> = args => (
+  <Project.Loading {...args} />
+);

@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ITask } from '@/api/tasks';
 import { IProject } from '@/api/projects';
 import { cn, cnProps } from '@/utils/mergeClassnames';
-import { TaskLoading } from './TaskLoading';
 import { useFinishMutation } from './useFinishMutation';
 
 import taskCN from './Task.module.scss';
@@ -50,4 +49,12 @@ export const Task = ({ task, project, ...props }: TaskProps) => {
   );
 };
 
-Task.Loading = TaskLoading;
+Task.Loading = () => (
+  <div className={taskCN.loading}>
+    <span className={taskCN.loadingDone} />
+    <div>
+      <span className={taskCN.loadingTask} />
+      <span className={taskCN.loadingDescription} />
+    </div>
+  </div>
+);

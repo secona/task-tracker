@@ -1,4 +1,5 @@
 @import '@/styles/project-colors';
+@import '@/styles/shimmer-animation';
 
 .card {
   border-left-width: 0.3rem;
@@ -12,4 +13,24 @@
 
 .description {
   color: rgba($color: #fff, $alpha: 0.4);
+}
+
+.loading {
+  & > span {
+    display: block;
+    border-radius: 0.3rem;
+    background-color: var(--elevation-9);
+    @include shimmer-animation;
+  }
+
+  &Name {
+    height: var(--font-size-6xl);
+    width: 30%;
+    margin-bottom: 0.3rem;
+  }
+
+  &Description {
+    height: var(--font-size-lg);
+    width: 50%;
+  }
 }

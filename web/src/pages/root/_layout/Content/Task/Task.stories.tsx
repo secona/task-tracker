@@ -39,3 +39,5 @@ Inbox.args = {
   task: fakeTask,
   project: fakeProject,
 };
+
+export const Loading: StoryFn<typeof Task.Loading> = () => <Task.Loading />;
