@@ -1,20 +1,20 @@
 $colors: 
-  --color-red-200,
-  --color-pink-200,
-  --color-purple-200,
-  --color-deep-purple-200,
-  --color-indigo-200,
-  --color-blue-200,
-  --color-light-blue-200,
-  --color-cyan-200,
-  --color-teal-200,
-  --color-green-200,
-  --color-light-green-200,
-  --color-lime-200,
-  --color-yellow-200,
-  --color-amber-200,
-  --color-orange-200,
-  --color-deep-orange-200;
+  --color-red-400,
+  --color-pink-400,
+  --color-purple-400,
+  --color-deep-purple-400,
+  --color-indigo-400,
+  --color-blue-400,
+  --color-light-blue-400,
+  --color-cyan-400,
+  --color-teal-400,
+  --color-green-400,
+  --color-light-green-400,
+  --color-lime-400,
+  --color-yellow-400,
+  --color-amber-400,
+  --color-orange-400,
+  --color-deep-orange-400;
 
 @mixin project-colors($property) {
   @each $color in $colors {
