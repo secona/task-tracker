@@ -25,6 +25,7 @@ export class Activity {
 }
 
 export class Session {
+  ip: string;
   user_id: number;
   client: string;
   last_activity: {
@@ -39,6 +40,7 @@ export class Session {
   constructor(user: User, headers: IncomingHttpHeaders, ip: string) {
     const client = useragent.parse(headers['user-agent']).toString();
     const current = new Activity(ip);
+    this.ip = ip;
     this.user_id = user.user_id;
     this.client = client;
     this.last_activity = current;
