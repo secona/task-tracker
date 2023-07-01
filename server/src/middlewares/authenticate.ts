@@ -7,7 +7,8 @@ const authenticate: RequestHandler = async (req, res, next) => {
   if (!sessionId) return res.status(401).json(<Body>{ msg: 'NOT_LOGGED_IN' });
 
   try {
-    const session = await sessionRepository.get(sessionId, req.ip);
+    const session = await sessionRepository.get(sessionId);
+    await sessionRepository.update(sessionId, req.ip);
 
     if (!session) {
       res.clearCookie(cookieKeys.SESSION_ID);

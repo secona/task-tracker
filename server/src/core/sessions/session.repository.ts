@@ -30,9 +30,8 @@ export const sessionRepository = {
     return multi.exec();
   },
 
-  async get(sessionId: string, ip?: string) {
+  async get(sessionId: string) {
     const session = await redis.json.get(`session:${sessionId}`);
-    if (ip) await this.update(sessionId, ip);
     return session as Session | null;
   },
 
