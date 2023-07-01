@@ -1,6 +1,7 @@
 import { QueryOptions } from '@tanstack/react-query';
 import { projectsAPI } from './api/projects';
 import { tasksAPI } from './api/tasks';
+import { authAPI } from './api/auth';
 
 export type ProjectsQuery = Awaited<
   ReturnType<typeof projectsAPI.getMany>
@@ -10,6 +11,12 @@ export type TasksQuery = Awaited<
 >['data']['tasks'];
 
 export const queries = {
+  sessions: () => ({
+    queryKey: ['sessions'],
+    queryFn: async () => {
+      return authAPI.sessions().then(result => result.data.sessions);
+    },
+  }),
   projects: () => ({
     queryKey: ['projects', 'all'],
     queryFn: async () => {

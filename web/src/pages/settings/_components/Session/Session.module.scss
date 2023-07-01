@@ -1,0 +1,17 @@
+.container {
+  padding: 1rem 1.5rem;
+  background-color: var(--elevation-4);
+  border-radius: 0.3rem;
+  margin-bottom: 0.3rem;
+  display: block;
+
+  td {
+    padding: 0.3rem 0.3rem;
+    vertical-align: top;
+    font-size: var(--font-size-sm);
+
+    &:first-child {
+      color: var(--color-grey-500);
+    }
+  }
+}

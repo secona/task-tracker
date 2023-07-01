@@ -1,6 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 import { SettingsLayout } from './_layout/SettingsLayout';
 import { Account } from './Account';
+import { Sessions } from './Sessions';
 
 export const settingsRoute: RouteObject = {
   path: '/settings',
@@ -13,6 +14,10 @@ export const settingsRoute: RouteObject = {
     {
       path: 'account',
       element: <Account />,
+    },
+    {
+      path: 'sessions',
+      element: <Sessions />,
     },
   ],
 };

@@ -2,7 +2,7 @@ import { Heading } from '@/components/Heading';
 import { Dashboard } from '@/layout/Dashboard/Dashboard';
 import { Sidebar } from '@/layout/Dashboard/Sidebar';
 import { Topbar } from '@/layout/Dashboard/Topbar';
-import { ArrowLeft, User } from 'react-feather';
+import { Activity, ArrowLeft, User } from 'react-feather';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 export const SettingsLayout = () => {
@@ -18,6 +18,7 @@ export const SettingsLayout = () => {
         <Sidebar>
           <Sidebar.Group>
             <Sidebar.Item to='account' label='Account' Icon={User} />
+            <Sidebar.Item to='sessions' label='Sessions' Icon={Activity} />
           </Sidebar.Group>
         </Sidebar>
         <Dashboard.Content>
