@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt';
 import { JsonWebTokenError } from 'jsonwebtoken';
 import { userSchemas } from '~/core/users/user.model';
 import { userRepository } from '~/core/users/user.repository';
+import { sessionRepository } from '~/core/sessions/session.repository';
 import validateBody from '~/middlewares/validateBody';
-import sessionService from '~/services/sessionService';
 import emailService from '~/services/emailService';
 import tokenService from '~/services/tokenService';
 
@@ -27,7 +27,7 @@ router.post(
       if (!user) {
         res.status(400).json(<Body>{ msg: 'TOKEN_EXPIRED' });
       } else {
-        await sessionService.delAll(user.user_id);
+        await sessionRepository.delAll(user.user_id);
         res.status(200).json(<Body>{ msg: 'SUCCESS' });
       }
     } catch (err) {

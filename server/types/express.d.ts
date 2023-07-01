@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken';
-import { Session } from '~/services/sessionService';
+import { Session } from '~/core/sessions/session.model';
 
 declare global {
   namespace Express {

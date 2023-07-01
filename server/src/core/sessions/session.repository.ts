@@ -1,60 +1,16 @@
 import { nanoid } from 'nanoid';
-import { IncomingHttpHeaders } from 'http';
-import useragent from 'useragent';
-import geoip from 'geoip-lite';
+import { Activity, Session } from './session.model';
 import { redis } from '~/clients';
-import { User } from '~/core/users/user.model';
 
 const SESSION_EXPIRE = 2_592_000_000; // 30 days
 
-function getCurrentTimeAndPlace(ip: string) {
-  const timeNow = Date.now();
-  const lookup = geoip.lookup(ip);
-
-  if (lookup === null) {
-    return {
-      date: timeNow,
-      loc: 'Unknown',
-    }
-  }
-
-  const { city, region, country } = lookup;
-
-  return {
-    date: timeNow,
-    loc: `${city}, ${region}, ${country}`,
-  };
-}
-
-export type Session = {
-  user_id: number;
-  client: string;
-  last_activity: {
-    date: number;
-    loc: string;
-  };
-  signed_in: {
-    date: number;
-    loc: string;
-  };
-}
-
-const sessionService = {
-  async create(user: User, headers: IncomingHttpHeaders, ip: string) {
+export const sessionRepository = {
+  async save(session: Session) {
     const sessionId = nanoid(24);
     const sessionKey = `session:${sessionId}`;
     const multi = redis.multi();
-    
-    const ua = useragent.parse(headers['user-agent']);
-    const current = getCurrentTimeAndPlace(ip);
-    const value: Session = {
-      user_id: user.user_id,
-      client: ua.toString(),
-      last_activity: current,
-      signed_in: current,
-    };
 
-    multi.json.set(sessionKey, '$', value);
+    multi.json.set(sessionKey, '$', { ...session });
     multi.expire(sessionKey, SESSION_EXPIRE);
 
     await multi.exec();
@@ -63,14 +19,14 @@ const sessionService = {
   },
 
   async update(sessionId: string, ip: string, data: Partial<Session> = {}) {
-    data.last_activity = getCurrentTimeAndPlace(ip);
+    data.last_activity = new Activity(ip);
 
     const multi = redis.multi();
     const sessionKey = `session:${sessionId}`;
     Object.entries(data).forEach(([key, val]) => {
       multi.json.set(sessionKey, key, val);
     });
-  
+
     return multi.exec();
   },
 
@@ -102,7 +58,5 @@ const sessionService = {
   async del(sessionId: string) {
     const deleted = await redis.json.del(`session:${sessionId}`);
     return deleted > 0;
-  }
+  },
 };
-
-export default sessionService;

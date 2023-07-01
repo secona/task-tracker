@@ -1,7 +1,8 @@
 import { Body, Router } from 'express';
 import bcrypt from 'bcrypt';
 import { userRepository } from '~/core/users/user.repository';
-import sessionService from '~/services/sessionService';
+import { sessionRepository } from '~/core/sessions/session.repository';
+import { Session } from '~/core/sessions/session.model';
 import cookieService, { cookieKeys } from '~/services/cookieService';
 import authenticate from '~/middlewares/authenticate';
 
@@ -22,7 +23,7 @@ router.post('/login', async (req, res, next) => {
     const cookie = req.cookies[cookieKeys.SESSION_ID];
 
     if (cookie) {
-      const session = await sessionService.get(cookie);
+      const session = await sessionRepository.get(cookie);
 
       if (session) {
         return res.status(400).json(<Body>{ msg: 'ALREADY_LOGGED_IN' });
@@ -53,7 +54,8 @@ router.post('/login', async (req, res, next) => {
       });
     }
 
-    const sessionId = await sessionService.create(user, req.headers, req.ip);
+    const session = new Session(user, req.headers, req.ip);
+    const sessionId = await sessionRepository.save(session);
     res.cookie(...cookieService.sessionId(sessionId));
     res.status(201).json(<Body>{ msg: 'SUCCESS' });
   } catch (err) {
@@ -75,7 +77,7 @@ router.post('/logout', async (req, res, next) => {
   }
 
   try {
-    await sessionService.del(sessionId);
+    await sessionRepository.del(sessionId);
     res.clearCookie(cookieKeys.SESSION_ID);
     res.status(200).json(<Body>{ msg: 'SUCCESS' });
   } catch (err) {
@@ -85,7 +87,7 @@ router.post('/logout', async (req, res, next) => {
 
 router.get('/sessions', authenticate, async (req, res, next) => {
   try {
-    const sessions = await sessionService.getAll(req.session.user_id);
+    const sessions = await sessionRepository.getAll(req.session.user_id);
     res.status(200).json(<Body<'sessions'>>{
       msg: 'SUCCESS',
       sessions: sessions.documents,

@@ -3,11 +3,11 @@ import bcrypt from 'bcrypt';
 import { DatabaseError } from 'pg';
 import { userRepository } from '~/core/users/user.repository';
 import { UserInsert, UserResponse, userSchemas } from '~/core/users/user.model';
+import { sessionRepository } from '~/core/sessions/session.repository';
 import authenticate from '~/middlewares/authenticate';
 import validateBody from '~/middlewares/validateBody';
 import { cookieKeys } from '~/services/cookieService';
 import emailVerificationService from '~/services/emailVerificationService';
-import sessionService from '~/services/sessionService';
 
 const router = Router();
 
@@ -109,7 +109,7 @@ router.put(
       });
 
       if (!user) {
-        await sessionService.delAll(req.session.user_id);
+        await sessionRepository.delAll(req.session.user_id);
         res.clearCookie(cookieKeys.SESSION_ID);
         return res.status(401).json(<Body>{ msg: 'NOT_LOGGED_IN' });
       }
@@ -125,7 +125,7 @@ router.put(
         { password: bcrypt.hashSync(req.body.new_password, 10) }
       );
 
-      await sessionService.delAll(user.user_id);
+      await sessionRepository.delAll(user.user_id);
       res.status(200).json(<Body>{ msg: 'SUCCESS' });
     } catch (err) {
       next(err);
@@ -145,13 +145,13 @@ router.put(
       );
 
       if (!user) {
-        await sessionService.delAll(req.session.user_id);
+        await sessionRepository.delAll(req.session.user_id);
         res.clearCookie(cookieKeys.SESSION_ID);
         return res.status(401).json(<Body>{ msg: 'NOT_LOGGED_IN' });
       }
 
       await emailVerificationService.sendEmail(user);
-      await sessionService.delAll(user.user_id);
+      await sessionRepository.delAll(user.user_id);
       res.status(200).json(<Body>{ msg: 'SUCCESS' });
     } catch (err) {
       next(err);
