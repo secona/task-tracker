@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const [previous, setPrevious] = React.useState('');
+  const [previous, setPrevious] = React.useState(DEFAULT_PREVIOUS);
 
   return (
     <QueryClientProvider client={queryClient}>
