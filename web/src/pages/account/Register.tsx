@@ -20,7 +20,7 @@ export const Register = () => {
       return userAPI.register({ body });
     },
     onSuccess: () => {
-      navigate(`../verify/notice`, { state: { email: getValues('email') } });
+      navigate(`../verify/notice`);
     },
     onError: (error: ErrorResponse) => {
       switch (error.response?.data.msg) {
@@ -40,7 +40,6 @@ export const Register = () => {
     formState: { errors },
     setError,
     handleSubmit,
-    getValues,
   } = useForm<UserRegisterBody>({
     resolver: yupResolver(userAPI.register.validation),
   });

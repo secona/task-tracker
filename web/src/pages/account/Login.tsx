@@ -36,7 +36,7 @@ export const Login = () => {
             }
           );
         case 'UNVERIFIED_EMAIL':
-          return navigate(`../verify/notice`, {
+          return navigate(`../verify/form`, {
             state: { email: getValues('email') },
           });
       }

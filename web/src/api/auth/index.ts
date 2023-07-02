@@ -2,11 +2,13 @@ import login from './login';
 import logout from './logout';
 import sessions from './sessions';
 import verify from './verify';
+import sendVerify from './sendVerify';
 
 export * from './login';
 export * from './logout';
 export * from './sessions';
 export * from './verify';
+export * from './sendVerify';
 
 export interface Session {
   id: string;
@@ -29,4 +31,5 @@ export const authAPI = {
   logout,
   sessions,
   verify,
+  sendVerify,
 };
