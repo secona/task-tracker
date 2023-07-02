@@ -4,6 +4,7 @@ import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
 import { QueryState } from '@/components/QueryState';
 import { TextInput } from '@/components/TextInput';
+import { usePrevious } from '@/hooks/usePrevious';
 import { queries } from '@/queries';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -14,7 +15,8 @@ export const EditProject = () => {
   const queryClient = useQueryClient();
   const params = useParams();
   const navigate = useNavigate();
-  const closeModal = () => navigate('..');
+  const previous = usePrevious();
+  const closeModal = () => navigate(previous.value);
 
   const query = useQuery(queries.projects());
 

@@ -3,6 +3,7 @@ import { ITask } from '@/api/tasks';
 import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
 import { TextInput } from '@/components/TextInput';
+import { usePrevious } from '@/hooks/usePrevious';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
@@ -12,7 +13,8 @@ export const NewTask = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { projectId } = useParams() as { projectId: string };
-  const closeModal = () => navigate('..');
+  const previous = usePrevious();
+  const closeModal = () => navigate(previous.value);
 
   const mutation = useMutation({
     mutationKey: ['new', 'task'],

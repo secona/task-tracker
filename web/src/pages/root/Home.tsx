@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { queries } from '@/queries';
+import { usePrevious } from '@/hooks/usePrevious';
 import { QueryState } from '@/components/QueryState';
 import { Container } from './_components/Container/Container';
 import { Card } from './_components/Card/Card';
@@ -10,12 +11,16 @@ import { Project } from './_components/Project/Project';
 
 export const Home = () => {
   const query = useQuery(queries.projects());
+  const previous = usePrevious();
 
   return (
     <Container>
       <Card>
         <Greeting />
-        {/* Temporary */} <Link to='new'>Add New Project</Link>
+        {/* Temporary */}
+        <Link onClick={() => previous.setToHere()} to='new'>
+          Add New Project
+        </Link>
       </Card>
       <ProjectGrid>
         <QueryState

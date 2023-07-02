@@ -15,12 +15,14 @@ import { Sidebar } from '@/layout/Dashboard/Sidebar';
 import { Dashboard } from '@/layout/Dashboard/Dashboard';
 import { RootLayoutError } from './RootLayoutError';
 import { Menu } from '@/components/Menu';
+import { usePrevious } from '@/hooks/usePrevious';
 import { authAPI } from '@/api/auth';
 import { keys } from '@/config/keys';
 
 export const RootLayout = () => {
   const query = useQuery(queries.projects());
   const navigate = useNavigate();
+  const previous = usePrevious();
 
   const logoutMutation = useMutation({
     mutationKey: ['logout'],
@@ -38,7 +40,13 @@ export const RootLayout = () => {
       <Topbar>
         <Topbar.Button Icon={HamburgerMenu} />
         <span style={{ flexGrow: 1 }} />
-        <Topbar.Button onClick={() => navigate('/settings')} Icon={Settings} />
+        <Topbar.Button
+          onClick={() => {
+            previous.setToHere();
+            navigate('/settings');
+          }}
+          Icon={Settings}
+        />
         <Menu activator={<Topbar.Button Icon={User} />}>
           <Menu.Item onClick={() => logoutMutation.mutate()} LeftIcon={LogOut}>
             Log Out

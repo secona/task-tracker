@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ErrorResponse, isErrorResponse } from '@/api';
 import { ITask, TasksEditBody, tasksAPI } from '@/api/tasks';
+import { usePrevious } from '@/hooks/usePrevious';
 import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
 import { TextInput } from '@/components/TextInput';
@@ -14,7 +15,8 @@ export const EditTask = () => {
   const queryClient = useQueryClient();
   const params = useParams();
   const navigate = useNavigate();
-  const closeModal = () => navigate('..');
+  const previous = usePrevious();
+  const closeModal = () => navigate(previous.value);
 
   const query = useQuery(queries.tasks(params.projectId));
 

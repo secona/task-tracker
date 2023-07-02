@@ -7,6 +7,7 @@ import { cn } from '@/utils/mergeClassnames';
 import { Card } from '../Card/Card';
 
 import projectDetailsCN from './ProjectDetails.module.scss';
+import { usePrevious } from '@/hooks/usePrevious';
 
 export interface ProjectDetailsProps {
   projectsQuery: UseQueryResult<IProject[]>;
@@ -14,6 +15,7 @@ export interface ProjectDetailsProps {
 
 export const ProjectDetails = ({ projectsQuery }: ProjectDetailsProps) => {
   const params = useParams();
+  const previous = usePrevious();
   const project = projectsQuery.data?.find(
     p => p.project_id === params.projectId
   );
@@ -32,8 +34,14 @@ export const ProjectDetails = ({ projectsQuery }: ProjectDetailsProps) => {
           {project?.name}
         </Heading>
         <p className={projectDetailsCN.description}>{project?.description}</p>
-        {/* Temporary */} <Link to='edit'>Edit Project</Link>
-        {/* Temporary */} <Link to='new'>Add New Task</Link>
+        {/* Temporary */}
+        <Link onClick={() => previous.setToHere()} to='edit'>
+          Edit Project
+        </Link>
+        {/* Temporary */}
+        <Link onClick={() => previous.setToHere()} to='new'>
+          Add New Task
+        </Link>
       </Card>
     </QueryState>
   );

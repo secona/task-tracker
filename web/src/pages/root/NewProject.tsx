@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { IProject, projectsAPI } from '@/api/projects';
 import { ProjectsNewProjectBody } from '@/api/projects/newProject';
+import { usePrevious } from '@/hooks/usePrevious';
 import { Button } from '@/components/Button';
 import { ModalContent } from '@/components/Modal/ModalContent';
 import { TextInput } from '@/components/TextInput';
@@ -10,7 +11,8 @@ import { TextInput } from '@/components/TextInput';
 export const NewProject = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const closeModal = () => navigate('..');
+  const previous = usePrevious();
+  const closeModal = () => navigate(previous.value);
 
   const mutation = useMutation({
     mutationKey: ['new', 'project'],
