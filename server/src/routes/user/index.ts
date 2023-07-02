@@ -24,7 +24,7 @@ router.post('/', validateBody(userSchemas.create), async (req, res, next) => {
   } catch (err) {
     if (err instanceof DatabaseError) {
       if (err.code === '23505') {
-        res.status(422).json(<Body>{
+        return res.status(422).json(<Body>{
           msg: 'VALIDATION_FAILED',
           details: { email: ['email already taken'] },
         });
