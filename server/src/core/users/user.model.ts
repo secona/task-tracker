@@ -57,7 +57,7 @@ export const userSchemas = new (class {
     .partial();
 
   updatePassword = z.object({
-    current_password: z.string(),
+    password: z.string(),
     new_password: z.string().min(8),
   });
 

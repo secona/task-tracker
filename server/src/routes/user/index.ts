@@ -114,7 +114,7 @@ router.put(
         return res.status(401).json(<Body>{ msg: 'NOT_LOGGED_IN' });
       }
 
-      if (!bcrypt.compareSync(req.body.current_password, user.password))
+      if (!bcrypt.compareSync(req.body.password, user.password))
         return res.status(403).json(<Body>{
           msg: 'VALIDATION_FAILED',
           details: { password: ['incorrect password'] },

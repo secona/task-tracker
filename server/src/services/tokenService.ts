@@ -26,7 +26,7 @@ export interface VerificationToken {
 
 export interface ForgotPasswordToken {
   email: string;
-  current_password: string;
+  password: string;
 }
 
 const tokenService = {
@@ -40,8 +40,8 @@ const tokenService = {
   forgotPassword: new TokenFns<ForgotPasswordToken>({
     secretKey: process.env.FORGOT_PASSWORD_TOKEN_SECRET,
     signOptions: {
-      expiresIn: '15m'
-    }
+      expiresIn: '15m',
+    },
   }),
 };
 

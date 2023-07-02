@@ -20,7 +20,7 @@ router.post(
         return res.status(400).json(<Body>{ msg: 'TOKEN_MALFORMED' });
 
       const user = await userRepository.update(
-        { email: decoded.email, password: decoded.current_password },
+        { email: decoded.email, password: decoded.password },
         { password: bcrypt.hashSync(req.body.new_password, 10) }
       );
 
@@ -54,7 +54,7 @@ router.post(
 
       const token = tokenService.forgotPassword.sign({
         email: user.email,
-        current_password: user.password,
+        password: user.password,
       });
 
       emailService.sendTemplate({
