@@ -3,13 +3,13 @@ import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
-import { queries } from '@/queries';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 export const ChangeEmail = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -18,6 +18,7 @@ export const ChangeEmail = () => {
       return userAPI.changeEmail({ body });
     },
     onSuccess: () => {
+      queryClient.removeQueries();
       localStorage.removeItem(keys.isLoggedIn);
       navigate('/account/verify/form', {
         state: { email: getValues('email') },

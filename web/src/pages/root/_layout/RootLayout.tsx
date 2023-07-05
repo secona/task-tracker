@@ -8,7 +8,7 @@ import {
   Inbox,
   Folder,
 } from 'react-feather';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { queries } from '@/queries';
 import { Topbar } from '@/layout/Dashboard/Topbar';
 import { Sidebar } from '@/layout/Dashboard/Sidebar';
@@ -20,6 +20,7 @@ import { authAPI } from '@/api/auth';
 import { keys } from '@/config/keys';
 
 export const RootLayout = () => {
+  const queryClient = useQueryClient();
   const query = useQuery(queries.projects());
   const navigate = useNavigate();
   const previous = usePrevious();
@@ -30,6 +31,7 @@ export const RootLayout = () => {
       return authAPI.logout();
     },
     onSuccess: () => {
+      queryClient.removeQueries();
       localStorage.removeItem(keys.isLoggedIn);
       return navigate('/account/login');
     },

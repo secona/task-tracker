@@ -5,11 +5,12 @@ import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 export const ChangePassword = () => {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -18,6 +19,7 @@ export const ChangePassword = () => {
       return userAPI.changePassword({ body });
     },
     onSuccess: () => {
+      queryClient.removeQueries();
       localStorage.removeItem(keys.isLoggedIn);
       navigate('/account/login?new-password');
     },
