@@ -36,7 +36,7 @@ input[type='text']::placeholder {
 :root {
   color-scheme: dark;
 
-  --border-semi-trans: 1px rgba(255, 255, 255, 0.1) solid;
+  --border-semi-trans: 1px var(--color-grey-850) solid;
   --text-secondary: var(--color-grey-700);
   --text-primary: var(--color-white);
 
@@ -330,6 +330,7 @@ input[type='text']::placeholder {
   --color-grey-600: #757575;
   --color-grey-700: #616161;
   --color-grey-800: #424242;
+  --color-grey-850: #2a2a2a;
   --color-grey-900: #212121;
   --color-blue-grey: #607d8b;
   --color-blue-grey-50: #eceff1;
