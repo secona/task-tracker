@@ -1,27 +1,7 @@
-$colors: 
-  --color-red-400,
-  --color-pink-400,
-  --color-purple-400,
-  --color-deep-purple-400,
-  --color-indigo-400,
-  --color-blue-400,
-  --color-light-blue-400,
-  --color-cyan-400,
-  --color-teal-400,
-  --color-green-400,
-  --color-light-green-400,
-  --color-lime-400,
-  --color-yellow-400,
-  --color-amber-400,
-  --color-orange-400,
-  --color-deep-orange-400;
-
 @mixin project-colors($property) {
-  @each $color in $colors {
-    $i: calc(index($colors, $color) - 1);
-
+  @for $i from 0 to 15 {
     &_color#{$i} {
-      #{$property}: var($color);
+      #{$property}: var(--project-color-#{$i});
     }
   }
 }
