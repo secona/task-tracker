@@ -3,13 +3,15 @@ import { Button } from '@/components/Button';
 import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
+import { queries } from '@/queries';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 export const ChangeEmail = () => {
   const queryClient = useQueryClient();
+  const query = useQuery(queries.user());
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -38,6 +40,7 @@ export const ChangeEmail = () => {
   return (
     <>
       <Heading fontSize='5xl'>Change Email</Heading>
+      <p>Current Email: {query.isLoading ? 'Loading...' : query.data?.email}</p>
       <form onSubmit={handleSubmit(data => mutation.mutate(data))}>
         <TextInput
           {...register('email')}

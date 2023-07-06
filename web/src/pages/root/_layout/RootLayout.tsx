@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { LogOut, User, Settings, Home, Inbox, Folder } from 'react-feather';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query';
 import { queries } from '@/queries';
 import { Sidebar } from '@/layout/Dashboard/Sidebar';
 import { Dashboard } from '@/layout/Dashboard/Dashboard';
@@ -12,10 +12,13 @@ import { keys } from '@/config/keys';
 import { Heading } from '@/components/Heading';
 
 import rootLayoutCN from './RootLayout.module.scss';
+import { QueryState } from '@/components/QueryState';
 
 export const RootLayout = () => {
   const queryClient = useQueryClient();
-  const query = useQuery(queries.projects());
+  const [projectsQuery, userQuery] = useQueries({
+    queries: [queries.projects(), queries.user()],
+  });
   const navigate = useNavigate();
   const previous = usePrevious();
 
@@ -46,7 +49,7 @@ export const RootLayout = () => {
             </Sidebar.Group>
 
             <Sidebar.Group title='projects'>
-              {query.data?.map(project => (
+              {projectsQuery.data?.map(project => (
                 <Sidebar.Item
                   key={project.project_id}
                   to={`/p/${project.project_id}`}
@@ -62,8 +65,13 @@ export const RootLayout = () => {
             <Menu
               activator={
                 <button className={rootLayoutCN.accountButton}>
-                  <User size='1rem' />
-                  <Heading fontSize='md'>Vito Secona</Heading>
+                  <QueryState query={userQuery}>
+                    <User size='1rem' />
+                    <div>
+                      <Heading fontSize='md'>{userQuery.data?.name}</Heading>
+                      <Heading fontSize='xs'>{userQuery.data?.email}</Heading>
+                    </div>
+                  </QueryState>
                 </button>
               }
             >

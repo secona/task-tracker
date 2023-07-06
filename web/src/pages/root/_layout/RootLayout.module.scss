@@ -18,5 +18,15 @@
     pointer-events: none;
     user-select: none;
     border: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  div {
+    overflow: hidden;
   }
 }
