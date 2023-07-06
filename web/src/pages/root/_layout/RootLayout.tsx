@@ -69,7 +69,7 @@ export const RootLayout = () => {
                     <User size='1rem' />
                     <div>
                       <Heading fontSize='md'>{userQuery.data?.name}</Heading>
-                      <Heading fontSize='xs'>{userQuery.data?.email}</Heading>
+                      <p>{userQuery.data?.email}</p>
                     </div>
                   </QueryState>
                 </button>

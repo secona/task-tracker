@@ -14,12 +14,15 @@
   cursor: pointer;
   width: 100%;
 
-  h1 {
-    pointer-events: none;
-    user-select: none;
-    border: none;
+  h1,
+  p {
     text-overflow: ellipsis;
     overflow: hidden;
+  }
+
+  p {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey-700);
   }
 
   svg {
