@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { IProject, projectsAPI } from '@/api/projects';
 import { ProjectsNewProjectBody } from '@/api/projects/newProject';
 import { usePrevious } from '@/hooks/usePrevious';
@@ -46,6 +47,7 @@ export const NewProject = () => {
     defaultValues: {
       color: 8,
     },
+    resolver: yupResolver(projectsAPI.newProject.validation),
   });
 
   return (
