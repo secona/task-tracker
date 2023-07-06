@@ -27,7 +27,7 @@
 
   &_done {
     text-decoration: line-through;
-    color: var(--color-grey-700);
+    color: var(--text-secondary);
 
     &:hover {
       text-decoration: line-through underline;
@@ -37,7 +37,7 @@
 
 .description {
   font-size: var(--font-size-xs);
-  color: var(--color-grey-700);
+  color: var(--text-secondary);
 }
 
 .finishButton {

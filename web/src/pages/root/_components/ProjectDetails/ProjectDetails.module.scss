@@ -12,7 +12,7 @@
 }
 
 .description {
-  color: rgba($color: #fff, $alpha: 0.4);
+  color: var(--text-secondary);
 }
 
 .loading {

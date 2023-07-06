@@ -37,6 +37,8 @@ input[type='text']::placeholder {
   color-scheme: dark;
 
   --border-semi-trans: 1px rgba(255, 255, 255, 0.1) solid;
+  --text-secondary: var(--color-grey-700);
+  --text-primary: var(--color-white);
 
   --elevation-0: #000000;
   --elevation-1: #0d0d0d;
