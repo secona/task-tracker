@@ -4,11 +4,11 @@
 .card {
   border-left-width: 0.3rem;
   border-left-style: solid;
-  @include project-colors(border-color);
+  @include project-colors(border-left-color);
 }
 
 .name {
-  border-bottom: 1px var(--elevation-9) solid;
+  border-bottom: var(--border-semi-trans);
 }
 
 .description {

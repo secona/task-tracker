@@ -2,6 +2,7 @@
   padding: 2rem;
   background-color: var(--elevation-2);
   border-radius: 0.3rem;
+  border: var(--border-semi-trans);
 
   &_titled {
     padding-top: 1.25rem;
@@ -10,6 +11,6 @@
 
 .title {
   text-transform: capitalize;
-  border-bottom: 1px var(--elevation-9) solid;
+  border-bottom: var(--border-semi-trans);
   padding-bottom: 0.5rem;
 }
