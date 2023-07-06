@@ -1,0 +1,22 @@
+.accountButton {
+  display: flex;
+  flex-direction: row;
+  gap: 1.2rem;
+  border-radius: 0.3rem;
+  background-color: var(--elevation-4);
+  align-items: center;
+  padding: 1rem 1.2rem;
+  color: inherit;
+  text-decoration: inherit;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+
+  h1 {
+    pointer-events: none;
+    user-select: none;
+    border: none;
+  }
+}
