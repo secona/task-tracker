@@ -56,16 +56,12 @@ input[type='text']::placeholder {
   --project-color-14: var(--color-orange-400);
   --project-color-15: var(--color-deep-orange-400);
 
+  --shimmer-color: #292929;
+
   --elevation-0: #000000;
-  --elevation-1: #0d0d0d;
-  --elevation-2: #121212;
-  --elevation-3: #141414;
-  --elevation-4: #171717;
-  --elevation-5: #1c1c1c;
-  --elevation-6: #1f1f1f;
-  --elevation-7: #242424;
-  --elevation-8: #262626;
-  --elevation-9: #292929;
+  --elevation-1: #121212;
+  --elevation-1-hover: #1c1c1c;
+  --elevation-2: #1f1f1f;
 
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;

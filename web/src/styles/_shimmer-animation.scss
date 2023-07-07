@@ -26,6 +26,6 @@
 @mixin shimmer-element {
   display: block;
   border-radius: 0.3rem;
-  background-color: var(--elevation-9);
+  background-color: var(--shimmer-color);
   @include shimmer-animation;
 }
