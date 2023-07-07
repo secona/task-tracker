@@ -1,5 +1,5 @@
 @mixin project-colors($property) {
-  @for $i from 0 to 15 {
+  @for $i from 0 through 15 {
     &_color#{$i} {
       #{$property}: var(--project-color-#{$i});
     }
