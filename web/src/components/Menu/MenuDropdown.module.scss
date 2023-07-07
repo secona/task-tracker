@@ -1,7 +1,8 @@
 .menuDropdown {
   position: fixed;
   border-radius: 0.3rem;
-  background-color: var(--elevation-9);
+  background-color: var(--elevation-6);
+  border: var(--border-semi-trans);
   display: flex;
   flex-direction: column;
 }

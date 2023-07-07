@@ -3,16 +3,18 @@
   flex-direction: row;
   gap: 1.2rem;
   border-radius: 0.3rem;
-  background-color: var(--elevation-4);
+  background-color: var(--elevation-2);
+  border: var(--border-semi-trans);
   align-items: center;
   padding: 1rem 1.2rem;
-  color: inherit;
-  text-decoration: inherit;
-  border: none;
   font-family: inherit;
   text-align: left;
   cursor: pointer;
   width: 100%;
+
+  &:hover {
+    background-color: var(--elevation-5);
+  }
 
   h1,
   p {
