@@ -4,10 +4,9 @@ import { usePrevious } from '@/hooks/usePrevious';
 import { Dashboard } from '@/layout/Dashboard/Dashboard';
 import { Sidebar } from '@/layout/Dashboard/Sidebar';
 import { Activity, ArrowLeft, User } from 'react-feather';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 export const SettingsLayout = () => {
-  const navigate = useNavigate();
   const previous = usePrevious();
 
   return (
@@ -24,14 +23,14 @@ export const SettingsLayout = () => {
             </Sidebar.Group>
           </Sidebar.List>
           <Sidebar.Block>
-            <Button
+            <Button.Link
               variant='secondary'
-              onClick={() => navigate(previous.value)}
+              to={previous.value}
               style={{ margin: 'auto' }}
               LeftIcon={ArrowLeft}
             >
               Back to Dashboard
-            </Button>
+            </Button.Link>
           </Sidebar.Block>
         </Sidebar>
         <Dashboard.Content>

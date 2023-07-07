@@ -38,7 +38,7 @@
   position: relative;
   transition: 0.2s;
   padding: 0.5rem 0.75rem;
-  border: none;
+  border: var(--border);
   border-radius: 0.3rem;
   display: flex;
   flex-direction: row;
@@ -46,9 +46,10 @@
   justify-content: center;
   gap: 0.5rem;
   font-family: inherit;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
   cursor: pointer;
   overflow: hidden;
-  border: var(--border);
   background-color: var(--default-bgc);
   color: var(--default-color);
 
