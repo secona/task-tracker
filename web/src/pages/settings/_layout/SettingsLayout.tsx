@@ -25,6 +25,7 @@ export const SettingsLayout = () => {
           </Sidebar.List>
           <Sidebar.Block>
             <Button
+              variant='secondary'
               onClick={() => navigate(previous.value)}
               style={{ margin: 'auto' }}
               LeftIcon={ArrowLeft}

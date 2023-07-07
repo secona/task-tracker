@@ -8,14 +8,38 @@
   }
 }
 
+.primary {
+  --border: 1px transparent solid;
+  --default-bgc: var(--color-teal-500);
+  --default-color: var(--color-teal-500-contrast);
+  --hover-bgc: var(--color-teal-600);
+  --hover-color: var(--color-teal-600-contrast);
+  --active-bgc: var(--color-teal-700);
+  --active-color: var(--color-teal-700-contrast);
+  --disabled-bgc: var(--color-teal-700);
+  --disabled-color: var(--color-teal-800);
+  --alt-loading-color: var(--color-teal-600);
+}
+
+.secondary {
+  --border: var(--border-semi-trans);
+  --default-bgc: var(--elevation-1);
+  --default-color: var(--color-white);
+  --hover-bgc: var(--elevation-1-hover);
+  --hover-color: var(--color-white);
+  --active-bgc: var(--elevation-2);
+  --active-color: var(--color-white);
+  --disabled-bgc: var(--color-grey-900);
+  --disabled-color: var(--color-grey-800);
+  --alt-loading-color: var(--elevation-2);
+}
+
 .button {
   position: relative;
   transition: 0.2s;
   padding: 0.5rem 0.75rem;
   border: none;
-  border-radius: 0.5rem;
-  background-color: var(--color-teal-500);
-  color: var(--color-teal-500-contrast);
+  border-radius: 0.3rem;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -24,23 +48,26 @@
   font-family: inherit;
   cursor: pointer;
   overflow: hidden;
+  border: var(--border);
+  background-color: var(--default-bgc);
+  color: var(--default-color);
 
   &:hover {
-    background-color: var(--color-teal-600);
-    color: var(--color-teal-600-contrast);
+    background-color: var(--hover-bgc);
+    color: var(--hover-color);
   }
 
   &:active {
-    background-color: var(--color-teal-700);
-    color: var(--color-teal-700-contrast);
+    background-color: var(--active-bgc);
+    color: var(--active-color);
   }
 
   &:not(&_loading):disabled {
     cursor: default;
-    color: var(--color-grey-800);
-    background-color: var(--color-grey-700);
+    color: var(--disabled-color);
+    background-color: var(--disabled-bgc);
     & > .icon {
-      color: var(--color-grey-800);
+      color: var(--disabled-color);
     }
   }
 
@@ -55,10 +82,10 @@
       height: 100%;
       background: repeating-linear-gradient(
         600deg,
-        var(--color-teal-500) 0,
-        var(--color-teal-500) 10px,
-        var(--color-teal-600) 10px,
-        var(--color-teal-600) 20px
+        var(--default-bgc) 0,
+        var(--default-bgc) 10px,
+        var(--alt-loading-color) 10px,
+        var(--alt-loading-color) 20px
       );
       animation: slide 0.25s infinite linear;
     }
@@ -71,5 +98,5 @@
 
 .icon {
   position: relative;
-  color: var(--color-teal-500-contrast);
+  color: var(--default-color);
 }

@@ -8,18 +8,27 @@ export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   LeftIcon?: Icon;
   RightIcon?: Icon;
   loading?: boolean;
+  variant?: 'primary' | 'secondary';
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
-    const { loading, children, LeftIcon, RightIcon, disabled, ...otherProps } =
-      props;
+    const {
+      variant = 'primary',
+      loading,
+      children,
+      LeftIcon,
+      RightIcon,
+      disabled,
+      ...otherProps
+    } = props;
 
     return (
       <button
         {...cnProps(
           otherProps,
           buttonCN.button,
+          buttonCN[variant],
           loading && buttonCN.button_loading
         )}
         ref={ref}
