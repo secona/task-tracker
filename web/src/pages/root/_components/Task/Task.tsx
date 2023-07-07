@@ -3,6 +3,7 @@ import { CheckCircle, Circle } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 import { ITask } from '@/api/tasks';
 import { IProject } from '@/api/projects';
+import { usePrevious } from '@/hooks/usePrevious';
 import { cn, cnProps } from '@/utils/mergeClassnames';
 import { useFinishMutation } from './useFinishMutation';
 
@@ -15,6 +16,7 @@ export interface TaskProps extends ComponentPropsWithoutRef<'div'> {
 
 export const Task = ({ task, project, ...props }: TaskProps) => {
   const navigate = useNavigate();
+  const previous = usePrevious();
   const finishMutation = useFinishMutation(task);
 
   return (
@@ -39,7 +41,10 @@ export const Task = ({ task, project, ...props }: TaskProps) => {
       <div>
         <p
           className={cn(taskCN.task, task.done && taskCN.task_done)}
-          onClick={() => navigate(`edit/${task.task_id}`)}
+          onClick={() => {
+            previous.setToHere();
+            navigate(`edit/${task.task_id}`);
+          }}
         >
           {task.task}
         </p>
