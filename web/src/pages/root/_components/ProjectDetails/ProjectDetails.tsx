@@ -8,6 +8,9 @@ import { Card } from '../Card/Card';
 
 import projectDetailsCN from './ProjectDetails.module.scss';
 import { usePrevious } from '@/hooks/usePrevious';
+import { HeaderLinks } from '../HeaderLinks/HeaderLinks';
+import { Button } from '@/components/Button';
+import { Edit3, Plus } from 'react-feather';
 
 export interface ProjectDetailsProps {
   projectsQuery: UseQueryResult<IProject[]>;
@@ -34,14 +37,23 @@ export const ProjectDetails = ({ projectsQuery }: ProjectDetailsProps) => {
           {project?.name}
         </Heading>
         <p className={projectDetailsCN.description}>{project?.description}</p>
-        {/* Temporary */}
-        <Link onClick={() => previous.setToHere()} to='edit'>
-          Edit Project
-        </Link>
-        {/* Temporary */}
-        <Link onClick={() => previous.setToHere()} to='new'>
-          Add New Task
-        </Link>
+        <HeaderLinks>
+          <Button.Link
+            onClick={() => previous.setToHere()}
+            to='new'
+            LeftIcon={Plus}
+          >
+            New Task
+          </Button.Link>
+          <Button.Link
+            variant='secondary'
+            onClick={() => previous.setToHere()}
+            to='edit'
+            LeftIcon={Edit3}
+          >
+            Edit Project
+          </Button.Link>
+        </HeaderLinks>
       </Card>
     </QueryState>
   );
