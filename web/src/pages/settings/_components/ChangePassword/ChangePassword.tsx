@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { Setting } from '../Setting/Setting';
 
 export const ChangePassword = () => {
   const queryClient = useQueryClient();
@@ -48,8 +49,7 @@ export const ChangePassword = () => {
   });
 
   return (
-    <div>
-      <Heading fontSize='5xl'>Change Password</Heading>
+    <Setting title='Change Password'>
       <form onSubmit={handleSubmit(data => mutation.mutate(data))}>
         <TextInput
           {...register('password')}
@@ -66,6 +66,6 @@ export const ChangePassword = () => {
         />
         <Button type='submit'>Change</Button>
       </form>
-    </div>
+    </Setting>
   );
 };
