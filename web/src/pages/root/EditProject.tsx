@@ -18,7 +18,12 @@ export const EditProject = () => {
   const previous = usePrevious();
   const closeModal = () => navigate(previous.value);
 
-  const query = useQuery(queries.projects());
+  const query = useQuery({
+    ...queries.projects(),
+    onSuccess: data => {
+      reset(data.find(data => data.project_id === params.projectId));
+    },
+  });
 
   const mutation = useMutation({
     mutationKey: ['edit', 'project'],
@@ -60,6 +65,7 @@ export const EditProject = () => {
 
   const {
     handleSubmit,
+    reset,
     register,
     formState: { errors },
   } = useForm<ProjectsEditBody>({

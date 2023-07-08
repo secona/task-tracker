@@ -18,7 +18,12 @@ export const EditTask = () => {
   const previous = usePrevious();
   const closeModal = () => navigate(previous.value);
 
-  const query = useQuery(queries.tasks(params.projectId));
+  const query = useQuery({
+    ...queries.tasks(params.projectId),
+    onSuccess: data => {
+      reset(data.find(data => data.task_id === params.taskId));
+    },
+  });
 
   const mutation = useMutation({
     mutationKey: ['edit', 'task'],
@@ -58,6 +63,7 @@ export const EditTask = () => {
 
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<TasksEditBody>({
