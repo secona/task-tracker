@@ -39,6 +39,7 @@ export const ProjectDetails = ({ projectsQuery }: ProjectDetailsProps) => {
         <p className={projectDetailsCN.description}>{project?.description}</p>
         <HeaderLinks>
           <Button.Link
+            size='sm'
             onClick={() => previous.setToHere()}
             to='new'
             LeftIcon={Plus}
@@ -46,6 +47,7 @@ export const ProjectDetails = ({ projectsQuery }: ProjectDetailsProps) => {
             New Task
           </Button.Link>
           <Button.Link
+            size='sm'
             variant='secondary'
             onClick={() => previous.setToHere()}
             to='edit'

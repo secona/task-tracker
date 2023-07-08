@@ -10,6 +10,7 @@ interface Props {
   RightIcon?: Icon;
   loading?: boolean;
   variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export interface ButtonProps
@@ -32,13 +33,15 @@ const propsJoin = ({
   LeftIcon,
   RightIcon,
   loading,
-  variant,
+  variant = 'primary',
+  size = 'md',
   ...otherProps
 }: Props) =>
   cnProps(
     otherProps,
     buttonCN.button,
-    buttonCN[variant || 'primary'],
+    buttonCN[variant],
+    buttonCN[size],
     loading && buttonCN.button_loading
   );
 
@@ -48,9 +51,9 @@ const ButtonInsides = ({
   children,
 }: Props & { children?: React.ReactNode }) => (
   <>
-    {LeftIcon && <LeftIcon className={buttonCN.icon} size='1rem' />}
+    {LeftIcon && <LeftIcon className={buttonCN.icon} />}
     <span className={buttonCN.text}>{children}</span>
-    {RightIcon && <RightIcon className={buttonCN.icon} size='1rem' />}
+    {RightIcon && <RightIcon className={buttonCN.icon} />}
   </>
 );
 

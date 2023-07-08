@@ -22,6 +22,7 @@ export const Home = () => {
         <Greeting />
         <HeaderLinks>
           <Button.Link
+            size='sm'
             onClick={() => previous.setToHere()}
             to='new'
             LeftIcon={Plus}
