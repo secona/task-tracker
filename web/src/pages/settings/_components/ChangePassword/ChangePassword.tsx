@@ -1,7 +1,6 @@
 import { ErrorResponse, isErrorResponse } from '@/api';
 import { UserChangePasswordBody, userAPI } from '@/api/user';
 import { Button } from '@/components/Button';
-import { Heading } from '@/components/Heading';
 import { TextInput } from '@/components/TextInput';
 import { keys } from '@/config/keys';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -49,23 +48,24 @@ export const ChangePassword = () => {
   });
 
   return (
-    <Setting title='Change Password'>
-      <form onSubmit={handleSubmit(data => mutation.mutate(data))}>
-        <TextInput
-          {...register('password')}
-          type='password'
-          fieldName='Password'
-          error={errors.password}
-        />
-        <TextInput
-          {...register('new_password')}
-          type='password'
-          fieldName='New Password'
-          error={errors.new_password}
-          disabled={mutation.isLoading}
-        />
-        <Button type='submit'>Change</Button>
-      </form>
-    </Setting>
+    <Setting.Form
+      settingTitle='Change Password'
+      onSubmit={handleSubmit(data => mutation.mutate(data))}
+    >
+      <TextInput
+        {...register('password')}
+        type='password'
+        fieldName='Password'
+        error={errors.password}
+      />
+      <TextInput
+        {...register('new_password')}
+        type='password'
+        fieldName='New Password'
+        error={errors.new_password}
+        disabled={mutation.isLoading}
+      />
+      <Button type='submit'>Change</Button>
+    </Setting.Form>
   );
 };

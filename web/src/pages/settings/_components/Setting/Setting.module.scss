@@ -12,3 +12,13 @@
   border-bottom: var(--border-semi-trans);
   margin-bottom: 1rem;
 }
+
+.form {
+  & > div {
+    width: 25rem;
+  }
+
+  & > * + * {
+    margin-top: 1rem;
+  }
+}

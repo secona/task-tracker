@@ -11,8 +11,14 @@ import { Setting } from '../Setting/Setting';
 
 export const ChangeEmail = () => {
   const queryClient = useQueryClient();
-  const query = useQuery(queries.user());
   const navigate = useNavigate();
+
+  const query = useQuery({
+    ...queries.user(),
+    onSuccess: data => {
+      reset({ email: data.email });
+    },
+  });
 
   const mutation = useMutation({
     mutationKey: ['edit', 'email'],
@@ -32,23 +38,24 @@ export const ChangeEmail = () => {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<UserChangeEmailBody>({
     resolver: yupResolver(userAPI.changeEmail.validation),
   });
 
   return (
-    <Setting title='Change Email'>
-      <p>Current Email: {query.isLoading ? 'Loading...' : query.data?.email}</p>
-      <form onSubmit={handleSubmit(data => mutation.mutate(data))}>
-        <TextInput
-          {...register('email')}
-          placeholder='anotherme@example.com'
-          fieldName='New Email'
-          error={errors.email}
-        />
-        <Button type='submit'>Change</Button>
-      </form>
-    </Setting>
+    <Setting.Form
+      settingTitle='Change Email'
+      onSubmit={handleSubmit(data => mutation.mutate(data))}
+    >
+      <TextInput
+        {...register('email')}
+        placeholder='anotherme@example.com'
+        fieldName='Email'
+        error={errors.email}
+      />
+      <Button type='submit'>Change</Button>
+    </Setting.Form>
   );
 };
