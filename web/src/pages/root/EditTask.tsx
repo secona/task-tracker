@@ -6,10 +6,9 @@ import { ErrorResponse, isErrorResponse } from '@/api';
 import { ITask, TasksEditBody, tasksAPI } from '@/api/tasks';
 import { usePrevious } from '@/hooks/usePrevious';
 import { Button } from '@/components/Button';
-import { ModalContent } from '@/components/Modal/ModalContent';
 import { TextInput } from '@/components/TextInput';
 import { queries } from '@/queries';
-import { QueryState } from '@/components/QueryState';
+import { PopupForm } from './_components/PopupForm/PopupForm';
 
 export const EditTask = () => {
   const queryClient = useQueryClient();
@@ -72,24 +71,22 @@ export const EditTask = () => {
   });
 
   return (
-    <ModalContent closeModal={closeModal}>
-      <QueryState query={query} loading={'Loading...'}>
-        <form onSubmit={handleSubmit(data => mutation.mutate(data))}>
-          <TextInput
-            {...register('task')}
-            fieldName='Task'
-            error={errors.task}
-          />
-          <TextInput
-            {...register('description')}
-            fieldName='Description'
-            error={errors.description}
-          />
-          <Button loading={mutation.isLoading} type='submit'>
-            Save
-          </Button>
-        </form>
-      </QueryState>
-    </ModalContent>
+    <PopupForm.WaitFor
+      title='Edit Task'
+      closeModal={closeModal}
+      query={query}
+      loadingElement='Loading...'
+      onSubmit={handleSubmit(data => mutation.mutate(data))}
+    >
+      <TextInput {...register('task')} fieldName='Task' error={errors.task} />
+      <TextInput
+        {...register('description')}
+        fieldName='Description'
+        error={errors.description}
+      />
+      <Button loading={mutation.isLoading} type='submit'>
+        Save
+      </Button>
+    </PopupForm.WaitFor>
   );
 };

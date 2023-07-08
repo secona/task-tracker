@@ -1,8 +1,6 @@
 import { ErrorResponse, isErrorResponse } from '@/api';
 import { IProject, ProjectsEditBody, projectsAPI } from '@/api/projects';
 import { Button } from '@/components/Button';
-import { ModalContent } from '@/components/Modal/ModalContent';
-import { QueryState } from '@/components/QueryState';
 import { TextInput } from '@/components/TextInput';
 import { usePrevious } from '@/hooks/usePrevious';
 import { queries } from '@/queries';
@@ -10,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import { PopupForm } from './_components/PopupForm/PopupForm';
 
 export const EditProject = () => {
   const queryClient = useQueryClient();
@@ -76,24 +75,22 @@ export const EditProject = () => {
   });
 
   return (
-    <ModalContent closeModal={closeModal}>
-      <QueryState query={query} loading={'Loading...'}>
-        <form onSubmit={handleSubmit(data => mutation.mutate(data))}>
-          <TextInput
-            {...register('name')}
-            fieldName='Name'
-            error={errors.name}
-          />
-          <TextInput
-            {...register('description')}
-            fieldName='Description'
-            error={errors.description}
-          />
-          <Button loading={mutation.isLoading} type='submit'>
-            Save
-          </Button>
-        </form>
-      </QueryState>
-    </ModalContent>
+    <PopupForm.WaitFor
+      title='Edit Project'
+      query={query}
+      loadingElement='Loading...'
+      closeModal={closeModal}
+      onSubmit={handleSubmit(data => mutation.mutate(data))}
+    >
+      <TextInput {...register('name')} fieldName='Name' error={errors.name} />
+      <TextInput
+        {...register('description')}
+        fieldName='Description'
+        error={errors.description}
+      />
+      <Button loading={mutation.isLoading} type='submit'>
+        Save
+      </Button>
+    </PopupForm.WaitFor>
   );
 };

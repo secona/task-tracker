@@ -1,9 +1,11 @@
 import React from 'react';
+import { cnProps } from '@/utils/mergeClassnames';
 import { Portal } from '../Portal';
 
 import modalCN from './Modal.module.scss';
 
-export interface ModalContentProps {
+export interface ModalContentProps
+  extends React.ComponentPropsWithoutRef<'div'> {
   children?: React.ReactNode;
   closeModal(): void;
 }
@@ -37,11 +39,9 @@ export const ModalContent = (props: ModalContentProps) => {
     <Portal>
       <div className={modalCN.backdrop}>
         <div
+          {...cnProps(props, modalCN.content)}
           ref={el => setContentEl(el || undefined)}
-          className={modalCN.content}
-        >
-          {props.children}
-        </div>
+        />
       </div>
     </Portal>
   );
