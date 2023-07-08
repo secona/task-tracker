@@ -39,10 +39,14 @@ export const ChangeEmail = () => {
     handleSubmit,
     getValues,
     reset,
+    watch,
     formState: { errors },
   } = useForm<UserChangeEmailBody>({
     resolver: yupResolver(userAPI.changeEmail.validation),
+    reValidateMode: 'onChange',
   });
+
+  console.log();
 
   return (
     <Setting.Form
@@ -55,7 +59,9 @@ export const ChangeEmail = () => {
         fieldName='Email'
         error={errors.email}
       />
-      <Button type='submit'>Change</Button>
+      <Button type='submit' disabled={watch('email') === query.data?.email}>
+        Change
+      </Button>
     </Setting.Form>
   );
 };
