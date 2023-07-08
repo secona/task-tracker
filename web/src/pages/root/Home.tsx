@@ -20,17 +20,17 @@ export const Home = () => {
     <Container>
       <Card>
         <Greeting />
-        <HeaderLinks>
-          <Button.Link
-            size='sm'
-            onClick={() => previous.setToHere()}
-            to='new'
-            LeftIcon={Plus}
-          >
-            New Project
-          </Button.Link>
-        </HeaderLinks>
       </Card>
+      <HeaderLinks>
+        <Button.Link
+          size='sm'
+          onClick={() => previous.setToHere()}
+          to='new'
+          LeftIcon={Plus}
+        >
+          New Project
+        </Button.Link>
+      </HeaderLinks>
       <ProjectGrid>
         <QueryState
           query={query}
