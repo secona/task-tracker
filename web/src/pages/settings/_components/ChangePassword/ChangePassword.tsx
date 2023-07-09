@@ -48,24 +48,26 @@ export const ChangePassword = () => {
   });
 
   return (
-    <Setting.Form
-      settingTitle='Change Password'
-      onSubmit={handleSubmit(data => mutation.mutate(data))}
-    >
-      <TextInput
-        {...register('password')}
-        type='password'
-        fieldName='Password'
-        error={errors.password}
-      />
-      <TextInput
-        {...register('new_password')}
-        type='password'
-        fieldName='New Password'
-        error={errors.new_password}
-        disabled={mutation.isLoading}
-      />
-      <Button type='submit'>Change</Button>
+    <Setting.Form onSubmit={handleSubmit(data => mutation.mutate(data))}>
+      <Setting.Main>
+        <Setting.Title>Change Password</Setting.Title>
+        <TextInput
+          {...register('password')}
+          type='password'
+          fieldName='Password'
+          error={errors.password}
+        />
+        <TextInput
+          {...register('new_password')}
+          type='password'
+          fieldName='New Password'
+          error={errors.new_password}
+          disabled={mutation.isLoading}
+        />
+      </Setting.Main>
+      <Setting.Footer>
+        <Button type='submit'>Change</Button>
+      </Setting.Footer>
     </Setting.Form>
   );
 };

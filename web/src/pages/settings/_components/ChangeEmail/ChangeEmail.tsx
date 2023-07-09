@@ -49,19 +49,21 @@ export const ChangeEmail = () => {
   console.log();
 
   return (
-    <Setting.Form
-      settingTitle='Change Email'
-      onSubmit={handleSubmit(data => mutation.mutate(data))}
-    >
-      <TextInput
-        {...register('email')}
-        placeholder='anotherme@example.com'
-        fieldName='Email'
-        error={errors.email}
-      />
-      <Button type='submit' disabled={watch('email') === query.data?.email}>
-        Change
-      </Button>
+    <Setting.Form onSubmit={handleSubmit(data => mutation.mutate(data))}>
+      <Setting.Main>
+        <Setting.Title>Change Email</Setting.Title>
+        <TextInput
+          {...register('email')}
+          placeholder='anotherme@example.com'
+          fieldName='Email'
+          error={errors.email}
+        />
+      </Setting.Main>
+      <Setting.Footer>
+        <Button type='submit' disabled={watch('email') === query.data?.email}>
+          Change
+        </Button>
+      </Setting.Footer>
     </Setting.Form>
   );
 };

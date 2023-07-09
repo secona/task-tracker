@@ -8,12 +8,15 @@ export const Sessions = () => {
   const query = useQuery(queries.sessions());
 
   return (
-    <Setting settingTitle='Sessions'>
-      <QueryState query={query} loading='Loading...'>
-        {query.data?.map(session => (
-          <Session session={session} />
-        ))}
-      </QueryState>
+    <Setting>
+      <Setting.Main>
+        <Setting.Title>Sessions</Setting.Title>
+        <QueryState query={query} loading='Loading...'>
+          {query.data?.map(session => (
+            <Session session={session} />
+          ))}
+        </QueryState>
+      </Setting.Main>
     </Setting>
   );
 };

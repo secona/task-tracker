@@ -1,33 +1,25 @@
 import React from 'react';
-import { Heading } from '@/components/Heading';
+import { Heading, HeadingProps } from '@/components/Heading';
 import { cnProps } from '@/utils/mergeClassnames';
 
 import settingCN from './Setting.module.scss';
 
-export interface SettingProps {
-  children: React.ReactNode;
-  settingTitle: string;
-}
+export const Setting = (props: React.ComponentPropsWithoutRef<'div'>) => (
+  <div {...cnProps(props, settingCN.container)} />
+);
 
-export const Setting = (props: SettingProps) => {
-  return (
-    <div className={settingCN.container}>
-      <Heading className={settingCN.title} fontSize='3xl'>
-        {props.settingTitle}
-      </Heading>
-      {props.children}
-    </div>
-  );
-};
+Setting.Form = (props: React.ComponentPropsWithoutRef<'form'>) => (
+  <form {...cnProps(props, settingCN.form, settingCN.container)} />
+);
 
-export interface SettingFormProps
-  extends Omit<SettingProps, 'children'>,
-    React.ComponentPropsWithoutRef<'form'> {}
+Setting.Title = (props: HeadingProps) => (
+  <Heading {...cnProps(props, settingCN.title)} fontSize='3xl' />
+);
 
-Setting.Form = ({ settingTitle, ...props }: SettingFormProps) => {
-  return (
-    <Setting {...props} settingTitle={settingTitle}>
-      <form {...cnProps(props, settingCN.form)} />
-    </Setting>
-  );
-};
+Setting.Main = (props: React.ComponentPropsWithoutRef<'div'>) => (
+  <div {...cnProps(props, settingCN.main)} />
+);
+
+Setting.Footer = (props: React.ComponentPropsWithoutRef<'footer'>) => (
+  <footer {...cnProps(props, settingCN.footer)} />
+);

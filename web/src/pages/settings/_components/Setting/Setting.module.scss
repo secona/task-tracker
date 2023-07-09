@@ -1,10 +1,15 @@
 .container {
-  background-color: var(--elevation-1);
-  border: var(--border-semi-trans);
-  border-radius: 0.3rem;
-  padding: 2rem;
-  padding-top: 1.5rem;
   margin-bottom: 1rem;
+
+  & > *:first-child {
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+  }
+
+  & > *:last-child {
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+  }
 }
 
 .title {
@@ -13,12 +18,27 @@
   margin-bottom: 1rem;
 }
 
+.main {
+  padding: 1rem 1.5rem;
+  border: var(--border-semi-trans);
+  background-color: var(--elevation-1);
+}
+
+.footer {
+  background-color: var(--elevation-1-hover);
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 1.5rem;
+  border: var(--border-semi-trans);
+  border-top: none;
+}
+
 .form {
-  & > div {
+  & > .main > div {
     width: 25rem;
   }
 
-  & > * + * {
+  & > * > * + * {
     margin-top: 1rem;
   }
 }
