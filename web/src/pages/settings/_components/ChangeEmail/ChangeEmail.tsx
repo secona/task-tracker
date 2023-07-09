@@ -8,8 +8,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Setting } from '../Setting/Setting';
+import { Confirmation } from '@/components/Confirmation/Confirmation';
+import React from 'react';
 
 export const ChangeEmail = () => {
+  const [confirmation, setConfirmation] = React.useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -49,7 +52,12 @@ export const ChangeEmail = () => {
   console.log();
 
   return (
-    <Setting.Form onSubmit={handleSubmit(data => mutation.mutate(data))}>
+    <Setting.Form
+      onSubmit={e => {
+        e.preventDefault();
+        setConfirmation(true);
+      }}
+    >
       <Setting.Main>
         <Setting.Title>Change Email</Setting.Title>
         <TextInput
@@ -64,6 +72,16 @@ export const ChangeEmail = () => {
           Change
         </Button>
       </Setting.Footer>
+      <Confirmation
+        open={confirmation}
+        setOpen={setConfirmation}
+        onYes={handleSubmit(data => mutation.mutate(data))}
+      >
+        <p>
+          Are you sure you want to change your account's email to{' '}
+          <b>{getValues('email')}</b>?
+        </p>
+      </Confirmation>
     </Setting.Form>
   );
 };

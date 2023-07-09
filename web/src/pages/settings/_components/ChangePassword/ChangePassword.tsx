@@ -8,8 +8,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Setting } from '../Setting/Setting';
+import React from 'react';
+import { Confirmation } from '@/components/Confirmation/Confirmation';
 
 export const ChangePassword = () => {
+  const [confirmation, setConfirmation] = React.useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -42,13 +45,20 @@ export const ChangePassword = () => {
     register,
     handleSubmit,
     setError,
+    trigger,
     formState: { errors },
   } = useForm<UserChangePasswordBody>({
     resolver: yupResolver(userAPI.changePassword.validation),
+    mode: 'onChange',
   });
 
   return (
-    <Setting.Form onSubmit={handleSubmit(data => mutation.mutate(data))}>
+    <Setting.Form
+      onSubmit={e => {
+        e.preventDefault();
+        trigger().then(success => setConfirmation(success));
+      }}
+    >
       <Setting.Main>
         <Setting.Title>Change Password</Setting.Title>
         <TextInput
@@ -68,6 +78,13 @@ export const ChangePassword = () => {
       <Setting.Footer>
         <Button type='submit'>Change</Button>
       </Setting.Footer>
+      <Confirmation
+        open={confirmation}
+        setOpen={setConfirmation}
+        onYes={handleSubmit(data => mutation.mutate(data))}
+      >
+        <p>Are you sure you want to change your account's password?</p>
+      </Confirmation>
     </Setting.Form>
   );
 };
