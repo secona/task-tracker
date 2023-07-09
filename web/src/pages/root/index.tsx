@@ -27,6 +27,12 @@ export const rootRoute: RouteObject = {
     {
       path: 'inbox',
       element: <Inbox />,
+      children: [
+        {
+          path: 'edit/:taskId',
+          element: <EditTask />,
+        },
+      ],
     },
     {
       path: 'p/:projectId',

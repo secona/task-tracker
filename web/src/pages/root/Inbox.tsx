@@ -1,4 +1,5 @@
 import { useQueries } from '@tanstack/react-query';
+import { Outlet } from 'react-router-dom';
 import { queries } from '@/queries';
 import { Container } from './_components/Container/Container';
 import { Card } from './_components/Card/Card';
@@ -20,6 +21,7 @@ export const Inbox = () => {
         tasksQuery={tasksQuery}
         colors
       />
+      <Outlet />
     </Container>
   );
 };
