@@ -6,6 +6,7 @@ import { QueryState } from '@/components/QueryState';
 import { cnProps } from '@/utils/mergeClassnames';
 
 import popupFormCN from './PopupForm.module.scss';
+import { Modal } from '@/components/Modal/Modal';
 
 export interface PopupFormProps extends React.ComponentPropsWithoutRef<'form'> {
   title: string;
@@ -18,10 +19,12 @@ const PopupFormWrapper = (props: PopupFormProps) => {
       closeModal={props.closeModal}
       className={popupFormCN.container}
     >
-      <Heading fontSize='3xl' className={popupFormCN.title}>
-        {props.title}
-      </Heading>
-      {props.children}
+      <Modal.Main>
+        <Modal.Title fontSize='3xl' className={popupFormCN.title}>
+          {props.title}
+        </Modal.Title>
+        {props.children}
+      </Modal.Main>
     </ModalContent>
   );
 };
