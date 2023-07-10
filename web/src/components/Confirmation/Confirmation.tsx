@@ -17,12 +17,6 @@ export const Confirmation = ({
   setOpen,
   onYes,
 }: ConfirmationProps) => {
-  const [noBtn, setNoBtn] = React.useState<HTMLButtonElement>();
-
-  React.useEffect(() => {
-    noBtn?.focus();
-  }, [noBtn]);
-
   return (
     <>
       {open && (
@@ -45,7 +39,7 @@ export const Confirmation = ({
               LeftIcon={X}
               onClick={() => setOpen(false)}
               variant='secondary'
-              ref={el => setNoBtn(el!)}
+              autoFocus
             >
               No
             </Button>

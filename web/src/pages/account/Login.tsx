@@ -69,6 +69,7 @@ export const Login = () => {
           placeholder='me@example.com'
           fieldName='Email'
           error={errors.email}
+          autoFocus
         />
         <TextInput
           {...register('password')}

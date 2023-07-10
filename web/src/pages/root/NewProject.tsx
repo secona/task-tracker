@@ -57,7 +57,12 @@ export const NewProject = () => {
     >
       <Modal.Main>
         <Modal.Title>New Project</Modal.Title>
-        <TextInput {...register('name')} fieldName='Name' error={errors.name} />
+        <TextInput
+          {...register('name')}
+          fieldName='Name'
+          error={errors.name}
+          autoFocus
+        />
         <TextInput
           {...register('description')}
           fieldName='Description'

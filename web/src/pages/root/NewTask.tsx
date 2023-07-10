@@ -59,7 +59,12 @@ export const NewTask = () => {
     >
       <Modal.Main>
         <Modal.Title>New Task</Modal.Title>
-        <TextInput {...register('task')} fieldName='Task' error={errors.task} />
+        <TextInput
+          {...register('task')}
+          fieldName='Task'
+          error={errors.task}
+          autoFocus
+        />
         <TextInput
           {...register('description')}
           fieldName='Description'

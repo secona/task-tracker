@@ -83,6 +83,7 @@ export const EditTask = () => {
             {...register('task')}
             fieldName='Task'
             error={errors.task}
+            autoFocus
           />
           <TextInput
             {...register('description')}

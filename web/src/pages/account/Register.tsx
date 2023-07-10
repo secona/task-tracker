@@ -58,6 +58,7 @@ export const Register = () => {
           placeholder='Rick Astley'
           fieldName='Name'
           error={errors.name}
+          autoFocus
         />
         <TextInput
           {...register('email')}

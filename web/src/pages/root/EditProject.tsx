@@ -87,6 +87,7 @@ export const EditProject = () => {
             {...register('name')}
             fieldName='Name'
             error={errors.name}
+            autoFocus
           />
           <TextInput
             {...register('description')}
