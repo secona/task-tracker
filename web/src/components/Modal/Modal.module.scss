@@ -42,4 +42,7 @@
   background-color: var(--elevation-1-hover);
   border: var(--border-semi-trans);
   border-top: none;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
 }
