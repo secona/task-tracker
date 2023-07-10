@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PopupForm } from './_components/PopupForm/PopupForm';
+import { Modal } from '@/components/Modal/Modal';
 
 export const NewTask = () => {
   const navigate = useNavigate();
@@ -53,20 +53,24 @@ export const NewTask = () => {
   });
 
   return (
-    <PopupForm
-      title='New Task'
-      closeModal={closeModal}
+    <Modal.Page
+      as='form'
       onSubmit={handleSubmit(data => mutation.mutate(data))}
     >
-      <TextInput {...register('task')} fieldName='Task' error={errors.task} />
-      <TextInput
-        {...register('description')}
-        fieldName='Description'
-        error={errors.description}
-      />
-      <Button loading={mutation.isLoading} type='submit'>
-        Create
-      </Button>
-    </PopupForm>
+      <Modal.Main>
+        <Modal.Title>New Task</Modal.Title>
+        <TextInput {...register('task')} fieldName='Task' error={errors.task} />
+        <TextInput
+          {...register('description')}
+          fieldName='Description'
+          error={errors.description}
+        />
+      </Modal.Main>
+      <Modal.Footer>
+        <Button loading={mutation.isLoading} type='submit'>
+          Create
+        </Button>
+      </Modal.Footer>
+    </Modal.Page>
   );
 };

@@ -9,6 +9,7 @@
 
 .content {
   max-width: 40%;
+  min-width: 35%;
 
   & > *:first-child {
     border-top-left-radius: 0.3rem;
@@ -24,13 +25,16 @@
 .title {
   padding-bottom: 0.5rem;
   border-bottom: var(--border-semi-trans);
-  margin-bottom: 1rem;
 }
 
 .main {
   padding: 1rem 1.5rem;
   background-color: var(--elevation-1);
   border: var(--border-semi-trans);
+
+  & > * + * {
+    margin-top: 0.8rem;
+  }
 }
 
 .footer {

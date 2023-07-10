@@ -8,7 +8,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PopupForm } from './_components/PopupForm/PopupForm';
+import { Modal } from '@/components/Modal/Modal';
+import { QueryState } from '@/components/QueryState';
 
 export const EditProject = () => {
   const queryClient = useQueryClient();
@@ -75,22 +76,30 @@ export const EditProject = () => {
   });
 
   return (
-    <PopupForm.WaitFor
-      title='Edit Project'
-      query={query}
-      loadingElement='Loading...'
-      closeModal={closeModal}
+    <Modal.Page
+      as='form'
       onSubmit={handleSubmit(data => mutation.mutate(data))}
     >
-      <TextInput {...register('name')} fieldName='Name' error={errors.name} />
-      <TextInput
-        {...register('description')}
-        fieldName='Description'
-        error={errors.description}
-      />
-      <Button loading={mutation.isLoading} type='submit'>
-        Save
-      </Button>
-    </PopupForm.WaitFor>
+      <QueryState query={query} loading='Loading...'>
+        <Modal.Main>
+          <Modal.Title>Edit Project</Modal.Title>
+          <TextInput
+            {...register('name')}
+            fieldName='Name'
+            error={errors.name}
+          />
+          <TextInput
+            {...register('description')}
+            fieldName='Description'
+            error={errors.description}
+          />
+        </Modal.Main>
+        <Modal.Footer>
+          <Button loading={mutation.isLoading} type='submit'>
+            Save
+          </Button>
+        </Modal.Footer>
+      </QueryState>
+    </Modal.Page>
   );
 };

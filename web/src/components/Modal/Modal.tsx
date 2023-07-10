@@ -6,15 +6,22 @@ import { UseModalResult } from './useModal';
 
 import modalCN from './Modal.module.scss';
 
-export interface ModalProps extends React.ComponentPropsWithoutRef<'div'> {
-  modal: UseModalResult;
-}
+export type ModalProps<T extends keyof React.ReactHTML> =
+  React.ComponentPropsWithoutRef<T> & {
+    as?: keyof React.ReactHTML;
+    modal: UseModalResult;
+  };
 
-export const Modal = ({ modal, ...props }: ModalProps) => {
-  return (
-    <>{modal.opened && <ModalContent {...props} closeModal={modal.close} />}</>
-  );
-};
+export const Modal = <T extends keyof React.ReactHTML>({
+  modal,
+  ...props
+}: ModalProps<T>) => (
+  <>{modal?.opened && <ModalContent {...props} closeModal={modal?.close} />}</>
+);
+
+Modal.Page = <T extends keyof React.ReactHTML>(
+  props: Omit<ModalProps<T>, 'modal'>
+) => <ModalContent.Page {...props} />;
 
 Modal.Title = (props: HeadingProps) => (
   <Heading {...cnProps(props, modalCN.title)} fontSize='3xl' />

@@ -7,7 +7,7 @@ import { ProjectsNewProjectBody } from '@/api/projects/newProject';
 import { usePrevious } from '@/hooks/usePrevious';
 import { Button } from '@/components/Button';
 import { TextInput } from '@/components/TextInput';
-import { PopupForm } from './_components/PopupForm/PopupForm';
+import { Modal } from '@/components/Modal/Modal';
 
 export const NewProject = () => {
   const queryClient = useQueryClient();
@@ -51,18 +51,22 @@ export const NewProject = () => {
   });
 
   return (
-    <PopupForm
-      title='New Project'
-      closeModal={closeModal}
+    <Modal.Page
+      as='form'
       onSubmit={handleSubmit(data => mutation.mutate(data))}
     >
-      <TextInput {...register('name')} fieldName='Name' error={errors.name} />
-      <TextInput
-        {...register('description')}
-        fieldName='Description'
-        error={errors.description}
-      />
-      <Button type='submit'>Create</Button>
-    </PopupForm>
+      <Modal.Main>
+        <Modal.Title>New Project</Modal.Title>
+        <TextInput {...register('name')} fieldName='Name' error={errors.name} />
+        <TextInput
+          {...register('description')}
+          fieldName='Description'
+          error={errors.description}
+        />
+      </Modal.Main>
+      <Modal.Footer>
+        <Button type='submit'>Create</Button>
+      </Modal.Footer>
+    </Modal.Page>
   );
 };
