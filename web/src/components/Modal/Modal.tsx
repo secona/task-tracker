@@ -1,29 +1,18 @@
 import React from 'react';
-import { Heading, HeadingProps } from '../Heading';
-import { ModalContent } from './ModalContent';
 import { cnProps } from '@/utils/mergeClassnames';
+import { ModalContent } from './ModalContent';
+import { Heading, HeadingProps } from '../Heading';
+import { UseModalResult } from './useModal';
 
 import modalCN from './Modal.module.scss';
 
-export interface ModalProps {
-  children: React.FC<{ closeModal(): void }>;
-  activator: React.ReactNode;
+export interface ModalProps extends React.ComponentPropsWithoutRef<'div'> {
+  modal: UseModalResult;
 }
 
-export const Modal = (props: ModalProps) => {
-  const [isOpen, setOpen] = React.useState(false);
-
+export const Modal = ({ modal, ...props }: ModalProps) => {
   return (
-    <>
-      {React.cloneElement(props.activator as any, {
-        onClick: () => setOpen(v => !v),
-      })}
-      {isOpen && (
-        <ModalContent closeModal={() => setOpen(false)}>
-          <props.children closeModal={() => setOpen(false)} />
-        </ModalContent>
-      )}
-    </>
+    <>{modal.opened && <ModalContent {...props} closeModal={modal.close} />}</>
   );
 };
 
