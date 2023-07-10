@@ -9,10 +9,10 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Setting } from '../Setting/Setting';
 import { Confirmation } from '@/components/Confirmation/Confirmation';
-import React from 'react';
+import { useModal } from '@/components/Modal/useModal';
 
 export const ChangeEmail = () => {
-  const [confirmation, setConfirmation] = React.useState(false);
+  const modal = useModal();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -55,7 +55,7 @@ export const ChangeEmail = () => {
     <Setting.Form
       onSubmit={e => {
         e.preventDefault();
-        setConfirmation(true);
+        modal.open();
       }}
     >
       <Setting.Main>
@@ -73,8 +73,7 @@ export const ChangeEmail = () => {
         </Button>
       </Setting.Footer>
       <Confirmation
-        open={confirmation}
-        setOpen={setConfirmation}
+        modal={modal}
         onYes={handleSubmit(data => mutation.mutate(data))}
       >
         <p>

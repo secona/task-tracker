@@ -3,24 +3,19 @@ import { Button } from '../Button';
 import { ModalContent } from '../Modal/ModalContent';
 import { Modal } from '../Modal/Modal';
 import { Check, X } from 'react-feather';
+import { UseModalResult } from '../Modal/useModal';
 
 export interface ConfirmationProps {
   children: React.ReactNode;
-  open: boolean;
-  setOpen(v: boolean): void;
+  modal: UseModalResult;
   onYes(): void;
 }
 
-export const Confirmation = ({
-  children,
-  open,
-  setOpen,
-  onYes,
-}: ConfirmationProps) => {
+export const Confirmation = ({ children, onYes, modal }: ConfirmationProps) => {
   return (
     <>
-      {open && (
-        <ModalContent closeModal={() => setOpen(false)}>
+      {modal.opened && (
+        <ModalContent closeModal={modal.close}>
           <Modal.Main>
             <Modal.Title>Confirm</Modal.Title>
             {children}
@@ -30,14 +25,14 @@ export const Confirmation = ({
               LeftIcon={Check}
               onClick={() => {
                 onYes();
-                setOpen(false);
+                modal.close();
               }}
             >
               Yes
             </Button>
             <Button
               LeftIcon={X}
-              onClick={() => setOpen(false)}
+              onClick={modal.close}
               variant='secondary'
               autoFocus
             >

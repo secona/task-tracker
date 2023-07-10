@@ -8,11 +8,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Setting } from '../Setting/Setting';
-import React from 'react';
 import { Confirmation } from '@/components/Confirmation/Confirmation';
+import { useModal } from '@/components/Modal/useModal';
 
 export const ChangePassword = () => {
-  const [confirmation, setConfirmation] = React.useState(false);
+  const modal = useModal();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ export const ChangePassword = () => {
     <Setting.Form
       onSubmit={e => {
         e.preventDefault();
-        trigger().then(success => setConfirmation(success));
+        trigger().then(success => success && modal.open());
       }}
     >
       <Setting.Main>
@@ -79,8 +79,7 @@ export const ChangePassword = () => {
         <Button type='submit'>Change</Button>
       </Setting.Footer>
       <Confirmation
-        open={confirmation}
-        setOpen={setConfirmation}
+        modal={modal}
         onYes={handleSubmit(data => mutation.mutate(data))}
       >
         <p>Are you sure you want to change your account's password?</p>
