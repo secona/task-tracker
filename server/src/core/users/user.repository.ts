@@ -27,6 +27,7 @@ export const userRepository = {
   async getAllTasks(user_id: number, query: Record<string, any>) {
     return db('tasks')
       .select('tasks.*')
+      .orderBy('created_at', 'asc')
       .leftJoin('projects', { 'projects.project_id': 'tasks.project_id' })
       .where({
         'projects.user_id': user_id,
@@ -34,3 +35,4 @@ export const userRepository = {
       });
   },
 };
+
